@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/tvType"
+        android:layout_width="@dimen/DIMEN_WIDTH_174_DP"
+        android:layout_height="@dimen/DIMEN_WIDTH_88_DP"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center"
+        android:text="信息技术"
+        android:textSize="@dimen/DIMEN_TEXT_26_SP"
+        android:textColor="@color/text_333333"
+        android:background="@drawable/dialog_select"
+        android:layout_marginTop="@dimen/DIMEN_WIDTH_16_DP"
+        android:layout_marginLeft="@dimen/DIMEN_WIDTH_16_DP"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

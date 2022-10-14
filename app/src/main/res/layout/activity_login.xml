@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.person.activity.LoginActivity">
+    <include layout="@layout/ic_title"/>
+    <ImageView
+        android:id="@+id/iv_person"
+        android:layout_width="@dimen/DIMEN_WIDTH_240_DP"
+        android:layout_height="@dimen/DIMEN_WIDTH_240_DP"
+        android:src="@mipmap/icon_base"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_WIDTH_56_DP"/>
+    <EditText
+        android:id="@+id/etPhone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_WIDTH_120_DP"
+        android:layout_marginTop="@dimen/DIMEN_WIDTH_100_DP"
+        android:textSize="@dimen/DIMEN_TEXT_32_SP"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="请输入手机号码"
+        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+    <View
+        style="@style/LineGray"
+        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_WIDTH_120_DP"
+        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP">
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/DIMEN_TEXT_32_SP"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请输入登录密码"/>
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="@dimen/DIMEN_WIDTH_35_DP"
+            android:layout_height="@dimen/DIMEN_WIDTH_26_DP"
+            android:src="@mipmap/close"
+            android:layout_toLeftOf="@+id/ivHide"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+
+        <ImageView
+            android:id="@+id/ivHide"
+            android:layout_width="@dimen/DIMEN_WIDTH_35_DP"
+            android:layout_height="@dimen/DIMEN_WIDTH_26_DP"
+            android:src="@mipmap/look"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <View
+        style="@style/LineGray"
+        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_WIDTH_20_DP"
+        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP">
+
+        <TextView
+            android:id="@+id/tvRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册新用户"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/DIMEN_TEXT_24_SP" />
+        <TextView
+            android:id="@+id/tvForgetPw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码？"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/DIMEN_TEXT_24_SP"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tvToLogin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_WIDTH_100_DP"
+        android:layout_gravity="center_horizontal"
+        android:text="立即登录"
+        android:textSize="@dimen/DIMEN_TEXT_32_SP"
+        android:layout_marginTop="@dimen/DIMEN_WIDTH_116_DP"
+        android:textColor="@color/black"
+        android:background="@drawable/prepare_login"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP" />
+
+
+</LinearLayout>
