@@ -10,10 +10,10 @@
         android:layout_centerInParent="true"
         android:text="领域"
         android:textColor="@color/black"
-        android:textSize="@dimen/DIMEN_TEXT_30_SP"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_46_DP"
-        android:layout_marginTop="@dimen/DIMEN_WIDTH_36_DP"
-        android:layout_marginBottom="@dimen/DIMEN_WIDTH_10_DP"/>
+        android:textSize="15sp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="5dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSelect"
         android:layout_width="match_parent"

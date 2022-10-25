@@ -1,6 +1,8 @@
 package com.example.xck.common;
 
 
+import com.blankj.utilcode.util.SPUtils;
+
 /**
  * Constants
  * 沉迷学习不能自拔
@@ -10,6 +12,7 @@ package com.example.xck.common;
 
 public class Constants {
     private static final String TAG = "Constants";
+    public final static String DOWNLOAD_PATH = "/sdcard/xck";                 //文件下载的路径
     public static final String KEY_SP_TOKEN = "SP_TOKEN";
     public static final String KEY_SP_HEAN = "SP_HEAN";
     public static final String KEY_SP_PERSON = "SP_Person";
@@ -62,88 +65,88 @@ public class Constants {
 
     *//**
      * 用户是否登录
-     *//*
+     */
     public static boolean isLogin() {
         return SPUtils.getInstance().getBoolean(KEY_SP_LOGIN);
     }
 
-    *//**
+    /**
      * 登录
-     *//*
+     */
     public static void login() {
         SPUtils.getInstance().put(KEY_SP_LOGIN, true);
     }
 
-    *//**
+    /**
      * 登出
-     *//*
+     */
     public static void loginOut() {
         SPUtils.getInstance().put(KEY_SP_LOGIN, false);
     }
-    *//**
+    /**
      * 设置新消息提示
-     *//*
+     */
     public static void setTishiMessage(Boolean tishi) {
         SPUtils.getInstance().put(TISHI_MESSAGE, tishi);
     }
 
-    *//**
+    /**
      * 登出
-     *//*
+     */
     public static Boolean getTishiMessage() {
         return SPUtils.getInstance().getBoolean(TISHI_MESSAGE, false);
     }
 
 
-    *//**
+    /**
      * 是否是第一次使用
-     *//*
+     */
     public static boolean isFirst() {
         return SPUtils.getInstance().getBoolean(KEY_SP_IS_FIRST, true);
     }
 
 
-    *//**
+    /**
      * 是否有支付密码
      *
      * @return true 有支付密码  要改密码 需要输入旧密码
      * <p>
      * false 没有支付密码    首次设置传验证码
-     *//*
+     */
     public static boolean hasPayPassword() {
         return false;
     }
 
-    *//**
+    /**
      * 设置为非首次使用app
-     *//*
+     */
     public static void setNotFirst() {
         SPUtils.getInstance().put(KEY_SP_IS_FIRST, false);
     }
 
-    *//**
+    /**
      * 获取token
      *
      * @return
-     *//*
+     */
     public static String getToken() {
         String loginJson = SPUtils.getInstance().getString(KEY_SP_TOKEN);
         return loginJson;
     }
 
-    *//**
+    /**
      * 储存token
      *
      * @param
-     *//*
+     */
     public static void putToken(String  token) {
         SPUtils.getInstance().put(KEY_SP_TOKEN, token);
     }
-    *//**
+    /**
      * 获取isExit
      *
      * @return
-     *//*
+     */
     public static int getIsExit() {
         int loginJson = SPUtils.getInstance().getInt(isExit,0);
         return loginJson;
@@ -152,35 +155,35 @@ public class Constants {
         SPUtils.getInstance().put(isExit,exit,true);
     }
 
-    *//**
+    /**
      * 获取头像
      *
      * @return
-     *//*
+     */
     public static String getHeadImg() {
         String loginJson = SPUtils.getInstance().getString(KEY_SP_HEAN);
         return loginJson;
     }
 
-    *//**
+    /**
      * 储存头像
      *
      * @param
-     *//*
+     */
     public static void putHeadImg(String  img) {
         SPUtils.getInstance().put(KEY_SP_HEAN, img);
     }
-    *//**
+    /**
          * 获取im
          *
          * @return
-         *//*
+         */
         public static String getImIndent() {
             String loginJson = SPUtils.getInstance().getString("im_identifier");
             return loginJson;
         }
 
-        *//**
+        /**
          * 储存im
          *
          * @param

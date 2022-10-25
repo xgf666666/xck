@@ -9,15 +9,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/DIMEN_WIDTH_60_DP"
-        android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:paddingRight="@dimen/DIMEN_WIDTH_40_DP"
-        android:paddingBottom="@dimen/DIMEN_WIDTH_60_DP"
+        android:paddingTop="35dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="30dp"
         android:background="@color/white">
         <ImageView
             android:id="@+id/iv_person"
-            android:layout_width="@dimen/DIMEN_WIDTH_78_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_78_DP"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
             android:src="@mipmap/icon_base" />
         <TextView
             android:id="@+id/tvName"
@@ -25,9 +25,10 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_person"
             android:text="匿名用户"
-            android:textSize="@dimen/DIMEN_TEXT_32_SP"
+            android:textSize="18sp"
             android:textColor="@color/text_333333"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_24_DP"/>
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="3dp"/>
         <TextView
             android:id="@+id/tvPhone"
             android:layout_width="wrap_content"
@@ -35,9 +36,9 @@
             android:layout_toRightOf="@+id/iv_person"
             android:layout_below="@+id/tvName"
             android:text="13800138000"
-            android:textSize="@dimen/DIMEN_TEXT_24_SP"
+            android:textSize="13sp"
             android:textColor="@color/text_gray"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_24_DP"
+            android:layout_marginLeft="12dp"
             android:layout_toLeftOf="@+id/tvQuota"/>
         <TextView
             android:id="@+id/tvQuota"
@@ -45,11 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="额度：0"
-            android:textSize="@dimen/DIMEN_TEXT_26_SP"
+            android:textSize="13sp"
             android:layout_alignTop="@+id/tvPhone"
             android:textColor="@color/text_333333"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_24_DP"
-            android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="20dp"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:paddingBottom="2dp"
@@ -58,15 +59,15 @@
     <LinearLayout
         android:id="@+id/llRoleIdentity"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_104_DP"
+        android:layout_height="52dp"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/DIMEN_WIDTH_20_DP"
-        android:paddingRight="@dimen/DIMEN_WIDTH_40_DP"
-        android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:layout_marginTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:background="@color/white">
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_36_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_36_DP"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/renzheng"
             android:layout_gravity="center_vertical"/>
         <TextView
@@ -74,30 +75,30 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="认证管理"
-            android:textSize="@dimen/DIMEN_TEXT_28_SP"
+            android:textSize="14sp"
             android:textColor="@color/text_333333"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_20_DP"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"/>
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_34_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_34_DP"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:src="@mipmap/gengduo"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <View
         style="@style/LineGray"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"/>
     <LinearLayout
         android:id="@+id/llMessage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_104_DP"
+        android:layout_height="52dp"
         android:orientation="horizontal"
-        android:paddingRight="@dimen/DIMEN_WIDTH_40_DP"
-        android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:background="@color/white">
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_36_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_36_DP"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/tzrxx"
             android:layout_gravity="center_vertical"/>
         <TextView
@@ -105,27 +106,27 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="投资人信息"
-            android:textSize="@dimen/DIMEN_TEXT_28_SP"
+            android:textSize="14sp"
             android:textColor="@color/text_333333"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_20_DP"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"/>
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_34_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_34_DP"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:src="@mipmap/gengduo"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_104_DP"
+        android:layout_height="52dp"
         android:orientation="horizontal"
-        android:paddingRight="@dimen/DIMEN_WIDTH_40_DP"
-        android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:background="@color/white"
-        android:layout_marginTop="@dimen/DIMEN_WIDTH_30_DP">
+        android:layout_marginTop="15dp">
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_36_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_36_DP"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/xiugai"
             android:layout_gravity="center_vertical"/>
         <TextView
@@ -133,29 +134,29 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="修改密码"
-            android:textSize="@dimen/DIMEN_TEXT_28_SP"
+            android:textSize="14sp"
             android:textColor="@color/text_333333"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_20_DP"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"/>
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_34_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_34_DP"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:src="@mipmap/gengduo"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <View
         style="@style/LineGray"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_104_DP"
+        android:layout_height="52dp"
         android:orientation="horizontal"
-        android:paddingRight="@dimen/DIMEN_WIDTH_40_DP"
-        android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:background="@color/white">
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_36_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_36_DP"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/bangzhu"
             android:layout_gravity="center_vertical"/>
         <TextView
@@ -163,29 +164,29 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="帮助文档"
-            android:textSize="@dimen/DIMEN_TEXT_28_SP"
+            android:textSize="14sp"
             android:textColor="@color/text_333333"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_20_DP"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"/>
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_34_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_34_DP"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:src="@mipmap/gengduo"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <View
         style="@style/LineGray"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_104_DP"
+        android:layout_height="52dp"
         android:orientation="horizontal"
-        android:paddingRight="@dimen/DIMEN_WIDTH_40_DP"
-        android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:background="@color/white">
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_36_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_36_DP"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/guanyu"
             android:layout_gravity="center_vertical"/>
         <TextView
@@ -193,29 +194,29 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="关于我们"
-            android:textSize="@dimen/DIMEN_TEXT_28_SP"
+            android:textSize="14sp"
             android:textColor="@color/text_333333"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_20_DP"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"/>
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_34_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_34_DP"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:src="@mipmap/gengduo"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <View
         style="@style/LineGray"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_104_DP"
+        android:layout_height="52dp"
         android:orientation="horizontal"
-        android:paddingRight="@dimen/DIMEN_WIDTH_40_DP"
-        android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:background="@color/white">
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_36_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_36_DP"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/kefu"
             android:layout_gravity="center_vertical"/>
         <TextView
@@ -223,13 +224,13 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="联系我们"
-            android:textSize="@dimen/DIMEN_TEXT_28_SP"
+            android:textSize="14sp"
             android:textColor="@color/text_333333"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_20_DP"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"/>
         <ImageView
-            android:layout_width="@dimen/DIMEN_WIDTH_34_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_34_DP"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:src="@mipmap/gengduo"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>

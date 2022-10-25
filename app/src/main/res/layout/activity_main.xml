@@ -17,12 +17,12 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_90_DP"
+        android:layout_height="wrap_content"
         app:itemIconTint="@color/selector_navigation_main"
         app:itemTextColor="@color/selector_navigation_main"
         app:menu="@menu/navigation_main"
         app:itemTextAppearanceActive="@style/bottom_tab_title_active"
-        app:itemIconSize="@dimen/DIMEN_WIDTH_40_DP"
+        app:itemIconSize="30dp"
         app:itemTextAppearanceInactive="@style/bottom_tab_title_active"
         />
 

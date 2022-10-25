@@ -23,10 +23,10 @@
             android:textColor="@color/black"
             android:background="@drawable/prepare_login"
             android:gravity="center"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-            android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"
-            android:layout_marginTop="@dimen/DIMEN_WIDTH_16_DP"
-            android:layout_marginBottom="@dimen/DIMEN_WIDTH_16_DP"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
 
     </RelativeLayout>
 
@@ -47,23 +47,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="@dimen/DIMEN_WIDTH_40_DP">
+                android:padding="20dp">
 
                 <ImageView
                     android:id="@+id/iv_person"
-                    android:layout_width="@dimen/DIMEN_WIDTH_108_DP"
-                    android:layout_height="@dimen/DIMEN_WIDTH_108_DP"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
                     android:src="@mipmap/icon_base" />
 
                 <TextView
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/DIMEN_WIDTH_24_DP"
+                    android:layout_marginLeft="12dp"
                     android:layout_toRightOf="@+id/iv_person"
                     android:text="苏南心"
                     android:textColor="@color/text_333333"
-                    android:textSize="@dimen/DIMEN_TEXT_32_SP"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -71,26 +71,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvName"
-                    android:layout_marginLeft="@dimen/DIMEN_WIDTH_24_DP"
-                    android:layout_marginTop="@dimen/DIMEN_WIDTH_20_DP"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/iv_person"
                     android:text="乐融资本|高级投资经理"
                     android:textColor="@color/text_gray"
-                    android:textSize="@dimen/DIMEN_TEXT_24_SP" />
+                    android:textSize="12sp" />
             </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/DIMEN_WIDTH_92_DP"
+                android:layout_height="46dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
-                android:layout_marginTop="@dimen/DIMEN_WIDTH_40_DP"
+                android:paddingLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:text="机构介绍"
                 android:textColor="@color/text_333333"
-                android:textSize="@dimen/DIMEN_TEXT_28_SP"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <View style="@style/LineGray" />
@@ -101,17 +101,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="@dimen/DIMEN_WIDTH_20_DP"
+                android:layout_marginBottom="10dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
-                android:paddingTop="@dimen/DIMEN_WIDTH_20_DP"
-                android:paddingRight="@dimen/DIMEN_WIDTH_40_DP"
-                android:paddingBottom="@dimen/DIMEN_WIDTH_20_DP"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
                 android:text="薛记炒货2002年由薛兴柱创立于济南，是一家集坚果炒货的产品研发、生产和销售为一体的连锁品牌，主要经营现烤坚果、瓜子花生、果蔬干、果脯蜜饯、膨化食品等特色炒货产品。
 创始人薛兴柱是山东有名的“瓜子大王”，早在1992年便开始跟着父亲做炒货生意，并从中发掘到现炒新鲜瓜子的商机。自2002年正式以“薛记炒货”进行经营，在瓜子、板栗等经典产品迭代基础上。"
                 android:textColor="@color/text_333333"
-                android:textSize="@dimen/DIMEN_TEXT_24_SP" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -120,10 +120,10 @@
                 android:layout_centerVertical="true"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
+                android:paddingLeft="20dp"
                 android:text="投资信息"
                 android:textColor="@color/text_333333"
-                android:textSize="@dimen/DIMEN_TEXT_28_SP"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <View style="@style/LineGray" />
@@ -132,19 +132,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@color/white"
-                android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
-                android:layout_marginBottom="@dimen/DIMEN_WIDTH_20_DP">
+                android:paddingLeft="20dp"
+                android:layout_marginBottom="10dp">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:paddingTop="@dimen/DIMEN_WIDTH_26_DP"
+                    android:paddingTop="13dp"
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:text="关注领域"
                     android:textColor="@color/text_999999"
-                    android:textSize="@dimen/DIMEN_TEXT_24_SP"/>
+                    android:textSize="12sp"/>
                 <TextView
                     android:id="@+id/tvType"
                     android:layout_width="wrap_content"
@@ -152,14 +152,14 @@
                     android:layout_below="@+id/tvCompany"
                     android:layout_alignLeft="@+id/tvCompany"
                     android:text="信息技术"
-                    android:textSize="@dimen/DIMEN_TEXT_24_SP"
+                    android:textSize="12sp"
                     android:textColor="@color/text_333333"
                     android:background="@drawable/home_type"
-                    android:paddingLeft="@dimen/DIMEN_WIDTH_16_DP"
-                    android:paddingRight="@dimen/DIMEN_WIDTH_16_DP"
-                    android:paddingTop="@dimen/DIMEN_WIDTH_12_DP"
-                    android:paddingBottom="@dimen/DIMEN_WIDTH_12_DP"
-                    android:layout_marginTop="@dimen/DIMEN_WIDTH_15_DP"/>
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_marginTop="7dp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -169,8 +169,8 @@
                     android:gravity="center_vertical"
                     android:text="关注领域"
                     android:textColor="@color/text_999999"
-                    android:textSize="@dimen/DIMEN_TEXT_24_SP"
-                    android:layout_marginTop="@dimen/DIMEN_WIDTH_48_DP"/>
+                    android:textSize="12sp"
+                    android:layout_marginTop="24dp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,8 +180,8 @@
                     android:gravity="center_vertical"
                     android:text="种子轮"
                     android:textColor="@color/text_333333"
-                    android:textSize="@dimen/DIMEN_TEXT_24_SP"
-                    android:layout_marginTop="@dimen/DIMEN_WIDTH_16_DP"/>
+                    android:textSize="12sp"
+                    android:layout_marginTop="8dp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -191,8 +191,8 @@
                     android:gravity="center_vertical"
                     android:text="单笔投资金额"
                     android:textColor="@color/text_999999"
-                    android:textSize="@dimen/DIMEN_TEXT_24_SP"
-                    android:layout_marginTop="@dimen/DIMEN_WIDTH_48_DP"/>
+                    android:textSize="12sp"
+                    android:layout_marginTop="24dp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -202,8 +202,8 @@
                     android:gravity="center_vertical"
                     android:text="500 ~ 1000万"
                     android:textColor="@color/text_333333"
-                    android:textSize="@dimen/DIMEN_TEXT_24_SP"
-                    android:layout_marginTop="@dimen/DIMEN_WIDTH_16_DP"/>
+                    android:textSize="12sp"
+                    android:layout_marginTop="8dp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -213,8 +213,8 @@
                     android:gravity="center_vertical"
                     android:text="关注地区"
                     android:textColor="@color/text_999999"
-                    android:textSize="@dimen/DIMEN_TEXT_24_SP"
-                    android:layout_marginTop="@dimen/DIMEN_WIDTH_48_DP"/>
+                    android:textSize="12sp"
+                    android:layout_marginTop="24dp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -224,8 +224,8 @@
                     android:gravity="center_vertical"
                     android:text="广州市"
                     android:textColor="@color/text_333333"
-                    android:textSize="@dimen/DIMEN_TEXT_24_SP"
-                    android:layout_marginTop="@dimen/DIMEN_WIDTH_16_DP"/>
+                    android:textSize="12sp"
+                    android:layout_marginTop="8dp"/>
 
             </LinearLayout>
             <TextView
@@ -235,10 +235,10 @@
                 android:layout_centerVertical="true"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
+                android:paddingLeft="20dp"
                 android:text="投资案例"
                 android:textColor="@color/text_333333"
-                android:textSize="@dimen/DIMEN_TEXT_28_SP"
+                android:textSize="14sp"
                 android:textStyle="bold" />
             <View style="@style/LineGray" />
             <TextView
@@ -249,11 +249,16 @@
                 android:layout_centerVertical="true"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/DIMEN_WIDTH_40_DP"
+                android:paddingLeft="20dp"
                 android:text="猫眼咖啡"
                 android:textColor="@color/text_333333"
-                android:textSize="@dimen/DIMEN_TEXT_24_SP" />
+                android:textSize="12sp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    <include layout="@layout/view_loading"
+        android:layout_below="@+id/icTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 </RelativeLayout>

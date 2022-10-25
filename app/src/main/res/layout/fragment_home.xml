@@ -7,46 +7,47 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_98_DP"
+        android:layout_height="49dp"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="9dp">
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/DIMEN_WIDTH_66_DP"
+            android:layout_height="33dp"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical"
             android:background="@drawable/home_search">
             <ImageView
-                android:layout_width="@dimen/DIMEN_WIDTH_34_DP"
-                android:layout_height="@dimen/DIMEN_WIDTH_34_DP"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
                 android:src="@mipmap/search"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/DIMEN_WIDTH_15_DP"/>
+                android:layout_marginLeft="8dp"/>
             <EditText
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:textSize="@dimen/DIMEN_TEXT_28_SP"/>
+                android:textSize="14sp"/>
         </LinearLayout>
         <ImageView
             android:id="@+id/iv_screen"
-            android:layout_width="@dimen/DIMEN_WIDTH_48_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_56_DP"
+            android:layout_width="24dp"
+            android:layout_height="28dp"
             android:src="@mipmap/screen"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_32_DP"/>
+            android:layout_marginLeft="16dp"/>
 
     </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_280_DP"
-        android:layout_marginTop="@dimen/DIMEN_WIDTH_20_DP"
-        android:layout_marginBottom="@dimen/DIMEN_WIDTH_20_DP"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srHome"
         android:layout_width="match_parent"

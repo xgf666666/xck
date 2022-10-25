@@ -8,15 +8,15 @@
     tools:context=".ui.person.activity.RegisterActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_98_DP"
-        android:layout_marginTop="@dimen/DIMEN_WIDTH_20_DP"
+        android:layout_height="49dp"
+        android:layout_marginTop="10dp"
         >
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="@dimen/DIMEN_WIDTH_60_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_60_DP"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@mipmap/iv_back"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_32_DP"
+            android:layout_marginLeft="16dp"
             android:layout_centerVertical="true"/>
 
         <TextView
@@ -30,61 +30,61 @@
     </RelativeLayout>
     <ImageView
         android:id="@+id/iv_person"
-        android:layout_width="@dimen/DIMEN_WIDTH_240_DP"
-        android:layout_height="@dimen/DIMEN_WIDTH_240_DP"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:src="@mipmap/icon_base"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/DIMEN_WIDTH_56_DP"/>
+        android:layout_marginTop="28dp"/>
     <EditText
         android:id="@+id/etPhone"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_120_DP"
-        android:layout_marginTop="@dimen/DIMEN_WIDTH_100_DP"
-        android:textSize="@dimen/DIMEN_TEXT_32_SP"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:textSize="16sp"
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="请输入注册手机号码"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
     <View
         style="@style/LineGray"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_120_DP"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP">
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
         <EditText
             android:id="@+id/etIconCode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/DIMEN_TEXT_32_SP"
+            android:textSize="16sp"
             android:background="@null"
             android:gravity="center_vertical"
             android:hint="请输入图片验证码"/>
         <ImageView
             android:id="@+id/ivIconCode"
-            android:layout_width="@dimen/DIMEN_WIDTH_35_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_26_DP"
+            android:layout_width="18dp"
+            android:layout_height="13dp"
             android:src="@mipmap/look"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <View
         style="@style/LineGray"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_120_DP"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP">
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
         <EditText
             android:id="@+id/etNote"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/DIMEN_TEXT_32_SP"
+            android:textSize="16sp"
             android:background="@null"
             android:gravity="center_vertical"
             android:hint="请输入短信验证码"/>
@@ -94,53 +94,53 @@
             android:layout_height="wrap_content"
             android:text="获取验证码"
             android:textColor="@color/text_FF6C2EA5"
-            android:textSize="@dimen/DIMEN_TEXT_32_SP"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <View
         style="@style/LineGray"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_120_DP"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"
-        android:textSize="@dimen/DIMEN_TEXT_32_SP"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="16sp"
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="请输入登录密码"/>
     <View
         style="@style/LineGray"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
     <EditText
         android:id="@+id/etPasswordAgain"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_120_DP"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"
-        android:textSize="@dimen/DIMEN_TEXT_32_SP"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="16sp"
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="请再次确认登录密码"/>
     <View
         style="@style/LineGray"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginTop="@dimen/DIMEN_WIDTH_44_DP">
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="22dp">
         <CheckBox
             android:id="@+id/cb_select"
-            android:layout_width="@dimen/DIMEN_WIDTH_24_DP"
-            android:layout_height="@dimen/DIMEN_WIDTH_24_DP"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:button="@null"
             android:background="@drawable/selector_register_agreement"
             android:checked="false"
@@ -151,24 +151,24 @@
             android:layout_height="wrap_content"
             android:text="同意《用户服务协议》"
             android:textColor="@color/text_FF6C2EA5"
-            android:textSize="@dimen/DIMEN_TEXT_24_SP"
+            android:textSize="12sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/DIMEN_WIDTH_10_DP"
+            android:layout_marginLeft="5dp"
             />
 
     </LinearLayout>
     <TextView
         android:id="@+id/tvRegister"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_WIDTH_100_DP"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:text="注册&amp;登录"
-        android:textSize="@dimen/DIMEN_TEXT_32_SP"
-        android:layout_marginTop="@dimen/DIMEN_WIDTH_116_DP"
+        android:textSize="16sp"
+        android:layout_marginTop="58dp"
         android:textColor="@color/text_FFBBBBBB"
         android:background="@drawable/register_login"
         android:gravity="center"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP"
-        android:layout_marginRight="@dimen/DIMEN_WIDTH_40_DP" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
 
 </LinearLayout>
