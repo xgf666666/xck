@@ -7,7 +7,7 @@
         android:id="@+id/iv_person"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@mipmap/icon_base"
+        android:src="@mipmap/logo"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="140dp"/>
     <TextView

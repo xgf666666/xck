@@ -6,7 +6,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ToastUtils
 import com.example.xck.R
+import com.example.xck.common.AppApi
+import com.example.xck.extensions.ui
 import com.example.xck.ui.home.adapter.DialogSelectAdapter
 import com.example.xck.utils.getScreenHeight
 import com.example.xck.utils.getScreenWidth
@@ -32,13 +36,22 @@ class SelectDialog(context: Context) : Dialog(context){
     }
 
     private fun initView() {
-        rvSelect.layoutManager=GridLayoutManager(context,4)
+        rvSelect.layoutManager=LinearLayoutManager(context)
         selectAdapter=DialogSelectAdapter()
         rvSelect.adapter=selectAdapter
         setData()
     }
     fun setData(){
-            for (  i in 1..10){
+        AppApi.Api().attrList.ui({
+//            selectAdapter?.data=it.data!!
+//            selectAdapter?.notifyDataSetChanged()
+            selectAdapter?.setNewData(it.data!!)
+        },{
+            ToastUtils.showShort(it.message)
+        })
+    }
+/*
+*   for (  i in 1..10){
                 array.add(""+ i)
             }
             array.clear()
@@ -47,7 +60,5 @@ class SelectDialog(context: Context) : Dialog(context){
             }
 
 
-        selectAdapter?.data=array
-    }
-
+        selectAdapter?.data=array*/
 }

@@ -14,19 +14,13 @@ class BaseResponseEntity<T> :BaseResponseStatusEntity {
 
     var data: T? = null
 
-    /**
-     * 构造方法,模拟数据用
-     *
-     * @param result 响应结果
-     */
-    constructor(status: String):super(status)
 
     /**
      * 构造方法,模拟数据用
      *
      * @param result 响应结果
      */
-    constructor(status: Int):super(status)
+    constructor(code: Int):super(code)
 
     /**
      * 构造方法,模拟数据用
@@ -34,15 +28,8 @@ class BaseResponseEntity<T> :BaseResponseStatusEntity {
      * @param result 响应结果 1为成功
      * @param msg    响应消息
      */
-    constructor(status: String, msg: String):super(status, msg)
+    constructor(code: Int, msg: String):super(code, msg)
 
-    /**
-     * 构造方法,模拟数据用
-     *
-     * @param result 响应结果 1为成功
-     * @param msg    响应消息
-     */
-    constructor(status: Int, msg: String):super(status, msg)
 
     /**
      * 构造方法,模拟数据用
@@ -50,42 +37,12 @@ class BaseResponseEntity<T> :BaseResponseStatusEntity {
      * @param result 响应结果
      * @param data   响应实体类
      */
-    constructor(status: String, data: T):super(status) {
+    constructor(code: Int, data: T):super(code.toString()) {
         this.data = data
     }
 
-    /**
-     * 构造方法,模拟数据用
-     *
-     * @param result 响应结果
-     * @param data   响应实体类
-     */
-    constructor(status: Int, data: T):super(status.toString()) {
-        this.data = data
-    }
 
-    /**
-     * 构造方法,模拟数据用
-     *
-     * @param result 响应结果
-     * @param msg    响应消息
-     * @param data   响应实体类
-     */
-    constructor(result: String, msg: String, data: T):super(result,msg) {
 
-        this.data = data
-    }
-
-    /**
-     * 构造方法,模拟数据用
-     *
-     * @param result 响应结果
-     * @param msg    响应消息
-     * @param data   响应实体类
-     */
-    constructor(status: Int, msg: String, data: T):super(status.toString(),msg) {
-        this.data = data
-    }
 
     companion object {
         /**

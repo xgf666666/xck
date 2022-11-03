@@ -11,27 +11,18 @@ package com.xx.baseutilslibrary.network.entity
 
 open class BaseResponseStatusEntity {
 
-    var status: String? = "0"
-    var code: String? = null
+    var code: Int? = null
     var msg: String? = null
 
 
-    /**
-     * 构造方法,模拟数据用
-     *
-     * @param result 响应结果
-     */
-    constructor(status: String) {
-        this.status = status
-    }
 
     /**
      * 构造方法,模拟数据用
      *
      * @param result 响应结果
      */
-    constructor(status: Int) {
-        this.status = status.toString()
+    constructor(code: Int) {
+        this.code = code
     }
 
     /**
@@ -40,8 +31,7 @@ open class BaseResponseStatusEntity {
      * @param result 响应结果 1为成功
      * @param msg    响应消息
      */
-    constructor(status: String, msg: String) {
-        this.status = status
+    constructor( msg: String) {
         this.msg = msg
     }
 
@@ -51,8 +41,8 @@ open class BaseResponseStatusEntity {
      * @param result 响应结果 1为成功
      * @param msg    响应消息
      */
-    constructor(status: Int, msg: String) {
-        this.status = status.toString()
+    constructor(code: Int, msg: String) {
+        this.code = code
         this.msg = msg
     }
 

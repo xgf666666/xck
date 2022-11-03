@@ -2,6 +2,8 @@ package com.example.xck.common;
 
 
 import com.blankj.utilcode.util.SPUtils;
+import com.example.xck.bean.Login;
+import com.google.gson.Gson;
 
 /**
  * Constants
@@ -34,6 +36,7 @@ public class Constants {
     private static final String KEY_SP_SEARCH="KEY_SP_SEARCH";//搜索记录
     private static final String KEY_UNREAD_MESSAGE = "UNREAD_MESSAGE";//未读消息
     private static final String TISHI_MESSAGE= "TISHI_MESSAGE";//新消息提示
+    private static final String PW_HIDE= "PW_HIDE";//密码隐藏和显示
     //滑动关闭Activity
     public static final int ACTIVITY_FINISH_REQUEST_CODE = 10000;
     public static final int ACTIVITY_FINISH_RESULT_CODE = 10001;
@@ -43,7 +46,7 @@ public class Constants {
     public static final String LONG_TOKEN_INVALID_ = "30002";
     public static final String SHORT_TOKEN_INVALID = "30003";
     public static final String SHORT_TOKEN_INVALID_ = "30004";
-    public static final String BASE_URL = "http://xxx.com/api/v1/";
+    public static final String BASE_URL = "http://api-test.xck6666.com/";
     /*private static UserCenterBean userData;
 
 
@@ -77,6 +80,15 @@ public class Constants {
         SPUtils.getInstance().put(KEY_SP_LOGIN, true);
     }
 
+    /**
+         * 密码是否隐藏
+     */
+    public static boolean isShow() {
+        return SPUtils.getInstance().getBoolean(PW_HIDE);
+    }
+    public static void setShow(boolean isShow) {
+        SPUtils.getInstance().put(PW_HIDE, isShow);
+    }
     /**
      * 登出
      */
@@ -133,7 +145,23 @@ public class Constants {
         String loginJson = SPUtils.getInstance().getString(KEY_SP_TOKEN);
         return loginJson;
     }
-
+    /**
+     * 储存Personal
+     *
+     * @param
+     */
+    public static void putPersonal(Login.UserInfoBean loginEntity) {
+        SPUtils.getInstance().put(KEY_SP_PERSON, new Gson().toJson(loginEntity));
+    }
+    /**
+     * 储存Personal
+     *
+     * @param
+     */
+    public static Login.UserInfoBean getPersonal( ) {
+        String per=SPUtils.getInstance().getString(KEY_SP_PERSON);
+        return new Gson().fromJson(per, Login.UserInfoBean.class);
+    }
     /**
      * 储存token
      *

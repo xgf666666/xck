@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="@dimen/DIMEN_WIDTH_40_DP">
+    android:layout_marginTop="20dp">
     <RelativeLayout
         android:id="@+id/rlTitle"
         app:layout_constraintTop_toTopOf="parent"
@@ -11,7 +11,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/DIMEN_WIDTH_40_DP">
+        android:layout_marginLeft="20dp">
         <ImageView
             android:id="@+id/iv_person"
             android:layout_width="39dp"
@@ -50,26 +50,19 @@
             android:textColor="@color/text_333333"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"/>
-        <TextView
-            android:id="@+id/tvType"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvCompany"
             android:layout_alignLeft="@+id/tvCompany"
-            android:text="信息技术"
-            android:textSize="12sp"
-            android:textColor="@color/text_333333"
-            android:background="@drawable/home_type"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:layout_marginTop="7dp"/>
+            android:orientation="horizontal"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/tvCase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvType"
+            android:layout_below="@+id/rcType"
             android:layout_alignLeft="@+id/tvCompany"
             android:text="投资案例：猫眼咖啡、爵士板鞋"
             android:textSize="12sp"

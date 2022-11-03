@@ -3,8 +3,10 @@ package com.xx.baseuilibrary.mvp
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.blankj.utilcode.util.ToastUtils
 import com.example.xck.R
 import com.example.xck.base.mvp.BaseActivity
 
@@ -75,7 +77,14 @@ abstract class BaseMvpViewActivity : BaseActivity() {
      */
 
     fun showToast(msg: String?) {
-
+        if (TextUtils.isEmpty(msg)) {
+            return
+        }
+//        ToastUtils.setBgColor(ContextCompat.getColor(this, android.R.color.black))
+//        ToastUtils.setMsgColor(ContextCompat.getColor(this, android.R.color.white))
+//        ToastUtils.setMsgTextSize(14)
+//        ToastUtils.setGravity(Gravity.CENTER, 0, 0)
+        ToastUtils.showShort(msg)
     }
 
 

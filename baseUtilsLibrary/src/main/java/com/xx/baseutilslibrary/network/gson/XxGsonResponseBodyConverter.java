@@ -52,7 +52,7 @@ final class XxGsonResponseBodyConverter<T> implements Converter<ResponseBody, T>
 //            }else
                 if (baseResponseEntity.getCode().equals("40001")) {
                 throw new TokenInvalidException("40001");
-            }else if (baseResponseEntity.getCode().equals("40004")||baseResponseEntity.getCode().equals("40005")){
+            }else if (baseResponseEntity.getCode()!=0){
                 throw new ApiFaileException(baseResponseEntity.getMsg());
             } else {
                 return adapter.fromJson(valueString);
