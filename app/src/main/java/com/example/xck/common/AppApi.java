@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * AppApi
@@ -53,7 +54,7 @@ public class AppApi {
                     .getInstance()
                     .setOkHttpClient(okHttpClient);
 
-            //设置新的Retrofit
+            //设置新的RetrofitXxGsonConverterFactory
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(Retrofit2Manager.Companion.getInstance().getApiConfigProvider().getApiBaseUrl())
                     .client(okHttpClient)

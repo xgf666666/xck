@@ -26,7 +26,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
     SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
     private var homeAdapter: HomeAdapter? =null
     private var homeProjectAdapter: HomeProjectAdapter? =null
-    private var  isProject=false
+    private var  isProject=true
     private var page=1
     override fun getFragmentLayoutId(): Int = R.layout.fragment_home
 
@@ -40,6 +40,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             homeProjectAdapter?.loadMoreModule?.isAutoLoadMore=true
             homeProjectAdapter?.setOnItemClickListener { adapter, view, position ->
             val intent=Intent(this.context, ProjectDetailActivity::class.java)
+                intent.putExtra("project_id", homeProjectAdapter!!.data[position].id)
                 this.startActivity(intent)
             }
            showLoadingDialog()
@@ -48,10 +49,9 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
         }else{
             homeAdapter= HomeAdapter()
             rvHome.adapter=homeAdapter
-            homeAdapter?.loadMoreModule?.setOnLoadMoreListener(this)
-            homeAdapter?.loadMoreModule?.isAutoLoadMore=true
             homeAdapter?.setOnItemClickListener { adapter, view, position ->
                 var intent=Intent(this.context,InvestorDetailActivity::class.java)
+                intent.putExtra("capitalist_id", homeAdapter!!.data[position].id)
                 this.startActivity(intent)
             }
             showLoadingDialog()
@@ -82,10 +82,6 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
         page++
         if (isProject){
             getPresenter().getProjects(Constants.getToken(),page,10)
-        }else{
-//            getPresenter().getCapitalists(Constants.getToken())
-            homeAdapter?.loadMoreModule?.loadMoreComplete()
-            homeAdapter?.loadMoreModule?.loadMoreEnd(true)
         }
     }
 
@@ -111,11 +107,6 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
         if (srHome.isRefreshing){
             srHome.isRefreshing=false
             homeAdapter?.data=projects.toMutableList()
-        }else if(homeAdapter?.loadMoreModule?.isLoading==true){
-            if (projects.size==0){
-                homeAdapter?.loadMoreModule?.loadMoreEnd(true)
-            }
-            homeAdapter?.addData(projects)
         }else{
             homeAdapter?.data=projects.toMutableList()
         }

@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="0dp"
+    android:background="#EEEEEE"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+
+    <LinearLayout
+        android:id="@+id/panel_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#cccccc"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:visibility="invisible"
+                android:id="@+id/ll_checkBox_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_gravity="center_vertical">
+                <CheckBox
+                    android:id="@+id/checkBox_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/check_state"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_fileName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"/>
+
+
+
+            <TextView
+                android:id="@+id/tv_quit"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center_vertical|right"
+                android:text="退出"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/btn_login"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/text_EEEEEE"
+        android:layout_below="@id/panel_top"/>
+
+    <ListView
+        android:id="@+id/lv_filelist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/panel_top"
+        android:layout_above="@+id/rl_upload"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:id="@+id/layout_no_file_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@+id/panel_top"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="64dp"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_nofile"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="#cccccc">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/btn_login"
+            android:clickable="false"
+            android:paddingStart="80dp"
+            android:paddingRight="80dp"
+            android:text="上传"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+</RelativeLayout>

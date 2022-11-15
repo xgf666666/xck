@@ -71,7 +71,7 @@ class RegisterActivity : BaseMvpActivity<RegisterPersenter>(),RegisterContract.V
         Constants.putPersonal(login.user_info)
         Constants.putToken(login.access_token)
         Constants.login()
-        startActivity(Intent(this,MainActivity::class.java))
+//        startActivity(Intent(this,MainActivity::class.java))
         (application as App).cleanActivity()
     }
 

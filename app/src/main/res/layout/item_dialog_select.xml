@@ -14,7 +14,7 @@
         android:text="信息技术"
         android:textSize="13sp"
         android:textColor="@color/text_333333"
-        android:background="@drawable/dialog_select"
+        android:background="@drawable/dialog_unselect"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"/>
 

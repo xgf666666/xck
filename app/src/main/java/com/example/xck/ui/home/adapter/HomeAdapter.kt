@@ -17,9 +17,9 @@ import com.example.xck.bean.Capitalist
 class HomeAdapter : BaseQuickAdapter<Capitalist,BaseViewHolder>(R.layout.item_home),LoadMoreModule{
 
     override fun convert(holder: BaseViewHolder, item: Capitalist) {
-        holder.setText(R.id.tvName,item.capitalist_name)
-        holder.setText(R.id.tvCase,item.introduction)
-        holder.setText(R.id.tvCompany,"投资案例:"+item.cases)
+        holder.setText(R.id.tvName,item.contact_name)
+        holder.setText(R.id.tvCompany,item.capitalist_name+"|"+item.position)
+        holder.setText(R.id.tvCase,"投资案例:"+item.cases)
         holder.setText(R.id.tvCapital,item.single_amount)
         var rcType=holder.getView<RecyclerView>(R.id.rcType)
         rcType.visibility=View.VISIBLE

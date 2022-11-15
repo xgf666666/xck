@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="line_C8C7CC">#C8C7CC</color>
     <color name="colorMain">#F5CC37</color>
+    <color name="colorMains">#F5AA37</color>
     <color name="text_gray">#666666</color>
     <color name="text_FFF6F6F6">#FFF6F6F6</color>
     <color name="text_333333">#333333</color>
@@ -19,4 +20,9 @@
     <color name="text_FF6C2EA5">#FF6C2EA5</color>
     <color name="text_FFBBBBBB">#FFBBBBBB</color>
     <color name="text_FFF9F9F8">#FFF9F9F8</color>
+    <color name="text_black_common">#3f3f3f</color>
+    <color name="color_gray">#999999</color>
+    <color name="color_F6F6F6">#F6F6F6</color>
+
+
 </resources>

@@ -15,17 +15,17 @@ import com.xx.baseuilibrary.mvp.BaseMvpViewActivity
 class GuideActivity :BaseMvpViewActivity() {
     override fun getActivityLayoutId(): Int =R.layout.activity_guide
     var handler= Handler(Looper.getMainLooper(),Handler.Callback {
-       if (Constants.isLogin()){
+//       if (Constants.isLogin()){
            startActivity(Intent(this,MainActivity::class.java))
-       }else{
-           startActivity(Intent(this,PrepareLoginActivity::class.java))
-       }
+//       }else{
+//           startActivity(Intent(this,PrepareLoginActivity::class.java))
+//       }
         finish()
         true
     })
 
     override fun initData() {
-        handler.sendEmptyMessageDelayed(1,3000)
+        handler.sendEmptyMessageDelayed(1,2000)
     }
 
     override fun initEvent() {

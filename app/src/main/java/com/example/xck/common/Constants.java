@@ -37,6 +37,7 @@ public class Constants {
     private static final String KEY_UNREAD_MESSAGE = "UNREAD_MESSAGE";//未读消息
     private static final String TISHI_MESSAGE= "TISHI_MESSAGE";//新消息提示
     private static final String PW_HIDE= "PW_HIDE";//密码隐藏和显示
+    public static final String UPLOADFILEPATH= "UPLOADFILEPATH";
     //滑动关闭Activity
     public static final int ACTIVITY_FINISH_REQUEST_CODE = 10000;
     public static final int ACTIVITY_FINISH_RESULT_CODE = 10001;
@@ -47,6 +48,7 @@ public class Constants {
     public static final String SHORT_TOKEN_INVALID = "30003";
     public static final String SHORT_TOKEN_INVALID_ = "30004";
     public static final String BASE_URL = "http://api-test.xck6666.com/";
+    public final static String SELECT_FILE_SUFFIX = ".PDF;.pdf";
     /*private static UserCenterBean userData;
 
 

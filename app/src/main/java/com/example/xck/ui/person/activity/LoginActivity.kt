@@ -41,6 +41,7 @@ class LoginActivity : BaseMvpActivity<LoginPersenter>(),LoginContract.View {
         }
         tvForgetPw.setOnClickListener {
             var intent=Intent(this,ModifyPasswordActivity::class.java)
+            intent.putExtra("type",1)
             this.startActivity(intent)
         }
         tvToLogin.setOnClickListener {
@@ -78,7 +79,7 @@ class LoginActivity : BaseMvpActivity<LoginPersenter>(),LoginContract.View {
         Constants.putPersonal(login.user_info)
         Constants.putToken(login.access_token)
         Constants.login()
-        startActivity(Intent(this, MainActivity::class.java))
+//        startActivity(Intent(this, MainActivity::class.java))
         (application as App).cleanActivity()
 
     }

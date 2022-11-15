@@ -1,7 +1,9 @@
 package com.example.xck.common
 
 import android.content.Context
+import com.blankj.utilcode.util.StringUtils
 import java.util.regex.Pattern
+
 
 /*fun String.md5Salt(): String =
         EncryptUtils.encryptMD5ToString(this)
@@ -21,4 +23,25 @@ fun String.isPhone(): Boolean {
     var p = Pattern.compile(regExp)
     var m = p.matcher(this)
     return m.matches()
+}
+
+/**
+ * 获取文件后缀名
+ */
+fun getsuffix(str: String): String? {
+    return if (StringUtils.isEmpty(str)) {
+        ""
+    } else str.substring(str.lastIndexOf(".") + 1)
+}
+
+/*
+     *获取文件名
+     */
+fun getFileName(pathandname: String): String? {
+    val start = pathandname.lastIndexOf("/")
+    return if (start != -1) {
+        pathandname.substring(start + 1)
+    } else {
+        null
+    }
 }

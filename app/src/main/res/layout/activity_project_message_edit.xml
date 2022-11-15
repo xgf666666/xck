@@ -49,7 +49,9 @@
                         android:gravity="center_vertical"
                         android:hint="请输入项目名称"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"/>
+                        android:layout_marginRight="20dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"/>
                 </LinearLayout>
 
                 <View
@@ -116,12 +118,13 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/tvFleid"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:text="选择所在领域"
+                        android:hint="选择所在领域"
                         android:textColor="@color/text_FFBBBBBB"
                         android:textSize="14sp" />
 
@@ -160,7 +163,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:text="选择当前阶段"
+                        android:hint="选择当前阶段"
                         android:textColor="@color/text_FFBBBBBB"
                         android:textSize="14sp" />
 
@@ -199,7 +202,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:text="选择项目地点"
+                        android:hint="选择项目地点"
                         android:textColor="@color/text_FFBBBBBB"
                         android:textSize="14sp" />
 
@@ -238,7 +241,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:text="选择成立年月"
+                        android:hint="选择成立年月"
                         android:textColor="@color/text_FFBBBBBB"
                         android:textSize="14sp" />
 
@@ -272,8 +275,10 @@
                     android:background="@null"
                     android:hint="请输入"
                     android:gravity="start"
-                    android:padding="10dp"/>
+                    android:padding="10dp"
+                    android:maxLength="300"/>
                 <TextView
+                    android:id="@+id/tvProjectIntroduce"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -308,8 +313,10 @@
                     android:background="@null"
                     android:hint="请输入"
                     android:gravity="start"
-                    android:padding="10dp"/>
+                    android:padding="10dp"
+                    android:maxLength="300"/>
                 <TextView
+                    android:id="@+id/tvFinances"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -338,14 +345,17 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp">
                 <EditText
-                    android:id="@+id/etYunying"
+                    android:id="@+id/etoperation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:hint="请输入"
                     android:gravity="start"
-                    android:padding="10dp"/>
+                    android:padding="10dp"
+                    android:maxLength="300"/>
+
                 <TextView
+                    android:id="@+id/tvOperation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -380,8 +390,10 @@
                     android:background="@null"
                     android:hint="请输入"
                     android:gravity="start"
-                    android:padding="10dp"/>
+                    android:padding="10dp"
+                    android:maxLength="300"/>
                 <TextView
+                    android:id="@+id/tvAdvantage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -392,6 +404,7 @@
                     android:layout_marginBottom="16dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"/>
+
             </RelativeLayout>
             <TextView
                 android:layout_width="wrap_content"
@@ -416,8 +429,10 @@
                     android:background="@null"
                     android:hint="请输入"
                     android:gravity="start"
-                    android:padding="10dp"/>
+                    android:padding="10dp"
+                    android:maxLength="300"/>
                 <TextView
+                    android:id="@+id/tvHistory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -430,6 +445,7 @@
                     android:layout_alignParentBottom="true"/>
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/rlFile"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@color/white"
@@ -495,8 +511,10 @@
                     android:background="@null"
                     android:hint="请输入"
                     android:gravity="start"
-                    android:padding="10dp"/>
+                    android:padding="10dp"
+                    android:maxLength="300"/>
                 <TextView
+                    android:id="@+id/tvPersonNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -517,7 +535,7 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="40dp"
                 android:textColor="@color/black"
-                android:background="@drawable/prepare_login"
+                android:background="@drawable/sel_login"
                 android:gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"

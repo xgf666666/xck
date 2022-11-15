@@ -12,15 +12,20 @@ interface ModifyPasswordContract {
         fun getCodeImage(image: CodeImage)
         fun getCode()
         fun verifyPhone(verifyPhone: VerifyPhone)
+        fun modify()
     }
     interface Model{
-//        fun getCodeImage(): Observable<BaseResponseEntity<CodeImage>>
-//        fun getCode(type:String ,mobile_phone:String): Observable<BaseResponseEntity<Any>>
-//        fun verifyPhone(Authorization:String,type:String,mobile_phone:String,smscode:String):Observable<BaseResponseEntity<VerifyPhone>>
+        fun getCodeImage(): Observable<BaseResponseEntity<CodeImage>>
+        fun getCode(type:String ,mobile_phone:String): Observable<BaseResponseEntity<Any>>
+        fun verifyPhone(Authorization:String,type:String,mobile_phone:String,vercode:String,key:String,smscode:String):Observable<BaseResponseEntity<VerifyPhone>>
+        fun verifyPhone(type:String,mobile_phone:String,vercode:String,key:String,smscode:String):Observable<BaseResponseEntity<VerifyPhone>>
+        fun modify(Authorization:String,password:String,repassword:String,verify_token:String):Observable<BaseResponseEntity<Any>>
     }
     abstract class Persenter(view:View):BaseMvpPresenter<Model,View>(view){
         abstract fun getCodeImage()
         abstract fun getCode(type:String ,mobile_phone:String)
-        abstract fun verifyPhone(Authorization:String,type:String,mobile_phone:String,smscode:String)
+        abstract fun verifyPhone(Authorization:String,type:String,mobile_phone:String,vercode:String,key:String,smscode:String)
+        abstract fun modify(Authorization:String,password:String,repassword:String,verify_token:String)
+
     }
 }

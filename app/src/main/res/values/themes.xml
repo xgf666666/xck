@@ -24,5 +24,4 @@
     <style name="bottom_tab_title_active">
         <item name="android:textSize">12sp</item>
     </style>
-
 </resources>

@@ -21,7 +21,7 @@
             android:text="打个招呼聊聊天（额度余 1 ）"
             android:textSize="@dimen/DIMEN_TEXT_32_SP"
             android:textColor="@color/black"
-            android:background="@drawable/prepare_login"
+            android:background="@drawable/sel_login"
             android:gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -108,8 +108,6 @@
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
-                android:text="薛记炒货2002年由薛兴柱创立于济南，是一家集坚果炒货的产品研发、生产和销售为一体的连锁品牌，主要经营现烤坚果、瓜子花生、果蔬干、果脯蜜饯、膨化食品等特色炒货产品。
-创始人薛兴柱是山东有名的“瓜子大王”，早在1992年便开始跟着父亲做炒货生意，并从中发掘到现炒新鲜瓜子的商机。自2002年正式以“薛记炒货”进行经营，在瓜子、板栗等经典产品迭代基础上。"
                 android:textColor="@color/text_333333"
                 android:textSize="12sp" />
 
@@ -142,24 +140,17 @@
                     android:paddingTop="13dp"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:text="关注领域"
+                    android:text="投资领域"
                     android:textColor="@color/text_999999"
                     android:textSize="12sp"/>
-                <TextView
-                    android:id="@+id/tvType"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvCompany"
                     android:layout_alignLeft="@+id/tvCompany"
-                    android:text="信息技术"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_333333"
-                    android:background="@drawable/home_type"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:layout_marginTop="7dp"/>
+                    android:orientation="horizontal"
+                    android:visibility="gone"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -167,11 +158,12 @@
                     android:layout_centerVertical="true"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:text="关注领域"
+                    android:text="投资领域"
                     android:textColor="@color/text_999999"
                     android:textSize="12sp"
                     android:layout_marginTop="24dp"/>
                 <TextView
+                    android:id="@+id/tvInverstor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -194,13 +186,13 @@
                     android:textSize="12sp"
                     android:layout_marginTop="24dp"/>
                 <TextView
+                    android:id="@+id/tvMoeny"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:text="500 ~ 1000万"
                     android:textColor="@color/text_333333"
                     android:textSize="12sp"
                     android:layout_marginTop="8dp"/>
@@ -216,16 +208,17 @@
                     android:textSize="12sp"
                     android:layout_marginTop="24dp"/>
                 <TextView
+                    android:id="@+id/tvAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:text="广州市"
                     android:textColor="@color/text_333333"
                     android:textSize="12sp"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
 
             </LinearLayout>
             <TextView
@@ -244,21 +237,20 @@
             <TextView
                 android:id="@+id/tvCase"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/DIMEN_WIDTH_104_DP"
+                android:layout_height="52dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="猫眼咖啡"
                 android:textColor="@color/text_333333"
                 android:textSize="12sp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <include layout="@layout/view_loading"
+        android:id="@+id/icLoading"
         android:layout_below="@+id/icTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:layout_height="match_parent" />
 </RelativeLayout>

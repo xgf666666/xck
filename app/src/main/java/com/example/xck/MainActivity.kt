@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.example.xck.ui.home.HomeFragment
 import com.example.xck.ui.message.MessageFragment
 import com.example.xck.ui.person.PersonFragment
-import com.example.xck.utils.BottomNavigationViewUtils
 import com.xx.baseuilibrary.mvp.BaseMvpViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,7 +22,7 @@ class MainActivity : BaseMvpViewActivity() {
             .beginTransaction()
             .add(R.id.ll_fragment, mFragments[0]!!)
             .commit()
-        BottomNavigationViewUtils.disableShiftMode(bottomNavigationView)
+//        BottomNavigationViewUtils.disableShiftMode(bottomNavigationView)
         bottomNavigationView.setOnItemSelectedListener {
             selectedFragemnt(it.itemId)
             true

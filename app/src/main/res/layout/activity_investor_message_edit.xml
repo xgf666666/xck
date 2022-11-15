@@ -225,50 +225,13 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tvFleid"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:text="选择所在领域"
-                    android:textColor="@color/text_FFBBBBBB"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@mipmap/gengduo" />
-            </LinearLayout>
-            <View
-                style="@style/LineGray"
-                android:layout_marginLeft="20dp" />
-            <LinearLayout
-                android:id="@+id/llFinance"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="融资阶段"
-                    android:textColor="@color/text_333333"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvFinance"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:text="选择当前阶段"
+                    android:hint="选择所在领域"
                     android:textColor="@color/text_FFBBBBBB"
                     android:textSize="14sp" />
 
@@ -295,7 +258,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="项目地点"
+                    android:text="投资城市"
                     android:textColor="@color/text_333333"
                     android:textSize="14sp" />
 
@@ -306,7 +269,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:text="选择项目地点"
+                    android:hint="选择项目地点"
                     android:textColor="@color/text_FFBBBBBB"
                     android:textSize="14sp" />
 
@@ -316,6 +279,46 @@
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/gengduo" />
             </LinearLayout>
+
+            <View
+                style="@style/LineGray"
+                android:layout_marginLeft="20dp" />
+            <LinearLayout
+                android:id="@+id/llFinance"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="投资阶段"
+                    android:textColor="@color/text_333333"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvFinance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:hint="选择当前阶段"
+                    android:textColor="@color/text_FFBBBBBB"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/gengduo" />
+            </LinearLayout>
+
         </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
@@ -420,13 +423,12 @@
                         android:textColor="@color/text_999999"
                         android:textSize="10sp" />
                 </RelativeLayout>
-                <TextView
+                <ImageView
+                    android:id="@+id/iv_card"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@color/text_999999"
                     android:layout_marginRight="20dp"
-                    android:textColor="@color/text_999999"
-                    android:textSize="10sp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>
 
@@ -440,7 +442,7 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="40dp"
                 android:textColor="@color/black"
-                android:background="@drawable/prepare_login"
+                android:background="@drawable/sel_login"
                 android:gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"

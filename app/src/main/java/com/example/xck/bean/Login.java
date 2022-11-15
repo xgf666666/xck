@@ -31,13 +31,26 @@ public class Login {
     }
 
     public static class UserInfoBean {
-        /**
-         * id : 24
-         * mobile_phone : 13066230849
-         * proof_status : 0
-         * user_type_select : 0
-         * quota_num : 2
-         * complete_status : 0
+        /** // 手机号
+         "mobile_phone": "15920196136",
+         // 头像
+         "avatar": "",
+         // 昵称
+         "nickname": "",
+         // 认证状态=[0:未认证,1:认证中,2:认证成功,3:认证失败]
+         "proof_status": 1,
+         // 真实姓名
+         "real_name": "真实姓名",
+         // 微信号
+         "wechat": "1341234",
+         // 用户类型=[0:无,1:创业者,2:投资人]
+         "user_type_select": 1,
+         // 聊天额度
+         "quota_num": 0,
+         // 完善角色信息状态 0:否 1:是
+         "complete_status": 0,
+         // im 用户id
+         "im_user_id": "bd6c2799-91e8-5acc-9c8a-c14d90d7c798"
          */
 
         private int id;
@@ -46,6 +59,51 @@ public class Login {
         private int user_type_select;
         private int quota_num;
         private int complete_status;
+        private String avatar; // 头像
+        private String nickname; // 昵称
+        private String real_name; // 真实姓名
+        private String wechat; // 微信号
+        private int im_user_id; // im 用户id
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public String getReal_name() {
+            return real_name;
+        }
+
+        public void setReal_name(String real_name) {
+            this.real_name = real_name;
+        }
+
+        public String getWechat() {
+            return wechat;
+        }
+
+        public void setWechat(String wechat) {
+            this.wechat = wechat;
+        }
+
+        public int getIm_user_id() {
+            return im_user_id;
+        }
+
+        public void setIm_user_id(int im_user_id) {
+            this.im_user_id = im_user_id;
+        }
 
         public int getId() {
             return id;

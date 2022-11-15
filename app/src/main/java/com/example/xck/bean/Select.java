@@ -63,6 +63,15 @@ public class Select {
         private int id;
         private int parent_id;
         private String attr_name;
+        private boolean isSelect;
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
 
         public int getId() {
             return id;

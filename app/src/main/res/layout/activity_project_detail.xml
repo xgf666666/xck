@@ -21,7 +21,7 @@
             android:text="打个招呼聊聊天（额度余 1 ）"
             android:textSize="16dp"
             android:textColor="@color/black"
-            android:background="@drawable/prepare_login"
+            android:background="@drawable/sel_login"
             android:gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -104,7 +104,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/ivAddress"
-                    android:text="广州市"
+                    android:text=""
                     android:textColor="@color/text_333333"
                     android:textSize="12sp" />
 
@@ -116,7 +116,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="10dp"
-                    android:text="2019-02-21"
+                    android:text=""
                     android:textColor="@color/text_333333"
                     android:textSize="12sp" />
 
@@ -158,8 +158,6 @@
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
-                android:text="薛记炒货2002年由薛兴柱创立于济南，是一家集坚果炒货的产品研发、生产和销售为一体的连锁品牌，主要经营现烤坚果、瓜子花生、果蔬干、果脯蜜饯、膨化食品等特色炒货产品。
-创始人薛兴柱是山东有名的“瓜子大王”，早在1992年便开始跟着父亲做炒货生意，并从中发掘到现炒新鲜瓜子的商机。自2002年正式以“薛记炒货”进行经营，在瓜子、板栗等经典产品迭代基础上。"
                 android:textColor="@color/text_333333"
                 android:textSize="12sp" />
 
@@ -191,7 +189,6 @@
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
-                android:text="薛记炒货2002年由薛兴柱创立于济南，是一家集坚果炒货的产品研发、生产和销售为一体的连锁品牌，主要经营现烤坚果、瓜子花生、果蔬干、果脯蜜饯、膨化食品等特色炒货产品。"
                 android:textColor="@color/text_333333"
                 android:textSize="12sp" />
 
@@ -223,7 +220,6 @@
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
-                android:text="薛记炒货2002年由薛兴柱创立于济南，是一家集坚果炒货的产品研发、生产和销售为一体的连锁品牌，主要经营现烤坚果、瓜子花生、果蔬干、果脯蜜饯、膨化食品等特色炒货产品。"
                 android:textColor="@color/text_333333"
                 android:textSize="12sp" />
 
@@ -255,7 +251,6 @@
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
-                android:text="薛记炒货2002年由薛兴柱创立于济南，是一家集坚果炒货的产品研发、生产和销售为一体的连锁品牌，主要经营现烤坚果、瓜子花生、果蔬干、果脯蜜饯、膨化食品等特色炒货产品。"
                 android:textColor="@color/text_333333"
                 android:textSize="12sp" />
 
@@ -287,7 +282,6 @@
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
-                android:text="薛记炒货2002年由薛兴柱创立于济南，是一家集坚果炒货的产品研发、生产和销售为一体的连锁品牌，主要经营现烤坚果、瓜子花生、果蔬干、果脯蜜饯、膨化食品等特色炒货产品。"
                 android:textColor="@color/text_333333"
                 android:textSize="12sp" />
 
@@ -319,7 +313,6 @@
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
-                android:text="薛记炒货2002年由薛兴柱创立于济南，是一家集坚果炒货的产品研发、生产和销售为一体的连锁品牌，主要经营现烤坚果、瓜子花生、果蔬干、果脯蜜饯、膨化食品等特色炒货产品。"
                 android:textColor="@color/text_333333"
                 android:textSize="12sp" />
 
@@ -351,12 +344,13 @@
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
-                android:text="薛记炒货2002年由薛兴柱创立于济南，是一家集坚果炒货的产品研发、生产和销售为一体的连锁品牌，主要经营现烤坚果、瓜子花生、果蔬干、果脯蜜饯、膨化食品等特色炒货产品。"
                 android:textColor="@color/text_333333"
                 android:textSize="12sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <include layout="@layout/view_loading"
+    <include
+        android:id="@+id/icLoading"
+        layout="@layout/view_loading"
         android:layout_below="@+id/icTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
