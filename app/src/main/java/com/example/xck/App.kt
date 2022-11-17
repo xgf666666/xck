@@ -3,6 +3,7 @@ package com.example.xck
 import android.app.Activity
 import android.app.Application
 import com.example.xck.common.Constants
+import com.example.xck.utils.CrashHandle
 import com.xx.baseutilslibrary.network.provider.JApiConfigProvider
 import com.xx.baseutilslibrary.network.retrofit.Retrofit2Manager
 
@@ -18,7 +19,7 @@ class App :Application(){
         Retrofit2Manager.instance.apiConfigProvider = object : JApiConfigProvider {
             override fun getBaseUrl(): String =Constants.BASE_URL
         }
-
+        CrashHandle.getInstance().init(baseContext);
     }
     fun addActivity(activity: Activity){
         if (!activitys.contains(activity)){

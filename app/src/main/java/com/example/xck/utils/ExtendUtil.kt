@@ -5,11 +5,16 @@ import android.content.Context
 import android.content.res.Resources
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.MemoryCategory
+import com.example.xck.R
 import com.example.xck.base.mvp.BaseActivity
 import com.example.xck.base.mvp.BaseFragment
 import com.example.xck.base.mvp.contract.BaseMvpView
 import com.xx.baseutilslibrary.network.exception.ApiFaileException
 import com.xx.baseutilslibrary.network.exception.TokenInvalidException
+import com.xx.baseutilslibrary.network.retrofit.Retrofit2Manager
 import retrofit2.HttpException
 import java.math.BigDecimal
 import java.net.ConnectException
@@ -92,5 +97,17 @@ fun Int.changeKm() : String{
     }else{
         return this.toString() + "m"
     }
+
 }
+fun ImageView.loadImag(url: String) {
+    var urltemp=url
+
+    Glide.get(context).setMemoryCategory(MemoryCategory.HIGH)
+    Glide.with(this.context).load(urltemp)
+        .placeholder(R.mipmap.icon_base)
+        .dontAnimate()
+        .error(R.mipmap.icon_base)
+        .into(this)
+}
+
 

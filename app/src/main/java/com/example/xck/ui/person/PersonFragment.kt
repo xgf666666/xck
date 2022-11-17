@@ -2,6 +2,8 @@ package com.example.xck.ui.person
 
 import android.content.Intent
 import android.view.View
+import com.blankj.utilcode.util.ToastUtils
+import com.bumptech.glide.Glide
 import com.example.xck.R
 import com.example.xck.base.mvp.BaseMvpFragment
 import com.example.xck.bean.Login
@@ -9,6 +11,8 @@ import com.example.xck.common.Constants
 import com.example.xck.ui.person.activity.*
 import com.example.xck.ui.person.mvp.contract.PersonContract
 import com.example.xck.ui.person.mvp.persenter.PersonPersenter
+import com.example.xck.utils.changeKm
+import com.example.xck.utils.loadImag
 import kotlinx.android.synthetic.main.activity_prepare_login.*
 import kotlinx.android.synthetic.main.fragment_person.*
 import kotlinx.android.synthetic.main.fragment_person.iv_person
@@ -19,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_person.iv_person
  */
 class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
     var isHide=false;
-
+    var message:String=""
     override fun getFragmentLayoutId(): Int = R.layout.fragment_person
     override fun init(view: View?) {
         tvToLogin.setOnClickListener {
@@ -40,9 +44,20 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
         llMessage.setOnClickListener {
             var intent:Intent?=null
             if (Constants.getPersonal().user_type_select==1){
-                 intent = Intent(context, ProjectMessageEditActivity::class.java)
+                if (Constants.getPersonal().proof_status==2){
+                    intent = Intent(context, ProjectMessageEditActivity::class.java)
+                }else{
+                    ToastUtils.showShort(message)
+                    return@setOnClickListener
+                }
+
             }else if (Constants.getPersonal().user_type_select==2){
-                 intent = Intent(context, InvestorMessageEditActivity::class.java)
+                if (Constants.getPersonal().proof_status==2){
+                    intent = Intent(context, InvestorMessageEditActivity::class.java)
+                }else{
+                    ToastUtils.showShort(message)
+                    return@setOnClickListener
+                }
             }
             context?.startActivity(intent)
         }
@@ -79,15 +94,22 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
     override fun createPresenter(): PersonPersenter = PersonPersenter(this)
     override fun userInfo(userInfo: Login.UserInfoBean) {
         Constants.putPersonal(userInfo)
+        iv_person.loadImag(userInfo.avatar)
+        if (userInfo.user_type_select==1){
+            tvMessage.text="创业项目信息"
+        }else if (userInfo.user_type_select==2){
+            tvMessage.text="投资人信息"
+        }
         tvPhone.text=userInfo.mobile_phone
         tvNames.text=userInfo.real_name
         tvQuota.text="额度："+userInfo.quota_num
+
         when( userInfo.proof_status){
            0->{tvRenz.visibility=View.VISIBLE
                ivRenz.visibility=View.VISIBLE
                llRoleIdentity.isClickable=true
                tvRenz.text="前往认证"
-               tvRenMessage.text="需要等认证通过"
+               message="需要等认证通过"
                ivRenMessage.visibility=View.GONE
            }
             1->{
@@ -96,7 +118,7 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
                 tvRenz.text="审核中"
                 llRoleIdentity.isClickable=false
                 ivRenMessage.visibility=View.GONE
-                tvRenMessage.text="需要等认证通过"
+                message="需要等认证通过"
             }
             2->{
                 ivRenz.visibility=View.GONE
@@ -104,18 +126,20 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
                 tvRenz.text="认证成功"
                 llRoleIdentity.isClickable=false
                 ivRenMessage.visibility=View.VISIBLE
-                tvRenMessage.text="完善的信息让机构了解您"
+                message="完善的信息让机构了解您"
             }
             3->{
                 ivRenz.visibility=View.VISIBLE
                 tvRenz.visibility=View.VISIBLE
                 tvRenz.text="认证不通过，需重新认证"
                 llRoleIdentity.isClickable=true
-                tvRenMessage.text="需要等认证通过"
+                message="需要等认证通过"
             }
         }
+        tvRenMessage.text=message
     }
 
 }
+
 
 

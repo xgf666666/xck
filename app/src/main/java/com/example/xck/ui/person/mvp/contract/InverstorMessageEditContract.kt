@@ -10,22 +10,23 @@ import java.io.File
 interface InverstorMessageEditContract {
     interface View : BaseMvpView{
         fun getloadFile(upLoadFile: UpLoadFile)
+        fun setCapitalist()
 
     }
     interface Model{
         fun upload(file: File): Observable<BaseResponseEntity<UpLoadFile>>
         fun setCapitalist(  Authorization:String, capitalist_name:String, contact_name:String,
                             position:String, single_amount:String, avatar:String, introduction:String,
-                            cases:String, business_card_img:String,industries:Array<Int>,stages:Array<Int> ,
-                         location:Array<Int>):Observable<BaseResponseEntity<Any>>
+                            cases:String, business_card_img:String,industries:IntArray,stages:IntArray ,
+                         location:IntArray):Observable<BaseResponseEntity<Any>>
 
     }
     abstract class Persenter(view:View):BaseMvpPresenter<Model,View>(view){
         abstract fun upload(file:File)
         abstract  fun setCapitalist(  Authorization:String, capitalist_name:String, contact_name:String,
                                              position:String, single_amount:String, avatar:String, introduction:String,
-                                             cases:String, business_card_img:String,industries:Array<Int>,stages:Array<Int> ,
-                                             location:Array<Int>)
+                                             cases:String, business_card_img:String,industries:IntArray,stages:IntArray ,
+                                             location:IntArray)
 
     }
 }

@@ -33,9 +33,9 @@ class InverstorMessageEditPersenter(view: InverstorMessageEditContract.View):Inv
         introduction: String,
         cases: String,
         business_card_img: String,
-        industries: Array<Int>,
-        stages: Array<Int>,
-        location: Array<Int>
+        industries: IntArray,
+        stages: IntArray,
+        location: IntArray
     ) {
         if (StringUtils.isEmpty(capitalist_name)) {
             ToastUtils.showShort("请输入机构名称")
@@ -81,6 +81,18 @@ class InverstorMessageEditPersenter(view: InverstorMessageEditContract.View):Inv
             ToastUtils.showShort("请选择项目地点")
             return
         }
+        getView()?.showLoadingDialog()
+        getModel().setCapitalist(Authorization, capitalist_name, contact_name, position, single_amount, avatar, introduction, cases, business_card_img, industries, stages, location).ui(
+            {
+                getView()?.dismissLoadingDialog()
+                ToastUtils.showShort("提交成功")
+                getView()?.setCapitalist()
+
+            },{
+                getView()?.dismissLoadingDialog()
+                ToastUtils.showShort(it.message)
+            }
+        )
     }
 
 

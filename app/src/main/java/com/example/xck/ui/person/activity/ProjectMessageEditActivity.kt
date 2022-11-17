@@ -19,7 +19,6 @@ import com.example.xck.bean.Select
 import com.example.xck.bean.UpLoadFile
 import com.example.xck.common.Constants
 import com.example.xck.dialog.SelectDialog
-import com.example.xck.ui.home.adapter.DialogSelectAdapter
 import com.example.xck.ui.person.mvp.contract.ProjectMessageEditContract
 import com.example.xck.ui.person.mvp.persenter.ProjectMessageEditPersenter
 import com.example.xck.utils.filechoose.FileBrowseActivity
@@ -45,9 +44,9 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
     private var image=""
     private var fileString=""
     private var selectDialog:SelectDialog?=null
-    private var filids: ArrayList<Int>?=null
-    private var fanances: ArrayList<Int>?=null
-    private var addresss: ArrayList<Int>?=null
+    private var filids: ArrayList<Int>?= ArrayList()
+    private var fanances: ArrayList<Int>?= ArrayList()
+    private var addresss: ArrayList<Int>?= ArrayList()
     private var isImage=false
     override fun getActivityLayoutId(): Int =R.layout.activity_project_message_edit
 
@@ -68,7 +67,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
             getPresenter().setProject(Constants.getToken(),etWx.text.toString(),image,tvTime.text.toString(),
                 etProjectIntroduce.text.toString(),etFinance.text.toString(),etoperation.text.toString(),etAdvantage.text.toString()
             ,etHistory.text.toString(),fileString,etPersonNum.text.toString(),
-                filids!!.toArray() as Array<Int>,fanances!!.toArray() as Array<Int>,addresss!!.toArray() as Array<Int>)
+                filids!!.toIntArray(),fanances!!.toIntArray(),addresss!!.toIntArray())
         }
         etProjectIntroduce.addTextChangedListener {
             tvProjectIntroduce.text="${etProjectIntroduce.text.length}/300"
@@ -178,7 +177,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (isImage){
+        if (!isImage){
             if (requestCode === 1 && resultCode === 1) { //上传文件的回调
                 if (data != null) {
                     val args = data.getSerializableExtra(FxHelp.ACTIVITY_ARG_PARAM_NAME) as FxFileDialogArgs?
@@ -203,6 +202,10 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
 
     }
 
+    override fun setProject() {
+        finish()
+    }
+
     override fun onClick(v: View?) {
         if (selectDialog==null){
             selectDialog=SelectDialog(this)
@@ -213,9 +216,6 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 fanance: ArrayList<Select.ChildrenBean>,
                 address: ArrayList<Select.ChildrenBean>
             ) {
-                filids =ArrayList()
-                fanances =ArrayList()
-                addresss =ArrayList()
                 var field=""
                 var fananceStr=""
                 var addressStr=""

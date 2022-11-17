@@ -34,9 +34,9 @@ class ProjectMessageEditPersenter(view: ProjectMessageEditContract.View) :
         history_financice: String,
         project_file: String,
         team_member: String,
-        industries: Array<Int>,
-        stages: Array<Int>,
-        location: Array<Int>
+        industries: IntArray,
+        stages:IntArray,
+        location: IntArray
     ) {
         if (StringUtils.isEmpty(project_name)) {
             ToastUtils.showShort("请输入项目名")
@@ -91,9 +91,10 @@ class ProjectMessageEditPersenter(view: ProjectMessageEditContract.View) :
             wait_finance, operation, advantage, history_financice,
             project_file, team_member, industries, stages, location).ui({
             getView()?.dismissLoadingDialog()
-            ToastUtils.showShort("上传成功")
-
+            ToastUtils.showShort("提交成功")
+            getView()?.setProject()
         },{
+            getView()?.dismissLoadingDialog()
             ToastUtils.showShort(it.message)
         })
 

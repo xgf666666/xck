@@ -28,9 +28,9 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
     private var imageChooseHelper: ImageChooseHelper? = null
     private var selectDialog:SelectDialog?=null
     private var card=false
-    private var filids: ArrayList<Int>?=null
-    private var fanances: ArrayList<Int>?=null
-    private var addresss: ArrayList<Int>?=null
+    private var filids: ArrayList<Int>?=ArrayList()
+    private var fanances: ArrayList<Int>?=ArrayList()
+    private var addresss: ArrayList<Int>?=ArrayList()
 
     override fun getActivityLayoutId(): Int =R.layout.activity_investor_message_edit
 
@@ -53,7 +53,7 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
             getPresenter().setCapitalist(Constants.getToken(),etName.text.toString(),etPerson.text.toString(),etPosition.text.toString(),
                 "${etlessMoney.text.toString()}-${etMoreMoney.text.toString()}",imageUri!!,etOrganIntroduce.text.toString(),
                 etCase.text.toString(),cardUri!!,
-                filids!!.toArray() as Array<Int>,fanances!!.toArray() as Array<Int>,addresss!!.toArray() as Array<Int>)
+                filids!!.toIntArray(),fanances!!.toIntArray() ,addresss!!.toIntArray())
 
         }
         llFinance.setOnClickListener(this)
@@ -123,9 +123,6 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
                 fanance: ArrayList<Select.ChildrenBean>,
                 address: ArrayList<Select.ChildrenBean>
             ) {
-                filids =ArrayList()
-                fanances =ArrayList()
-                addresss =ArrayList()
                 var field=""
                 var fananceStr=""
                 var addressStr=""
@@ -175,5 +172,9 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
         }else{
             imageUri=upLoadFile.url
         }
+    }
+
+    override fun setCapitalist() {
+        finish()
     }
 }

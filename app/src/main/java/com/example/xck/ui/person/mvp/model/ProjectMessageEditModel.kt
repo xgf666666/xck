@@ -6,14 +6,16 @@ import com.example.xck.ui.person.mvp.contract.ProjectMessageEditContract
 import com.xx.baseutilslibrary.network.entity.BaseResponseEntity
 import io.reactivex.Observable
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 
 class ProjectMessageEditModel :ProjectMessageEditContract.Model{
     override fun upload(file: File): Observable<BaseResponseEntity<UpLoadFile>>{//image/png"
-        val body = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val body = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
 
         val multipartBody = MultipartBody.Builder()
             .addFormDataPart("file", file.name, body)
@@ -21,7 +23,7 @@ class ProjectMessageEditModel :ProjectMessageEditContract.Model{
             .build()
 
 //        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-        return AppApi.Api().uploads(multipartBody.parts())
+        return AppApi.Api().uploads(multipartBody.parts)
     }
 
     override fun setProject(
@@ -36,9 +38,9 @@ class ProjectMessageEditModel :ProjectMessageEditContract.Model{
         history_financice: String,
         project_file: String,
         team_member: String,
-        industries: Array<Int>,
-        stages: Array<Int>,
-        location: Array<Int>
+        industries: IntArray,
+        stages: IntArray,
+        location: IntArray
     ):Observable<BaseResponseEntity<Any>> =AppApi.Api().setProject(Authorization, project_name, logo_image, found_time, introduction, wait_finance, operation, advantage, history_financice, project_file, team_member, industries, stages, location)
 
 }

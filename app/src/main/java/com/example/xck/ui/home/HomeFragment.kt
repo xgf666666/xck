@@ -33,6 +33,13 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
     @SuppressLint("SuspiciousIndentation")
     override fun init(view: View?) {
         rvHome.layoutManager=LinearLayoutManager(this.context)
+        if (Constants.getPersonal()!=null){
+            if (Constants.getPersonal().user_type_select==1){
+                isProject=false
+            }else if (Constants.getPersonal().user_type_select==2){
+                isProject=true
+            }
+        }
         if (isProject){
             homeProjectAdapter= HomeProjectAdapter()
             rvHome.adapter=homeProjectAdapter

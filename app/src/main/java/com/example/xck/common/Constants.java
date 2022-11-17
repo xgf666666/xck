@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 public class Constants {
     private static final String TAG = "Constants";
     public final static String DOWNLOAD_PATH = "/sdcard/xck";                 //文件下载的路径
+    public final static String CRASH_FOLDER = "/sdcard/xckCrash/";                 //崩溃日志
     public static final String KEY_SP_TOKEN = "SP_TOKEN";
     public static final String KEY_SP_HEAN = "SP_HEAN";
     public static final String KEY_SP_PERSON = "SP_Person";
