@@ -1,8 +1,11 @@
 package com.example.xck
 
+import android.Manifest
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.UtilsTransActivity
 import com.example.xck.common.Constants
 import com.example.xck.ui.person.activity.PrepareLoginActivity
 import com.xx.baseuilibrary.mvp.BaseMvpViewActivity
@@ -25,12 +28,33 @@ class GuideActivity :BaseMvpViewActivity() {
     })
 
     override fun initData() {
-        handler.sendEmptyMessageDelayed(1,2000)
+        showEditAvatarDialog()
+
     }
 
     override fun initEvent() {
 
     }
+    private fun showEditAvatarDialog() {
+        //请求相机和内存读取权限
+        PermissionUtils.permission(
+//            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            , Manifest.permission.READ_EXTERNAL_STORAGE)
+            .callback(object : PermissionUtils.SimpleCallback {
+                override fun onGranted() {
+                    //被给予权限,调起选图弹窗
+                    handler.sendEmptyMessageDelayed(1,2000)
+                }
+                override fun onDenied() {
+
+                }
+            })
+            .rationale { utilsTransActivity: UtilsTransActivity, shouldRequest: PermissionUtils.OnRationaleListener.ShouldRequest -> shouldRequest.again(true)
+            }
+            .request()
+    }
+
 }
 
 

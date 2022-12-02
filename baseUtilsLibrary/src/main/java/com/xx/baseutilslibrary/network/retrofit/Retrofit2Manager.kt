@@ -38,7 +38,6 @@ class Retrofit2Manager {
                         .baseUrl(apiConfigProvider!!.apiBaseUrl)
                         .client(okHttpClient)
                         .addConverterFactory(XxGsonConverterFactory.create()!!)
-                        .addConverterFactory(GsonConverterFactory.create()!!)
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build()
             }

@@ -25,4 +25,6 @@ class RegisterModel :RegisterContract.Model{
         mobile_phone: String,
         password: String
     ): Observable<BaseResponseEntity<Login>> =AppApi.Api().login(mobile_phone, password)
+
+    override fun registerIM(authorization: String): Observable<BaseResponseEntity<Any>> =AppApi.Api().registerIM(authorization)
 }

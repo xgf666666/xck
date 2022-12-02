@@ -46,13 +46,9 @@ final class XxGsonResponseBodyConverter<T> implements Converter<ResponseBody, T>
             valueString = valueString.replaceAll(":null", ":\"\"");
             Log.e(TAG, valueString);//输出替换后的json数据
             BaseResponseStatusEntity baseResponseEntity = gson.fromJson(valueString, BaseResponseStatusEntity.class);
-//            if (baseResponseEntity.getStatus().equals(BaseResponseEntity.Companion.getFAILE())) {
-//                //错误情况不解析data数据,防止数据成功失败返回数据格式不一致的问题
-//                throw new ApiFaileException(baseResponseEntity.getMsg());
-//            }else
-                if (baseResponseEntity.getCode().equals("40001")) {
+            if (baseResponseEntity.getCode().equals("40001")) {
                 throw new TokenInvalidException("40001");
-            }else if (baseResponseEntity.getCode()!=0){
+            } else if (baseResponseEntity.getCode() != 0) {
                 throw new ApiFaileException(baseResponseEntity.getMsg());
             } else {
                 return adapter.fromJson(valueString);

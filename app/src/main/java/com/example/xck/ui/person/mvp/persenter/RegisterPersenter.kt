@@ -96,5 +96,13 @@ class RegisterPersenter(view: RegisterContract.View):RegisterContract.Persenter(
         })
     }
 
+    override fun registerIM(authorization: String) {
+        getModel().registerIM(authorization).ui({
+            getView()?.registerIM()
+        },{
+            getView()?.showToast(it.message)
+        })
+    }
+
     override fun createModel(): RegisterContract.Model =RegisterModel()
 }

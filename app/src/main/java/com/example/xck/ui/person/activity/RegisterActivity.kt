@@ -37,6 +37,9 @@ class RegisterActivity : BaseMvpActivity<RegisterPersenter>(),RegisterContract.V
         ivSendNote.setOnClickListener {
             getPresenter().getCode("reg",etPhone.text.toString())
         }
+        tv_agreement.setOnClickListener {
+            startActivity(Intent(this,ServiceActivity::class.java))
+        }
         tvRegister.setOnClickListener {
             if (!cb_select.isChecked){
                 showToast("请勾选用户服务协议")
@@ -63,6 +66,10 @@ class RegisterActivity : BaseMvpActivity<RegisterPersenter>(),RegisterContract.V
     }
 
     override fun register(register: Register) {
+        getPresenter().registerIM(register.access_token)
+    }
+
+    override fun registerIM() {
 
     }
 

@@ -13,6 +13,7 @@ interface RegisterContract {
         fun getCodeImage(image: CodeImage)
         fun getCode()
         fun register(register: Register)
+        fun registerIM()
         fun login(login: Login)
     }
     interface Model{
@@ -20,11 +21,13 @@ interface RegisterContract {
         fun getCode(type:String ,mobile_phone:String): Observable<BaseResponseEntity<Any>>
         fun register(mobile_phone:String ,vercode:String,smscode:String ,key:String ,password:String ,repassword:String): Observable<BaseResponseEntity<Register>>
         fun login(mobile_phone:String ,password:String): Observable<BaseResponseEntity<Login>>
+        fun registerIM(authorization:String): Observable<BaseResponseEntity<Any>>
     }
     abstract class Persenter(view:View):BaseMvpPresenter<Model,View>(view){
        abstract fun getCodeImage()
        abstract fun getCode(type:String ,mobile_phone:String)
        abstract fun register(mobile_phone:String ,vercode:String,smscode:String ,key:String ,password:String ,repassword:String)
-        abstract fun login(mobile_phone:String ,password:String)
+       abstract fun login(mobile_phone:String ,password:String)
+       abstract fun registerIM(authorization:String)
     }
 }

@@ -3,6 +3,7 @@ package com.example.xck.common;
 
 import com.example.xck.bean.Capitalist;
 import com.example.xck.bean.CodeImage;
+import com.example.xck.bean.Doc;
 import com.example.xck.bean.Login;
 import com.example.xck.bean.Project;
 import com.example.xck.bean.Register;
@@ -82,6 +83,14 @@ public interface AppService {
     @FormUrlEncoded
     @POST("api/v1/passport/reg")
     Observable<BaseResponseEntity<Register>> register(@Field("mobile_phone") String mobile_phone, @Field("vercode") String vercode, @Field("smscode") String smscode, @Field("key") String key, @Field("password") String password, @Field("repassword") String repassword);
+ /**
+     * 注册IM
+     */
+    @FormUrlEncoded
+    @POST("api/v1/user/regIm")
+    Observable<BaseResponseEntity<Object>> registerIM(@Header("Authorization") String authorization);
+
+
 
     /**
      * 获取用户信息
@@ -143,6 +152,11 @@ public interface AppService {
      */
     @GET("api/v1/capitalist/getCapitalistInfo")
     Observable<BaseResponseEntity<Capitalist>> getCapitalDetail(@Header("Authorization") String authorization,@Query("capitalist_id") int capitalist_id);
+    /**
+     * 获取相关文档
+     */
+    @GET("api/v1/attach/getDoc")
+    Observable<BaseResponseEntity<Doc>> getDoc( @Query("type") String type);
 
 }
 

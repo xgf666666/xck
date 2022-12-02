@@ -15,7 +15,6 @@ import com.example.xck.utils.changeKm
 import com.example.xck.utils.loadImag
 import kotlinx.android.synthetic.main.activity_prepare_login.*
 import kotlinx.android.synthetic.main.fragment_person.*
-import kotlinx.android.synthetic.main.fragment_person.iv_person
 
 /**
  *   author ： xiaogf
@@ -33,13 +32,21 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
         tvRegister.setOnClickListener {
             startActivity(Intent(context, RegisterActivity::class.java))
         }
-        iv_person.setOnClickListener {
+/*
+        ivPerson.setOnClickListener {
             val intent = Intent(context, PrepareLoginActivity::class.java)
             context?.startActivity(intent)
         }
+*/
         llRoleIdentity.setOnClickListener {
             val intent = Intent(context, PrepareRoleIdentifyActivity::class.java)
             context?.startActivity(intent)
+        }
+        llHelp.setOnClickListener {
+            startActivity(Intent(context,HelpActivity::class.java))
+        }
+        llAboutUs.setOnClickListener {
+            startActivity(Intent(context,AboutUsActivity::class.java))
         }
         llMessage.setOnClickListener {
             var intent:Intent?=null
@@ -94,7 +101,7 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
     override fun createPresenter(): PersonPersenter = PersonPersenter(this)
     override fun userInfo(userInfo: Login.UserInfoBean) {
         Constants.putPersonal(userInfo)
-        iv_person.loadImag(userInfo.avatar)
+        ivPerson.loadImag(userInfo.avatar)
         if (userInfo.user_type_select==1){
             tvMessage.text="创业项目信息"
         }else if (userInfo.user_type_select==2){
