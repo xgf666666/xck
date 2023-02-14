@@ -29,7 +29,7 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
             val intent = Intent(context, LoginActivity::class.java)
             this?.startActivity(intent)
         }
-        tvRegister.setOnClickListener {
+         tvRegister.setOnClickListener {
             startActivity(Intent(context, RegisterActivity::class.java))
         }
 /*
