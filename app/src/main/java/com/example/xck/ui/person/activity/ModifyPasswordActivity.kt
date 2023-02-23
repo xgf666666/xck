@@ -52,7 +52,7 @@ class ModifyPasswordActivity : BaseMvpActivity<ModifyPasswordPersenter>(),Modify
             if (type==0){
                 getPresenter().modify(Constants.getToken(),etPassword.text.toString(),etPasswordAgain.text.toString(),verifyPhone!!.verify_token)
             }else{
-                getPresenter().modify("",etPassword.text.toString(),etPasswordAgain.text.toString(),verifyPhone!!.verify_token)
+                getPresenter().forgetPW(etPassword.text.toString(),etPasswordAgain.text.toString(),verifyPhone!!.verify_token)
             }
         }
         ivIconCode.setOnClickListener {
@@ -85,7 +85,7 @@ class ModifyPasswordActivity : BaseMvpActivity<ModifyPasswordPersenter>(),Modify
         llPassword.visibility=View.VISIBLE
         tvCodeRz.setTextColor(resources.getColor(R.color.text_333333))
         tvNewPassdword.setTextColor(resources.getColor(R.color.text_FF6C2EA5))
-        tvRegister.setText("提交%登录")
+//        tvRegister.setText("提交%登录")
     }
 
     override fun modify() {

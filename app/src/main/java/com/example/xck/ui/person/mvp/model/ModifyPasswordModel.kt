@@ -35,4 +35,10 @@ class ModifyPasswordModel :ModifyPasswordContract.Model{
         repassword: String,
         verify_token: String
     ): Observable<BaseResponseEntity<Any>> =AppApi.Api().modifyPw(Authorization, password, repassword, verify_token)
+
+    override fun forgetPW(
+        password: String,
+        repassword: String,
+        verify_token: String
+    ): Observable<BaseResponseEntity<Any>> =AppApi.Api().forgetPw( password, repassword, verify_token)
 }

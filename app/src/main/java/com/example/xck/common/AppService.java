@@ -70,7 +70,12 @@ public interface AppService {
      */
     @FormUrlEncoded
     @POST("api/v1/user/updatePassword")
-    Observable<BaseResponseEntity<Object>> modifyPw(@Header("Authorization") String Authorization, @Field("password") String password, @Field("repassword") String repassword, @Field("verify_token") String verify_token);
+    Observable<BaseResponseEntity<Object>> modifyPw(@Header("Authorization") String Authorization, @Field("password") String password, @Field("repassword") String repassword, @Field("verify_token") String verify_token);    /**
+     * 忘记密码
+     */
+    @FormUrlEncoded
+    @POST("api/v1/user/resetPassword")
+    Observable<BaseResponseEntity<Object>> forgetPw( @Field("password") String password, @Field("repassword") String repassword, @Field("verify_token") String verify_token);
     /**
      * 修改密码
      */

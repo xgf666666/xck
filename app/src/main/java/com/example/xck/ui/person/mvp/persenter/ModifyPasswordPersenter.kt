@@ -108,6 +108,34 @@ class ModifyPasswordPersenter(view: ModifyPasswordContract.View):ModifyPasswordC
             getView()?.showToast(it.message)
         })
     }
+    override fun forgetPW(
+        password: String,
+        repassword: String,
+        verify_token: String
+    ) {
+        if (TextUtils.isEmpty(repassword)){
+            getView()?.showToast("请输入确认密码")
+            return
+        }
+        if (TextUtils.isEmpty(password)||password.length<6||password.length>16){
+            getView()?.showToast("请输入6到16位密码")
+            return
+        }
+        if (password!=repassword){
+            getView()?.showToast("确认密码与密码不一致")
+            return
+
+        }
+        getView()?.showLoadingDialog()
+        getModel().forgetPW( password, repassword, verify_token).ui({
+            getView()?.dismissLoadingDialog()
+            getView()?.modify()
+
+        },{
+            getView()?.dismissLoadingDialog()
+            getView()?.showToast(it.message)
+        })
+    }
 
 
     override fun createModel(): ModifyPasswordContract.Model =ModifyPasswordModel()

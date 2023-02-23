@@ -62,4 +62,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     //图片加载框架
     implementation 'com.github.bumptech.glide:glide:4.14.2'
+
+    //环信IM
+    implementation 'io.hyphenate:hyphenate-chat:4.0.0'
+
 }
