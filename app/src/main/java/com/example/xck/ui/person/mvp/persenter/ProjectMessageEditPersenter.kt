@@ -36,7 +36,8 @@ class ProjectMessageEditPersenter(view: ProjectMessageEditContract.View) :
         team_member: String,
         industries: IntArray,
         stages:IntArray,
-        location: IntArray
+        location: IntArray,
+        id: Int
     ) {
         if (StringUtils.isEmpty(project_name)) {
             ToastUtils.showShort("请输入项目名")
@@ -89,12 +90,23 @@ class ProjectMessageEditPersenter(view: ProjectMessageEditContract.View) :
         getView()?.showLoadingDialog()
         getModel().setProject(Authorization, project_name, logo_image, found_time, introduction,
             wait_finance, operation, advantage, history_financice,
-            project_file, team_member, industries, stages, location).ui({
+            project_file, team_member, industries, stages, location,id).ui({
             getView()?.dismissLoadingDialog()
             ToastUtils.showShort("提交成功")
             getView()?.setProject()
         },{
             getView()?.dismissLoadingDialog()
+            ToastUtils.showShort(it.message)
+        })
+
+    }
+    /**
+     * 项目详情
+    * */
+    override fun getProjectDetail(token: String, user_id: Int) {
+        getModel().getProjectDetail(token,user_id).ui({
+            getView()?.getProjectDetail(it.data!!)
+        },{
             ToastUtils.showShort(it.message)
         })
 

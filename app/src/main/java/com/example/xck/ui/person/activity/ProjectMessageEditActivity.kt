@@ -11,10 +11,13 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.UtilsTransActivity
+import com.bumptech.glide.Glide
 import com.example.xck.BuildConfig
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
+import com.example.xck.bean.Project
 import com.example.xck.bean.Select
 import com.example.xck.bean.UpLoadFile
 import com.example.xck.common.Constants
@@ -24,6 +27,7 @@ import com.example.xck.ui.person.mvp.persenter.ProjectMessageEditPersenter
 import com.example.xck.utils.filechoose.FileBrowseActivity
 import com.example.xck.utils.filechoose.FxFileDialogArgs
 import com.example.xck.utils.filechoose.FxHelp
+import com.example.xck.utils.loadImag
 import com.xx.baseutilslibrary.common.ImageChooseHelper
 import kotlinx.android.synthetic.main.activity_project_message_edit.*
 import kotlinx.android.synthetic.main.activity_project_message_edit.ivPerson
@@ -48,6 +52,8 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
     private var fanances: ArrayList<Int>?= ArrayList()
     private var addresss: ArrayList<Int>?= ArrayList()
     private var isImage=false
+    var completeStatus=0
+    var ProjectId=0
     override fun getActivityLayoutId(): Int =R.layout.activity_project_message_edit
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -64,10 +70,18 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
             showDatePickerDialog(this,2,tvTime,Calendar.getInstance(Locale.CHINA))
         }
         tvSend.setOnClickListener {
-            getPresenter().setProject(Constants.getToken(),etWx.text.toString(),image,tvTime.text.toString(),
-                etProjectIntroduce.text.toString(),etFinance.text.toString(),etoperation.text.toString(),etAdvantage.text.toString()
-            ,etHistory.text.toString(),fileString,etPersonNum.text.toString(),
-                filids!!.toIntArray(),fanances!!.toIntArray(),addresss!!.toIntArray())
+            if (completeStatus==0){
+                getPresenter().setProject(Constants.getToken(),etWx.text.toString(),image,tvTime.text.toString(),
+                    etProjectIntroduce.text.toString(),etFinance.text.toString(),etoperation.text.toString(),etAdvantage.text.toString()
+                    ,etHistory.text.toString(),fileString,etPersonNum.text.toString(),
+                    filids!!.toIntArray(),fanances!!.toIntArray(),addresss!!.toIntArray(),0)
+            }else{
+                getPresenter().setProject(Constants.getToken(),etWx.text.toString(),image,tvTime.text.toString(),
+                    etProjectIntroduce.text.toString(),etFinance.text.toString(),etoperation.text.toString(),etAdvantage.text.toString()
+                    ,etHistory.text.toString(),fileString,etPersonNum.text.toString(),
+                    filids!!.toIntArray(),fanances!!.toIntArray(),addresss!!.toIntArray(),ProjectId)
+
+            }
         }
         etProjectIntroduce.addTextChangedListener {
             tvProjectIntroduce.text="${etProjectIntroduce.text.length}/300"
@@ -96,6 +110,11 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
     override fun initData() {
         tvTilte.text="创业项目信息完善"
         initImageChooseHelper()
+         completeStatus = intent.getIntExtra("complete_status", 0)
+        if (completeStatus==1){
+            icLoading.visibility=View.VISIBLE
+            getPresenter().getProjectDetail(Constants.getToken(),Constants.getPersonal().id)
+        }
 
     }
     private fun initImageChooseHelper(){
@@ -206,6 +225,52 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
         finish()
     }
 
+    override fun getProjectDetail(project: Project) {
+        ProjectId=project.id
+        icLoading.visibility=View.GONE
+        etWx.setText(project.project_name)
+        ivPerson.loadImag(project.logo_image)
+        var address=""//地址
+        var trade=""//行业
+        var finance=""//轮次
+        for (i in 0 until project.attr_list.size){
+            if (project.attr_list[i].attr_parent_id==1){
+                if (StringUtils.isEmpty(trade)){
+                    trade += project.attr_list[i].attr_name
+                }else{
+                    trade += ",${project.attr_list[i].attr_name}"
+                }
+            }
+            if (project.attr_list[i].attr_parent_id==2){
+                if (StringUtils.isEmpty(address)){
+                    address+=project.attr_list[i].attr_name
+                }else{
+                    address+=",${project.attr_list[i].attr_name}"
+                }
+            }
+            if (project.attr_list[i].attr_parent_id==3){
+                if (StringUtils.isEmpty(finance)){
+                    finance+=project.attr_list[i].attr_name
+                }else{
+                    finance+=",${project.attr_list[i].attr_name}"
+                }
+            }
+        }
+        tvFleid.text=trade
+        tvFinance.text=finance
+        tvAddress.text=address
+        tvTime.text=project.create_time
+        etProjectIntroduce.setText(project.introduction)
+        etFinance.setText(project.wait_finance)
+        etoperation.setText(project.operation)
+        etAdvantage.setText(project.advantage)
+        etHistory.setText(project.history_financice)
+        tvTishi.text=project.project_file
+        etPersonNum.setText(project.team_member)
+        image=project.logo_image
+        fileString=project.project_file
+    }
+
     override fun onClick(v: View?) {
         if (selectDialog==null){
             selectDialog=SelectDialog(this)
@@ -237,7 +302,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 }
 
                 for (i in 0 until address.size){
-                    addresss!!.add(filid[i].id)
+                    addresss!!.add(address[i].id)
                     if (i==0){
                         addressStr+=address[i].attr_name
                     }else{

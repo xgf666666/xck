@@ -91,8 +91,7 @@ public interface AppService {
  /**
      * 注册IM
      */
-    @FormUrlEncoded
-    @POST("api/v1/user/regIm")
+    @GET("api/v1/user/regIm")
     Observable<BaseResponseEntity<Object>> registerIM(@Header("Authorization") String authorization);
 
 
@@ -109,8 +108,8 @@ public interface AppService {
     @POST("api/v1/user/setProject")
     Observable<BaseResponseEntity<Object>> setProject(@Header("Authorization") String Authorization,@Field("project_name")String project_name,@Field("logo_image")String logo_image,
                                                       @Field("found_time") String found_time,@Field("introduction") String introduction,@Field("wait_finance") String wait_finance,@Field("operation") String operation,
-                                                      @Field("advantage") String advantage,@Field("history_financice") String history_financice,@Field("project_file") String project_file,@Field("team_member") String team_member,@Field("industries") int[] industries,
-                                                      @Field("stages") int[] stages,@Field("location") int[] location);
+                                                      @Field("advantage") String advantage,@Field("history_financice") String history_financice,@Field("project_file") String project_file,@Field("team_member") String team_member,@Field("industries[]") int[] industries,
+                                                      @Field("stages[]") int[] stages,@Field("location[]") int[] location,@Field("id") int id);
     /**
      * 设置机构信息
      */
@@ -153,6 +152,11 @@ public interface AppService {
     @GET("api/v1/project/getProjectInfo")
     Observable<BaseResponseEntity<Project>> getProjectDetail(@Header("Authorization") String authorization,@Query("project_id") int project_id);
     /**
+     * 项目详情
+     */
+    @GET("api/v1/project/getProjectInfo")
+    Observable<BaseResponseEntity<Project>> getProjectDetailForId(@Header("Authorization") String authorization,@Query("user_id") int user_id);
+    /**
      * 机构详情
      */
     @GET("api/v1/capitalist/getCapitalistInfo")
@@ -162,6 +166,11 @@ public interface AppService {
      */
     @GET("api/v1/attach/getDoc")
     Observable<BaseResponseEntity<Doc>> getDoc( @Query("type") String type);
+    /**
+     * 获取实时聊天剩余额度
+     */
+    @GET("api/v1/user/userQuotaNum")
+    Observable<BaseResponseEntity<Object>> getUserQuotaNum( @Header("Authorization") String authorization);
 
 }
 

@@ -12,4 +12,6 @@ class InvestorDetailModel :InvestorDetailContract.Model{
         authorization: String,
         capitalist_id: Int
     ): Observable<BaseResponseEntity<Capitalist>> =AppApi.Api().getCapitalDetail(authorization, capitalist_id)
+
+    override fun getUserQuotaNum(authorization: String): Observable<BaseResponseEntity<Any>> =AppApi.Api().getUserQuotaNum(authorization)
 }

@@ -265,4 +265,37 @@
             android:layout_gravity="center_vertical"
             android:visibility="gone"/>
     </LinearLayout>
+    <View
+        style="@style/LineGray"
+        android:layout_marginLeft="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/llLoginOut"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:background="@color/white">
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@mipmap/guanyu"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="退出登录"
+            android:textSize="14sp"
+            android:textColor="@color/text_333333"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"/>
+        <ImageView
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@mipmap/gengduo"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
 </LinearLayout>

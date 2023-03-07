@@ -26,6 +26,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
     override fun initData() {
         tvTilte.text="详情"
         getPresenter().getInverstorDetail(Constants.getToken(),intent.getIntExtra("capitalist_id",0))
+        getPresenter().getUserQuotaNum()
     }
 
     override fun initEvent() {

@@ -13,10 +13,12 @@ interface InvestorDetailContract {
     }
     interface Model{
         fun getInverstorDetail(authorization:String,capitalist_id:Int):Observable<BaseResponseEntity<Capitalist>>
+        fun getUserQuotaNum(authorization:String):Observable<BaseResponseEntity<Any>>
 
     }
     abstract class Persenter(view:View):BaseMvpPresenter<Model,View>(view){
-        abstract  fun getInverstorDetail(authorization:String,capitalist_id:Int)
+        abstract fun getInverstorDetail(authorization:String,capitalist_id:Int)
+        abstract fun getUserQuotaNum()
 
     }
 }

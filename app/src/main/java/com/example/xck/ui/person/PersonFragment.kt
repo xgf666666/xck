@@ -66,10 +66,18 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
                     return@setOnClickListener
                 }
             }
+            intent?.putExtra("complete_status",Constants.getPersonal().complete_status)
             context?.startActivity(intent)
         }
         ll_identifyPw.setOnClickListener {
             startActivity(Intent(context,ModifyPasswordActivity::class.java))
+        }
+        llLoginOut.setOnClickListener {
+            Constants.loginOut()
+            Constants.putToken("")
+            Constants.putPersonal(Login.UserInfoBean())
+            startActivity(Intent(context,LoginActivity::class.java))
+            ToastUtils.showShort("退出登录!")
         }
     }
     override fun onHiddenChanged(hidden: Boolean) {
@@ -133,7 +141,11 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
                 tvRenz.text="认证成功"
                 llRoleIdentity.isClickable=false
                 ivRenMessage.visibility=View.VISIBLE
-                message="完善的信息让机构了解您"
+                if (userInfo.complete_status==1){
+                    message="已完善"
+                }else{
+                    message="完善的信息让机构了解您"
+                }
             }
             3->{
                 ivRenz.visibility=View.VISIBLE

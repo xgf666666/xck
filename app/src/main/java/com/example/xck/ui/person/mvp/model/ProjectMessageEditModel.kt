@@ -1,5 +1,6 @@
 package com.example.xck.ui.person.mvp.model
 
+import com.example.xck.bean.Project
 import com.example.xck.bean.UpLoadFile
 import com.example.xck.common.AppApi
 import com.example.xck.ui.person.mvp.contract.ProjectMessageEditContract
@@ -40,7 +41,13 @@ class ProjectMessageEditModel :ProjectMessageEditContract.Model{
         team_member: String,
         industries: IntArray,
         stages: IntArray,
-        location: IntArray
-    ):Observable<BaseResponseEntity<Any>> =AppApi.Api().setProject(Authorization, project_name, logo_image, found_time, introduction, wait_finance, operation, advantage, history_financice, project_file, team_member, industries, stages, location)
+        location: IntArray,
+        id: Int
+    ):Observable<BaseResponseEntity<Any>> =AppApi.Api().setProject(Authorization, project_name, logo_image, found_time, introduction, wait_finance, operation, advantage, history_financice, project_file, team_member, industries, stages, location,id)
+
+    override fun getProjectDetail(
+        token: String,
+        user_id: Int
+    ): Observable<BaseResponseEntity<Project>> =AppApi.Api().getProjectDetailForId(token,user_id)
 
 }

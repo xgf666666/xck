@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Application
 import com.example.xck.common.Constants
 import com.example.xck.utils.CrashHandle
+import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMOptions
 import com.xx.baseutilslibrary.network.provider.JApiConfigProvider
 import com.xx.baseutilslibrary.network.retrofit.Retrofit2Manager
 
@@ -20,6 +22,14 @@ class App :Application(){
             override fun getBaseUrl(): String =Constants.BASE_URL
         }
         CrashHandle.getInstance().init(baseContext);
+        initIM()
+    }
+    private fun initIM(){
+        var options = EMOptions();
+        options.setAppKey("1198221025163768#demo");
+        // 其他 EMOptions 配置。
+        EMClient.getInstance().init(this, options);
+
     }
     fun addActivity(activity: Activity){
         if (!activitys.contains(activity)){

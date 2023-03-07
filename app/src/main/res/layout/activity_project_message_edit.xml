@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.person.activity.ProjectMessageEditActivity"
     android:background="@color/text_FFF9F9F8">
 
-    <include layout="@layout/ic_title"/>
+    <include
+        android:id="@+id/icTitle"
+        layout="@layout/ic_title"/>
 
     <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/icTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -453,16 +455,18 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp">
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/tvImage">
                     <TextView
                         android:id="@+id/tvTishi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
                         android:text="商业计划书"
+                        android:lines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/text_333333"
                         android:textSize="16sp" />
                     <TextView
@@ -477,6 +481,7 @@
                         android:textSize="10sp" />
                 </RelativeLayout>
                 <TextView
+                    android:id="@+id/tvImage"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@color/text_999999"
@@ -543,4 +548,12 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+    <include
+        android:id="@+id/icLoading"
+        layout="@layout/view_loading"
+        android:layout_below="@+id/icTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+</RelativeLayout>

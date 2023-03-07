@@ -28,9 +28,9 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
     private var imageChooseHelper: ImageChooseHelper? = null
     private var selectDialog:SelectDialog?=null
     private var card=false
-    private var filids: ArrayList<Int>?=ArrayList()
-    private var fanances: ArrayList<Int>?=ArrayList()
-    private var addresss: ArrayList<Int>?=ArrayList()
+    private var filids: MutableList<Int>?= mutableListOf()
+    private var fanances: MutableList<Int>?=mutableListOf()
+    private var addresss: MutableList<Int>?=mutableListOf()
 
     override fun getActivityLayoutId(): Int =R.layout.activity_investor_message_edit
 
