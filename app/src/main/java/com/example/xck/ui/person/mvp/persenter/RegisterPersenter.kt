@@ -1,6 +1,7 @@
 package com.example.xck.ui.person.mvp.persenter
 
 import android.text.TextUtils
+import com.example.xck.common.Constants
 import com.example.xck.common.isPhone
 import com.example.xck.extensions.ui
 import com.example.xck.ui.person.mvp.contract.RegisterContract
@@ -75,10 +76,13 @@ class RegisterPersenter(view: RegisterContract.View):RegisterContract.Persenter(
             return
 
         }
+        this.mobile_phone=mobile_phone
+        this.password=password
        getView()?.showLoadingDialog()
        getModel().register(mobile_phone,vercode,smscode, key, password, repassword).ui({
            getView()?.register(it.data!!)
-           login(mobile_phone,password)
+           registerIM(it.data!!.access_token)
+
 
        },{
            getView()?.dismissLoadingDialog()
@@ -95,10 +99,13 @@ class RegisterPersenter(view: RegisterContract.View):RegisterContract.Persenter(
             getView()?.dismissLoadingDialog()
         })
     }
-
+    private var mobile_phone=""
+    private var password=""
     override fun registerIM(authorization: String) {
         getModel().registerIM(authorization).ui({
+            Constants.putIMToken(it.data!!.access_token)
             getView()?.registerIM()
+            login(mobile_phone,password)
         },{
             getView()?.showToast(it.message)
         })

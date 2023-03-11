@@ -240,6 +240,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 }else{
                     trade += ",${project.attr_list[i].attr_name}"
                 }
+                filids?.add(project.attr_list[i].project_id)
             }
             if (project.attr_list[i].attr_parent_id==2){
                 if (StringUtils.isEmpty(address)){
@@ -247,6 +248,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 }else{
                     address+=",${project.attr_list[i].attr_name}"
                 }
+                fanances?.add(project.attr_list[i].project_id)
             }
             if (project.attr_list[i].attr_parent_id==3){
                 if (StringUtils.isEmpty(finance)){
@@ -254,6 +256,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 }else{
                     finance+=",${project.attr_list[i].attr_name}"
                 }
+                addresss?.add(project.attr_list[i].project_id)
             }
         }
         tvFleid.text=trade

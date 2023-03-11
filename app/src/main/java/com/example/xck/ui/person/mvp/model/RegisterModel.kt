@@ -3,6 +3,7 @@ package com.example.xck.ui.person.mvp.model
 import com.example.xck.bean.CodeImage
 import com.example.xck.bean.Login
 import com.example.xck.bean.Register
+import com.example.xck.bean.RegisterIM
 import com.example.xck.common.AppApi
 import com.example.xck.ui.person.mvp.contract.RegisterContract
 import com.xx.baseutilslibrary.network.entity.BaseResponseEntity
@@ -26,5 +27,5 @@ class RegisterModel :RegisterContract.Model{
         password: String
     ): Observable<BaseResponseEntity<Login>> =AppApi.Api().login(mobile_phone, password)
 
-    override fun registerIM(authorization: String): Observable<BaseResponseEntity<Any>> =AppApi.Api().registerIM(authorization)
+    override fun registerIM(authorization: String): Observable<BaseResponseEntity<RegisterIM>> =AppApi.Api().registerIM(authorization)
 }

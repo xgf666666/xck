@@ -1,5 +1,6 @@
 package com.example.xck.ui.home.mvp.persenter
 
+import com.example.xck.common.Constants
 import com.example.xck.extensions.ui
 import com.example.xck.ui.home.mvp.contract.ProjectDetailContract
 import com.example.xck.ui.home.mvp.model.ProjectDetailModel
@@ -16,6 +17,13 @@ class ProjectDetailPersenter(view: ProjectDetailContract.View):ProjectDetailCont
         })
     }
 
+    override fun getUserQuotaNum() {
+        getModel().getUserQuotaNum(Constants.getToken()).ui({
+            getView()?.getUserQuotaNum(it.data!!)
+        },{
+            getView()?.showToast(it.message)
+        })
+    }
 
 
     override fun createModel(): ProjectDetailContract.Model =ProjectDetailModel()

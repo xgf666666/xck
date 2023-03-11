@@ -4,11 +4,13 @@ package com.example.xck.ui.home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.example.xck.R
 import com.example.xck.base.mvp.BaseMvpFragment
+import com.example.xck.bean.Banner
 import com.example.xck.bean.Capitalist
 import com.example.xck.bean.Project
 import com.example.xck.common.Constants
@@ -17,8 +19,10 @@ import com.example.xck.ui.home.activity.InvestorDetailActivity
 import com.example.xck.ui.home.activity.ProjectDetailActivity
 import com.example.xck.ui.home.adapter.HomeAdapter
 import com.example.xck.ui.home.adapter.HomeProjectAdapter
+import com.example.xck.ui.home.adapter.HomeViewPagerAdapter
 import com.example.xck.ui.home.mvp.contract.HomeContract
 import com.example.xck.ui.home.mvp.persenter.HomePersenter
+import com.example.xck.utils.loadImag
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -52,7 +56,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             }
            showLoadingDialog()
             getPresenter().getProjects(Constants.getToken(),page,10)
-
+            getPresenter().getBanner("project_banner")
         }else{
             homeAdapter= HomeAdapter()
             rvHome.adapter=homeAdapter
@@ -63,6 +67,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             }
             showLoadingDialog()
             getPresenter().getCapitalists(Constants.getToken())
+            getPresenter().getBanner("capitalist_banner")
         }
         srHome.setOnRefreshListener(this)
 
@@ -118,6 +123,17 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             homeAdapter?.data=projects.toMutableList()
         }
         homeAdapter?.notifyDataSetChanged()
+    }
+
+    override fun getBanner(banner: Banner) {
+        var data= mutableListOf<ImageView>()
+        banner.banner_url.forEach {
+            var image=ImageView(activity)
+            image.scaleType=ImageView.ScaleType.FIT_XY
+            image.loadImag(it)
+            data.add(image)
+        }
+        VpHome.adapter=HomeViewPagerAdapter(data)
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.xck.ui.person.mvp.model
 
+import com.example.xck.bean.Capitalist
 import com.example.xck.bean.UpLoadFile
 import com.example.xck.common.AppApi
 import com.example.xck.ui.person.mvp.contract.InverstorMessageEditContract
@@ -38,6 +39,12 @@ class InverstorMessageEditModel :InverstorMessageEditContract.Model{
         business_card_img: String,
         industries: IntArray,
         stages: IntArray,
-        location: IntArray
-    ): Observable<BaseResponseEntity<Any>> =AppApi.Api().setCapitalist(Authorization, capitalist_name, contact_name, position, single_amount, avatar, introduction, cases, business_card_img, industries, stages, location)
+        location: IntArray,
+        id:Int
+    ): Observable<BaseResponseEntity<Any>> =AppApi.Api().setCapitalist(Authorization, capitalist_name, contact_name, position, single_amount, avatar, introduction, cases, business_card_img, industries, stages, location,id)
+
+    override fun getInverstorDetail(
+        authorization: String,
+        userId: Int
+    ): Observable<BaseResponseEntity<Capitalist>> =AppApi.Api().getCapitalDetailForId(authorization,userId)
 }

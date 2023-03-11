@@ -1,14 +1,17 @@
 package com.example.xck.common;
 
 
+import com.example.xck.bean.Banner;
 import com.example.xck.bean.Capitalist;
 import com.example.xck.bean.CodeImage;
 import com.example.xck.bean.Doc;
 import com.example.xck.bean.Login;
 import com.example.xck.bean.Project;
 import com.example.xck.bean.Register;
+import com.example.xck.bean.RegisterIM;
 import com.example.xck.bean.Select;
 import com.example.xck.bean.UpLoadFile;
+import com.example.xck.bean.UserQuotaNum;
 import com.example.xck.bean.VerifyPhone;
 import com.xx.baseutilslibrary.network.entity.BaseResponseEntity;
 
@@ -92,7 +95,7 @@ public interface AppService {
      * 注册IM
      */
     @GET("api/v1/user/regIm")
-    Observable<BaseResponseEntity<Object>> registerIM(@Header("Authorization") String authorization);
+    Observable<BaseResponseEntity<RegisterIM>> registerIM(@Header("Authorization") String authorization);
 
 
 
@@ -117,13 +120,13 @@ public interface AppService {
     @POST("api/v1/user/setCapitalist")
     Observable<BaseResponseEntity<Object>> setCapitalist(@Header("Authorization") String Authorization,@Field("capitalist_name")String capitalist_name,@Field("contact_name")String contact_name,
                                                       @Field("position") String position,@Field("single_amount") String single_amount,@Field("avatar") String avatar,@Field("introduction") String introduction,
-                                                      @Field("cases") String cases,@Field("business_card_img") String business_card_img,@Field("industries") int[] industries,
-                                                      @Field("stages") int[] stages,@Field("location") int[] location);
+                                                      @Field("cases") String cases,@Field("business_card_img") String business_card_img,@Field("industries[]") int[] industries,
+                                                      @Field("stages[]") int[] stages,@Field("location[]") int[] location,@Field("id") int id);
     /**
      * 角色认证
      */
     @FormUrlEncoded
-    @POST("/api/v1/user/proof")
+    @POST("api/v1/user/proof")
     Observable<BaseResponseEntity<Object>> roleIdentify(@Header("Authorization") String Authorization,@Field("user_type_select")int user_type_select,@Field("real_name")String real_name,@Field("wechat") String wechat);
     /**
      * 上传文件
@@ -162,6 +165,11 @@ public interface AppService {
     @GET("api/v1/capitalist/getCapitalistInfo")
     Observable<BaseResponseEntity<Capitalist>> getCapitalDetail(@Header("Authorization") String authorization,@Query("capitalist_id") int capitalist_id);
     /**
+     * 机构详情
+     */
+    @GET("api/v1/capitalist/getCapitalistInfo")
+    Observable<BaseResponseEntity<Capitalist>> getCapitalDetailForId(@Header("Authorization") String authorization,@Query("user_id") int user_id);
+    /**
      * 获取相关文档
      */
     @GET("api/v1/attach/getDoc")
@@ -170,7 +178,12 @@ public interface AppService {
      * 获取实时聊天剩余额度
      */
     @GET("api/v1/user/userQuotaNum")
-    Observable<BaseResponseEntity<Object>> getUserQuotaNum( @Header("Authorization") String authorization);
+    Observable<BaseResponseEntity<UserQuotaNum>> getUserQuotaNum(@Header("Authorization") String authorization);
+    /**
+     * 获取banner
+     */
+    @GET("api/v1/attach/getBanner")
+    Observable<BaseResponseEntity<Banner>> getBanner(@Query("type") String type);
 
 }
 

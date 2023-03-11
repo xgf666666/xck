@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
 import com.example.xck.bean.Capitalist
+import com.example.xck.bean.UserQuotaNum
 import com.example.xck.common.Constants
 import com.example.xck.ui.home.adapter.HomeTypeAdapter
 import com.example.xck.ui.home.mvp.contract.InvestorDetailContract
@@ -62,6 +63,10 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
         tvMoeny.text=capitalist.single_amount
         tvInverstor.text=inverstor
         tvAddress.text=address
+    }
+
+    override fun getUserQuotaNum(userQuotaNum: UserQuotaNum) {
+        tvSend.text="打个招呼聊聊天(额度余${userQuotaNum.quota_num})"
     }
 
 }

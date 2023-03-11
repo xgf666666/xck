@@ -15,7 +15,11 @@ class InvestorDetailPersenter(view: InvestorDetailContract.View):InvestorDetailC
     }
 
     override fun getUserQuotaNum() {
-       getModel().getUserQuotaNum(Constants.getToken())
+       getModel().getUserQuotaNum(Constants.getToken()).ui({
+           getView()?.getUserQuotaNum(it.data!!)
+       },{
+           getView()?.showToast(it.message)
+       })
     }
 
     override fun createModel(): InvestorDetailContract.Model =InvestorDetailModel()

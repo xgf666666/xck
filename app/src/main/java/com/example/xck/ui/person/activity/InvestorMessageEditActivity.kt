@@ -4,21 +4,32 @@ import android.Manifest
 import android.content.Intent
 import android.view.View
 import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.UtilsTransActivity
 import com.example.xck.BuildConfig
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
+import com.example.xck.bean.Capitalist
 import com.example.xck.bean.Select
 import com.example.xck.bean.UpLoadFile
 import com.example.xck.common.Constants
 import com.example.xck.dialog.SelectDialog
 import com.example.xck.ui.person.mvp.contract.InverstorMessageEditContract
 import com.example.xck.ui.person.mvp.persenter.InverstorMessageEditPersenter
+import com.example.xck.utils.loadImag
 import com.xx.baseutilslibrary.common.ImageChooseHelper
 import kotlinx.android.synthetic.main.activity_investor_message_edit.*
+import kotlinx.android.synthetic.main.activity_investor_message_edit.icLoading
 import kotlinx.android.synthetic.main.activity_investor_message_edit.ivPerson
+import kotlinx.android.synthetic.main.activity_investor_message_edit.llAddress
+import kotlinx.android.synthetic.main.activity_investor_message_edit.llFinance
+import kotlinx.android.synthetic.main.activity_investor_message_edit.llFleid
+import kotlinx.android.synthetic.main.activity_investor_message_edit.tvAddress
+import kotlinx.android.synthetic.main.activity_investor_message_edit.tvFinance
+import kotlinx.android.synthetic.main.activity_investor_message_edit.tvFleid
 import kotlinx.android.synthetic.main.activity_investor_message_edit.tvSend
+import kotlinx.android.synthetic.main.activity_project_message_edit.*
 import kotlinx.android.synthetic.main.ic_title.*
 
 class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersenter>(),InverstorMessageEditContract.View,
@@ -31,6 +42,8 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
     private var filids: MutableList<Int>?= mutableListOf()
     private var fanances: MutableList<Int>?=mutableListOf()
     private var addresss: MutableList<Int>?=mutableListOf()
+    private var completeStatus=0;
+    private var capitalistId=0;
 
     override fun getActivityLayoutId(): Int =R.layout.activity_investor_message_edit
 
@@ -38,6 +51,11 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
     override fun initData() {
         tvTilte.text="投资人信息完善"
         initImageChooseHelper()
+        completeStatus = intent.getIntExtra("complete_status", 0)
+        if (completeStatus==1){
+            icLoading.visibility=View.VISIBLE
+            getPresenter().getInverstorDetail(Constants.getToken(),Constants.getPersonal().id)
+        }
     }
 
     override fun initEvent() {
@@ -50,10 +68,19 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
             showEditAvatarDialog()
         }
         tvSend.setOnClickListener {
-            getPresenter().setCapitalist(Constants.getToken(),etName.text.toString(),etPerson.text.toString(),etPosition.text.toString(),
-                "${etlessMoney.text.toString()}-${etMoreMoney.text.toString()}",imageUri!!,etOrganIntroduce.text.toString(),
-                etCase.text.toString(),cardUri!!,
-                filids!!.toIntArray(),fanances!!.toIntArray() ,addresss!!.toIntArray())
+            if (completeStatus==0){
+                getPresenter().setCapitalist(Constants.getToken(),etName.text.toString(),etPerson.text.toString(),etPosition.text.toString(),
+                    "${etlessMoney.text.toString()}"+"-"+"${etMoreMoney.text.toString()}",imageUri!!,etOrganIntroduce.text.toString(),
+                    etCase.text.toString(),cardUri!!,
+                    filids!!.toIntArray(),fanances!!.toIntArray() ,addresss!!.toIntArray(),0)
+
+            }else{
+                getPresenter().setCapitalist(Constants.getToken(),etName.text.toString(),etPerson.text.toString(),etPosition.text.toString(),
+                    "${etlessMoney.text.toString()}"+"-"+"${etMoreMoney.text.toString()}",imageUri!!,etOrganIntroduce.text.toString(),
+                    etCase.text.toString(),cardUri!!,
+                    filids!!.toIntArray(),fanances!!.toIntArray() ,addresss!!.toIntArray(),capitalistId)
+
+            }
 
         }
         llFinance.setOnClickListener(this)
@@ -133,6 +160,7 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
                     }else{
                         field+="、${filid[i].attr_name}"
                     }
+
                 }
                 for (i in 0 until fanance.size){
                     fanances!!.add(fanance[i].id)
@@ -144,7 +172,7 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
                 }
 
                 for (i in 0 until address.size){
-                    addresss!!.add(filid[i].id)
+                    addresss!!.add(address[i].id)
                     if (i==0){
                         addressStr+=address[i].attr_name
                     }else{
@@ -176,5 +204,56 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
 
     override fun setCapitalist() {
         finish()
+    }
+
+    override fun getInverstorDetail(capitalist: Capitalist) {
+        capitalistId=capitalist.id
+        icLoading.visibility=View.GONE
+        etName.setText(capitalist.capitalist_name)
+        etPerson.setText(capitalist.contact_name)
+        etPosition.setText(capitalist.position)
+        var amount=capitalist.single_amount.split("-")
+        if (amount.size>1){
+            etlessMoney.setText(amount[0])
+            etMoreMoney.setText(amount[1])
+        }
+        ivPerson.loadImag(capitalist.avatar)
+        iv_card.loadImag(capitalist.business_card_img)
+            cardUri=capitalist.business_card_img
+            imageUri=capitalist.avatar
+        var address=""//地址
+        var trade=""//行业
+        var finance=""//轮次
+        for (i in 0 until capitalist.attr_list.size) {
+            if (capitalist.attr_list[i].attr_parent_id == 1) {
+                if (StringUtils.isEmpty(trade)) {
+                    trade += capitalist.attr_list[i].attr_name
+                } else {
+                    trade += ",${capitalist.attr_list[i].attr_name}"
+                }
+                filids?.add(capitalist.attr_list[i].attr_id)
+            }
+            if (capitalist.attr_list[i].attr_parent_id == 2) {
+                if (StringUtils.isEmpty(address)) {
+                    address += capitalist.attr_list[i].attr_name
+                } else {
+                    address += ",${capitalist.attr_list[i].attr_name}"
+                }
+                fanances?.add(capitalist.attr_list[i].attr_id)
+            }
+            if (capitalist.attr_list[i].attr_parent_id == 3) {
+                if (StringUtils.isEmpty(finance)) {
+                    finance += capitalist.attr_list[i].attr_name
+                } else {
+                    finance += ",${capitalist.attr_list[i].attr_name}"
+                }
+                addresss?.add(capitalist.attr_list[i].attr_id)
+            }
+        }
+        tvFleid.text=trade;
+        tvAddress.text=address
+        tvFinance.text=finance
+        etOrganIntroduce.setText(capitalist.introduction)
+        etCase.setText(capitalist.cases)
     }
 }

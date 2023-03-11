@@ -5,6 +5,7 @@ import com.example.xck.base.mvp.presenter.BaseMvpPresenter
 import com.example.xck.bean.CodeImage
 import com.example.xck.bean.Login
 import com.example.xck.bean.Register
+import com.example.xck.bean.RegisterIM
 import com.xx.baseutilslibrary.network.entity.BaseResponseEntity
 import io.reactivex.Observable
 
@@ -21,7 +22,7 @@ interface RegisterContract {
         fun getCode(type:String ,mobile_phone:String): Observable<BaseResponseEntity<Any>>
         fun register(mobile_phone:String ,vercode:String,smscode:String ,key:String ,password:String ,repassword:String): Observable<BaseResponseEntity<Register>>
         fun login(mobile_phone:String ,password:String): Observable<BaseResponseEntity<Login>>
-        fun registerIM(authorization:String): Observable<BaseResponseEntity<Any>>
+        fun registerIM(authorization:String): Observable<BaseResponseEntity<RegisterIM>>
     }
     abstract class Persenter(view:View):BaseMvpPresenter<Model,View>(view){
        abstract fun getCodeImage()

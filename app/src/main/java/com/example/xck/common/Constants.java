@@ -17,6 +17,7 @@ public class Constants {
     public final static String DOWNLOAD_PATH = "/sdcard/xck";                 //文件下载的路径
     public final static String CRASH_FOLDER = "/sdcard/xckCrash/";                 //崩溃日志
     public static final String KEY_SP_TOKEN = "SP_TOKEN";
+    public static final String KEY_SP_IMTOKEN = "SP_IMTOKEN";
     public static final String KEY_SP_HEAN = "SP_HEAN";
     public static final String KEY_SP_PERSON = "SP_Person";
     public static final String KEY_SP_CODE = "SP_CODE";
@@ -172,6 +173,17 @@ public class Constants {
      */
     public static void putToken(String  token) {
         SPUtils.getInstance().put(KEY_SP_TOKEN, token);
+    }
+    /**
+     * 储存IMtoken
+     *
+     * @param
+     */
+    public static void putIMToken(String  token) {
+        SPUtils.getInstance().put(KEY_SP_IMTOKEN, token);
+    }
+    public static String getIMToken() {
+        return SPUtils.getInstance().getString(KEY_SP_IMTOKEN);
     }
     /**
      * 获取isExit

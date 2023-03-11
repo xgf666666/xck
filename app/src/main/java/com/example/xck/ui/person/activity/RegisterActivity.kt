@@ -66,7 +66,6 @@ class RegisterActivity : BaseMvpActivity<RegisterPersenter>(),RegisterContract.V
     }
 
     override fun register(register: Register) {
-        getPresenter().registerIM(register.access_token)
     }
 
     override fun registerIM() {

@@ -25,5 +25,13 @@ class HomePersenter(view: HomeContract.View):HomeContract.Persenter(view) {
         })
     }
 
+    override fun getBanner(type: String) {
+        getModel().getBanner(type).ui({
+            getView()?.getBanner(it.data!!)
+        },{
+            getView()?.showToast(it.message)
+        })
+    }
+
     override fun createModel(): HomeContract.Model =HomeModel()
 }

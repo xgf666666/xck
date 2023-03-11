@@ -4,10 +4,17 @@ import android.view.View
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
 import com.example.xck.bean.Project
+import com.example.xck.bean.UserQuotaNum
 import com.example.xck.common.Constants
 import com.example.xck.ui.home.mvp.contract.ProjectDetailContract
 import com.example.xck.ui.home.mvp.persenter.ProjectDetailPersenter
+import kotlinx.android.synthetic.main.activity_investor_detail.*
 import kotlinx.android.synthetic.main.activity_project_detail.*
+import kotlinx.android.synthetic.main.activity_project_detail.icLoading
+import kotlinx.android.synthetic.main.activity_project_detail.tvAddress
+import kotlinx.android.synthetic.main.activity_project_detail.tvCompany
+import kotlinx.android.synthetic.main.activity_project_detail.tvName
+import kotlinx.android.synthetic.main.activity_project_detail.tvSend
 import kotlinx.android.synthetic.main.ic_title.*
 
 /**
@@ -21,6 +28,7 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
     override fun initData() {
         tvTilte.text="详情"
         getPresenter().getProjectDetail(Constants.getToken(),intent.getIntExtra("project_id",0),0)
+        getPresenter().getUserQuotaNum()
     }
 
     override fun initEvent() {
@@ -52,6 +60,10 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
         tvHistoryFinance.text=project.history_financice
         tvBusinessBook.text=project.project_file
         tvTeamNum.text=project.team_member
+    }
+
+    override fun getUserQuotaNum(userQuotaNum: UserQuotaNum) {
+        tvSend.text="打个招呼聊聊天(额度余${userQuotaNum.quota_num})"
     }
 
 }

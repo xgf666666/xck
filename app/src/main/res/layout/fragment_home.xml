@@ -42,7 +42,8 @@
             android:layout_marginLeft="16dp"/>
 
     </LinearLayout>
-    <ImageView
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/VpHome"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_marginTop="10dp"
