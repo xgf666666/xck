@@ -13,6 +13,7 @@ import com.example.xck.ui.person.mvp.contract.PersonContract
 import com.example.xck.ui.person.mvp.persenter.PersonPersenter
 import com.example.xck.utils.changeKm
 import com.example.xck.utils.loadImag
+import com.hyphenate.chat.EMClient
 import kotlinx.android.synthetic.main.activity_prepare_login.*
 import kotlinx.android.synthetic.main.fragment_person.*
 
@@ -77,6 +78,7 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
             Constants.putToken("")
             Constants.putPersonal(Login.UserInfoBean())
             startActivity(Intent(context,LoginActivity::class.java))
+            EMClient.getInstance().logout(true)
             ToastUtils.showShort("退出登录!")
         }
     }

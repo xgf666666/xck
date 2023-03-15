@@ -8,7 +8,8 @@ import com.example.xck.bean.UserQuotaNum
 import com.example.xck.common.Constants
 import com.example.xck.ui.home.mvp.contract.ProjectDetailContract
 import com.example.xck.ui.home.mvp.persenter.ProjectDetailPersenter
-import kotlinx.android.synthetic.main.activity_investor_detail.*
+import com.example.xck.ui.person.activity.ChatActivity
+import com.hyphenate.easeui.constants.EaseConstant
 import kotlinx.android.synthetic.main.activity_project_detail.*
 import kotlinx.android.synthetic.main.activity_project_detail.icLoading
 import kotlinx.android.synthetic.main.activity_project_detail.tvAddress
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.ic_title.*
  *   describe    ：
  */
 class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDetailContract.View{
+    var project: Project? =null
     override fun getActivityLayoutId(): Int = R.layout.activity_project_detail
 
     override fun initData() {
@@ -32,10 +34,14 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
     }
 
     override fun initEvent() {
+        tvSend.setOnClickListener {
+            ChatActivity.actionStart(this,"${project?.user_id}", EaseConstant.CHATTYPE_SINGLE)
+        }
     }
 
     override fun createPresenter(): ProjectDetailPersenter = ProjectDetailPersenter(this)
     override fun getProjectDetail(project: Project) {
+        this.project=project
         icLoading.visibility=View.GONE
         tvName.text=project.project_name
         var type=""

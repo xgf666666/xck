@@ -5,6 +5,7 @@ import com.example.xck.bean.Banner;
 import com.example.xck.bean.Capitalist;
 import com.example.xck.bean.CodeImage;
 import com.example.xck.bean.Doc;
+import com.example.xck.bean.ImToken;
 import com.example.xck.bean.Login;
 import com.example.xck.bean.Project;
 import com.example.xck.bean.Register;
@@ -184,6 +185,12 @@ public interface AppService {
      */
     @GET("api/v1/attach/getBanner")
     Observable<BaseResponseEntity<Banner>> getBanner(@Query("type") String type);
+
+    /**
+     * 获取imToken
+     */
+    @GET("api/v1/user/getImUserToken")
+    Observable<BaseResponseEntity<ImToken>> getImUserToken(@Header("Authorization") String authorization);
 
 }
 

@@ -14,6 +14,8 @@ import com.example.xck.bean.Login
 import com.example.xck.common.Constants
 import com.example.xck.ui.person.mvp.contract.LoginContract
 import com.example.xck.ui.person.mvp.persenter.LoginPersenter
+import com.hyphenate.EMCallBack
+import com.hyphenate.chat.EMClient
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseMvpActivity<LoginPersenter>(),LoginContract.View {
@@ -75,12 +77,13 @@ class LoginActivity : BaseMvpActivity<LoginPersenter>(),LoginContract.View {
     }
 
     override fun login(login: Login) {
-        showToast("登录成功")
+
+//        showToast("登录成功")
         Constants.putPersonal(login.user_info)
         Constants.putToken(login.access_token)
         Constants.login()
 //        startActivity(Intent(this, MainActivity::class.java))
-        (application as App).cleanActivity()
+//        (application as App).cleanActivity()
 
     }
     override fun onDestroy() {

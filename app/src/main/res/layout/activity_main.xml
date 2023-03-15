@@ -24,6 +24,7 @@
         app:itemTextAppearanceActive="@style/bottom_tab_title_active"
         app:itemIconSize="30dp"
         app:itemTextAppearanceInactive="@style/bottom_tab_title_active"
+        android:background="@color/white"
         />
 
 </LinearLayout>
