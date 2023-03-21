@@ -116,7 +116,7 @@ class SelectDialog(context: Context) : Dialog(context){
            childrenBean.attr_name="全部"
            datas!![i].children.add(0,childrenBean)
        }
-        selectAdapter?.setNewData(datas)
+        selectAdapter?.setNewInstance(datas)
     }
     public fun setOnSureListener(onSureListener: OnSureListener){
         this.onSureListener=onSureListener

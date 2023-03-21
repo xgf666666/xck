@@ -42,6 +42,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation project(path: ':baseUtilsLibrary')
     implementation 'com.google.ar.sceneform:filament-android:1.17.1'
+    implementation project(path: ':ease-im-kit')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
@@ -66,5 +67,5 @@ dependencies {
     //环信IM
     implementation 'io.hyphenate:hyphenate-chat:4.0.0'
 
-    implementation 'io.hyphenate:ease-im-kit:4.0.0'
+  /*  implementation 'io.hyphenate:ease-im-kit:4.0.0'*/
 }

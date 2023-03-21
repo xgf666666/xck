@@ -49,7 +49,7 @@ class DialogSelectAdapter :
                     children.isSelect = true
                 }
             }
-            notifyDataSetChanged()
+            selectAdapter.notifyDataSetChanged()
         })
     }
 }

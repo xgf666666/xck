@@ -17,3 +17,4 @@ rootProject.name = "xck"
 include ':app'
 include ':baseUtilsLibrary'
 include ':module_swdp_res'
+include ':ease-im-kit'
