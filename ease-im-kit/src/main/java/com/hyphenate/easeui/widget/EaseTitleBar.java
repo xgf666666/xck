@@ -206,7 +206,7 @@ public class EaseTitleBar extends RelativeLayout implements View.OnClickListener
     }
 
     public void setToolbarCustomColorDefault(@ColorInt int colorId) {
-        Drawable leftArrow = ContextCompat.getDrawable(getContext(), R.drawable.abc_ic_ab_back_material);
+        Drawable leftArrow = ContextCompat.getDrawable(getContext(), androidx.appcompat.R.drawable.abc_ic_ab_back_material);
         if(leftArrow != null) {
             leftArrow.setColorFilter(colorId, PorterDuff.Mode.SRC_ATOP);
             if(getContext() instanceof AppCompatActivity) {

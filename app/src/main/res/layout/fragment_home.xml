@@ -31,7 +31,10 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:textSize="14sp"
-                android:focusable="false"/>
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:lines="1"
+                />
         </LinearLayout>
         <ImageView
             android:id="@+id/iv_screen"

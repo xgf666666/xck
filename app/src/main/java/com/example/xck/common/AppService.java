@@ -144,12 +144,12 @@ public interface AppService {
      * 项目列表
      */
     @GET("api/v1/project/getProjectList")
-    Observable<BaseResponseEntity<List<Project>>> getProjectList(@Header("Authorization") String authorization, @Query("page") int page, @Query("page_size") int page_size);
+    Observable<BaseResponseEntity<List<Project>>> getProjectList(@Header("Authorization") String authorization,@Query("attr") String attr,@Query("keyword") String keyword ,@Query("page") int page, @Query("page_size") int page_size);
     /**
      * 机构列表
      */
     @GET("api/v1/capitalist/getCapitalistList")
-    Observable<BaseResponseEntity<List<Capitalist>>> getCapitalistList(@Header("Authorization") String authorization);
+    Observable<BaseResponseEntity<List<Capitalist>>> getCapitalistList(@Header("Authorization") String authorization,@Query("attr") String attr,@Query("keyword") String keyword,@Query("page") int page, @Query("page_size") int page_size);
     /**
      * 项目详情
      */

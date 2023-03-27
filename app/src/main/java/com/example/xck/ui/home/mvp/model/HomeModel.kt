@@ -13,10 +13,10 @@ import io.reactivex.Observable
 class HomeModel :HomeContract.Model{
     override fun getProjects(
         token: String,
-        page: Int,
-        page_size: Int
-    ): Observable<BaseResponseEntity<List<Project>>> =AppApi.Api().getProjectList(token,page, page_size)
+        attr:String,keyword:String,page:Int,page_size:Int
+    ): Observable<BaseResponseEntity<List<Project>>> =AppApi.Api().getProjectList(token,attr,keyword,page, page_size)
 
-    override fun getCapitalists(token: String): Observable<BaseResponseEntity<List<Capitalist>>> =AppApi.Api().getCapitalistList(token)
+    override fun getCapitalists(token: String,attr:String,keyword:String,page:Int,page_size:Int):
+            Observable<BaseResponseEntity<List<Capitalist>>> =AppApi.Api().getCapitalistList(token,attr,keyword,page, page_size)
     override fun getBanner(type: String): Observable<BaseResponseEntity<Banner>> =AppApi.Api().getBanner(type)
 }

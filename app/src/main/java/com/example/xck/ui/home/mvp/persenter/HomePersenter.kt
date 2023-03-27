@@ -5,8 +5,8 @@ import com.example.xck.ui.home.mvp.contract.HomeContract
 import com.example.xck.ui.home.mvp.model.HomeModel
 
 class HomePersenter(view: HomeContract.View):HomeContract.Persenter(view) {
-    override fun getProjects(token: String, page: Int, page_size: Int) {
-       getModel().getProjects(token, page, page_size).ui({
+    override fun getProjects(token:String,attr:String,keyword:String,page:Int,page_size:Int) {
+       getModel().getProjects(token,attr, keyword,page, page_size).ui({
            getView()?.getProject(it.data!!)
            getView()?.dismissLoadingDialog()
        },{
@@ -15,8 +15,8 @@ class HomePersenter(view: HomeContract.View):HomeContract.Persenter(view) {
        })
     }
 
-    override fun getCapitalists(token: String) {
-        getModel().getCapitalists(token).ui({
+    override fun getCapitalists(token:String,attr:String,keyword:String,page:Int,page_size:Int) {
+        getModel().getCapitalists(token,attr, keyword,page, page_size).ui({
             getView()?.getCapitalist(it.data!!)
             getView()?.dismissLoadingDialog()
         },{

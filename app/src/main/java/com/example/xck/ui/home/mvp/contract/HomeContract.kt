@@ -17,14 +17,14 @@ interface HomeContract {
 
     }
     interface Model{
-        fun getProjects(token:String,page:Int,page_size:Int): Observable<BaseResponseEntity<List<Project>>>
-        fun getCapitalists(token:String): Observable<BaseResponseEntity<List<Capitalist>>>
+        fun getProjects(token:String,attr:String,keyword:String,page:Int,page_size:Int): Observable<BaseResponseEntity<List<Project>>>
+        fun getCapitalists(token:String,attr:String,keyword:String,page:Int,page_size:Int): Observable<BaseResponseEntity<List<Capitalist>>>
         fun getBanner(type:String): Observable<BaseResponseEntity<Banner>>
 
     }
     abstract class Persenter(view:View):BaseMvpPresenter<Model,View>(view){
-        abstract fun getProjects(token:String,page:Int,page_size:Int)
-        abstract fun getCapitalists(token:String)
+        abstract fun getProjects(token:String,attr:String,keyword:String,page:Int,page_size:Int)
+        abstract fun getCapitalists(token:String,attr:String,keyword:String,page:Int,page_size:Int)
         abstract fun getBanner(type:String)
 
     }
