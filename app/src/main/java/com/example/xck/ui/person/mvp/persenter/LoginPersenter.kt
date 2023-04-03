@@ -1,6 +1,7 @@
 package com.example.xck.ui.person.mvp.persenter
 
 import android.text.TextUtils
+import android.util.Log
 import com.example.xck.App
 import com.example.xck.MainActivity
 import com.example.xck.common.isPhone
@@ -37,6 +38,8 @@ class LoginPersenter(view: LoginContract.View):LoginContract.Persenter(view) {
 
                     override fun onError(code: Int, error: String) {
                         getView()?.showToast(error)
+                        Log.i("xgf",error)
+                        getView()?.dismissLoadingDialog()
                     }
                 })
 

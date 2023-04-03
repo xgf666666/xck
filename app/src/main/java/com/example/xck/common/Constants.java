@@ -3,7 +3,11 @@ package com.example.xck.common;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.example.xck.bean.Login;
+import com.example.xck.bean.User;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
 
 /**
  * Constants
@@ -38,6 +42,7 @@ public class Constants {
     private static final String KEY_SP_SEARCH="KEY_SP_SEARCH";//搜索记录
     private static final String KEY_UNREAD_MESSAGE = "UNREAD_MESSAGE";//未读消息
     private static final String TISHI_MESSAGE= "TISHI_MESSAGE";//新消息提示
+    private static final String FRIEND_ID= "FRIEND_ID";//好友ID
     private static final String PW_HIDE= "PW_HIDE";//密码隐藏和显示
     public static final String UPLOADFILEPATH= "UPLOADFILEPATH";
     //滑动关闭Activity
@@ -51,6 +56,7 @@ public class Constants {
     public static final String SHORT_TOKEN_INVALID_ = "30004";
     public static final String BASE_URL = "http://api-test.xck6666.com/";
     public final static String SELECT_FILE_SUFFIX = ".PDF;.pdf";
+    public final static String USERDETAIL = "USERDETAIL";
     /*private static UserCenterBean userData;
 
 
@@ -165,6 +171,52 @@ public class Constants {
     public static Login.UserInfoBean getPersonal( ) {
         String per=SPUtils.getInstance().getString(KEY_SP_PERSON);
         return new Gson().fromJson(per, Login.UserInfoBean.class);
+    }
+    /**
+     * 储存好友ID
+     *
+     * @param
+     */
+    public static void putFriendIDs(List<String> friendIDs) {
+        SPUtils.getInstance().put(FRIEND_ID, new Gson().toJson(friendIDs));
+    }
+    /**
+     * 储存好友ID
+     *
+     * @param
+     */
+    public static List<String > getFriendIDs( ) {
+        String per=SPUtils.getInstance().getString(FRIEND_ID);
+        return new Gson().fromJson(per, new TypeToken<List<String>>() {}.getType());
+    }
+    /**
+     * 储存浏览用户详情信息
+     *
+     * @param
+     */
+    public static void putUserDetail(User user) {
+        List<User> users= new Gson().fromJson(SPUtils.getInstance().getString(USERDETAIL), new TypeToken<List<String>>() {}.getType());
+       boolean isHas=false;
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId()==user.getId()){
+                users.set(i,user);
+                isHas=true;
+                break;
+            }
+        }
+        if (!isHas){
+            users.add(user);
+        }
+        SPUtils.getInstance().put(USERDETAIL, new Gson().toJson(users));
+    }
+    /**
+     * 获取浏览用户详情信息
+     *
+     * @param
+     */
+    public static List<User> getUserDetail() {
+        String per=SPUtils.getInstance().getString(USERDETAIL);
+        return new Gson().fromJson(per, new TypeToken<List<String>>() {}.getType());
     }
     /**
      * 储存token

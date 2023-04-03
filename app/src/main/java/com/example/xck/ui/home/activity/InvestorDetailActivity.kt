@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
 import com.example.xck.bean.Capitalist
+import com.example.xck.bean.User
 import com.example.xck.bean.UserQuotaNum
 import com.example.xck.common.Constants
 import com.example.xck.ui.home.adapter.HomeTypeAdapter
@@ -13,7 +14,15 @@ import com.example.xck.ui.home.mvp.contract.InvestorDetailContract
 import com.example.xck.ui.home.mvp.contract.ProjectDetailContract
 import com.example.xck.ui.home.mvp.persenter.InvestorDetailPersenter
 import com.example.xck.ui.home.mvp.persenter.ProjectDetailPersenter
+import com.example.xck.utils.loadImag
 import kotlinx.android.synthetic.main.activity_investor_detail.*
+import kotlinx.android.synthetic.main.activity_investor_detail.icLoading
+import kotlinx.android.synthetic.main.activity_investor_detail.iv_person
+import kotlinx.android.synthetic.main.activity_investor_detail.tvAddress
+import kotlinx.android.synthetic.main.activity_investor_detail.tvCompany
+import kotlinx.android.synthetic.main.activity_investor_detail.tvName
+import kotlinx.android.synthetic.main.activity_investor_detail.tvSend
+import kotlinx.android.synthetic.main.activity_project_detail.*
 import kotlinx.android.synthetic.main.ic_title.*
 
 /**
@@ -35,6 +44,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
 
     override fun createPresenter(): InvestorDetailPersenter = InvestorDetailPersenter(this)
     override fun getInverstorDetail(capitalist: Capitalist) {
+        Thread(Runnable { Constants.putUserDetail(User(capitalist.user_id,capitalist.logo_image)) }).start()
         icLoading.visibility=View.GONE
         var inverstor=""
         var address=""
@@ -63,6 +73,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
         tvMoeny.text=capitalist.single_amount
         tvInverstor.text=inverstor
         tvAddress.text=address
+        iv_person.loadImag(capitalist.logo_image)
     }
 
     override fun getUserQuotaNum(userQuotaNum: UserQuotaNum) {

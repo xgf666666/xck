@@ -4,11 +4,13 @@ import android.view.View
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
 import com.example.xck.bean.Project
+import com.example.xck.bean.User
 import com.example.xck.bean.UserQuotaNum
 import com.example.xck.common.Constants
 import com.example.xck.ui.home.mvp.contract.ProjectDetailContract
 import com.example.xck.ui.home.mvp.persenter.ProjectDetailPersenter
 import com.example.xck.ui.person.activity.ChatActivity
+import com.example.xck.utils.loadImag
 import com.hyphenate.easeui.constants.EaseConstant
 import kotlinx.android.synthetic.main.activity_project_detail.*
 import kotlinx.android.synthetic.main.activity_project_detail.icLoading
@@ -35,13 +37,18 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
 
     override fun initEvent() {
         tvSend.setOnClickListener {
-            ChatActivity.actionStart(this,"${project?.user_id}", EaseConstant.CHATTYPE_SINGLE)
+            project?.let { it1 ->
+                ChatActivity.actionStart(this,"${it1.user_id}", EaseConstant.CHATTYPE_SINGLE,
+                    it1.project_name)
+            }
         }
     }
 
     override fun createPresenter(): ProjectDetailPersenter = ProjectDetailPersenter(this)
     override fun getProjectDetail(project: Project) {
         this.project=project
+        Thread(Runnable { Constants.putUserDetail(User(project.user_id,project.logo_image)) }).start()
+
         icLoading.visibility=View.GONE
         tvName.text=project.project_name
         var type=""
@@ -66,6 +73,7 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
         tvHistoryFinance.text=project.history_financice
         tvBusinessBook.text=project.project_file
         tvTeamNum.text=project.team_member
+        iv_person.loadImag(project.logo_image)
     }
 
     override fun getUserQuotaNum(userQuotaNum: UserQuotaNum) {

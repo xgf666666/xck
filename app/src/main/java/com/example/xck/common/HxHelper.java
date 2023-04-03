@@ -51,7 +51,7 @@ public class HxHelper {
         //初始化IM SDK
         if(initSDK(context)) {
             // debug mode, you'd better set it to false, if you want release your App officially.
-            EMClient.getInstance().setDebugMode(true);
+            EMClient.getInstance().setDebugMode(false);
             // set Call options
 //            setCallOptions(context);
             //初始化推送
@@ -107,7 +107,7 @@ public class HxHelper {
     private EMOptions initChatOptions(Context context){
         EMOptions options = new EMOptions();
         // 设置是否自动接受加好友邀请,默认是true
-        options.setAcceptInvitationAlways(false);
+        options.setAcceptInvitationAlways(true);
         // 设置是否需要接受方已读确认
         options.setRequireAck(true);
         // 设置是否需要接受方送达确认,默认false
@@ -124,9 +124,102 @@ public class HxHelper {
      * ChatPresenter中添加了网络连接状态监听，多端登录监听，群组监听，联系人监听，聊天室监听
      * @param context
      */
+/*
     private void initEaseUI(Context context) {
+        EaseIM.getInstance().addChatPresenter(ChatPresenter.getInstance());
+        EaseIM.getInstance()
+                .setSettingsProvider(new EaseSettingsProvider() {
+                    @Override
+                    public boolean isMsgNotifyAllowed(EMMessage message) {
+                        if(message == null){
+                            return demoModel.getSettingMsgNotification();
+                        }
+                        if(!demoModel.getSettingMsgNotification()){
+                            return false;
+                        }else{
+                            String chatUsename = null;
+                            List<String> notNotifyIds = null;
+                            // get user or group id which was blocked to show message notifications
+                            if (message.getChatType() == EMMessage.ChatType.Chat) {
+                                chatUsename = message.getFrom();
+                                notNotifyIds = demoModel.getDisabledIds();
+                            } else {
+                                chatUsename = message.getTo();
+                                notNotifyIds = demoModel.getDisabledGroups();
+                            }
+
+                            if (notNotifyIds == null || !notNotifyIds.contains(chatUsename)) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public boolean isMsgSoundAllowed(EMMessage message) {
+                        return demoModel.getSettingMsgSound();
+                    }
+
+                    @Override
+                    public boolean isMsgVibrateAllowed(EMMessage message) {
+                        return demoModel.getSettingMsgVibrate();
+                    }
+
+                    @Override
+                    public boolean isSpeakerOpened() {
+                        return demoModel.getSettingMsgSpeaker();
+                    }
+                })
+                .setEmojiconInfoProvider(new EaseEmojiconInfoProvider() {
+                    @Override
+                    public EaseEmojicon getEmojiconInfo(String emojiconIdentityCode) {
+                        EaseEmojiconGroupEntity data = EmojiconExampleGroupData.getData();
+                        for(EaseEmojicon emojicon : data.getEmojiconList()){
+                            if(emojicon.getIdentityCode().equals(emojiconIdentityCode)){
+                                return emojicon;
+                            }
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    public Map<String, Object> getTextEmojiconMapping() {
+                        return null;
+                    }
+                })
+                .setAvatarOptions(getAvatarOptions())
+                .setUserProvider(new EaseUserProfileProvider() {
+                    @Override
+                    public EaseUser getUser(String username) {
+                        return getUserInfo(username);
+                    }
+
+                });
 
     }
+
+    public EaseUser getUserInfo(String username) {
+        // To get instance of EaseUser, here we get it from the user list in memory
+        // You'd better cache it if you get it from your server
+        EaseUser user = null;
+        if(username.equals(EMClient.getInstance().getCurrentUser()))
+            return getUserProfileManager().getCurrentUserInfo();
+        user = getContactList().get(username);
+        if(user == null){
+            //找不到更新会话列表 继续查找
+            updateContactList();
+            user = getContactList().get(username);
+            //如果还找不到从服务端异步拉取 然后通知UI刷新列表
+            if(user == null){
+                if(fetchUserInfoList != null){
+                    fetchUserInfoList.addUserId(username);
+                }
+            }
+        }
+        return user;
+    }
+*/
     /**
      *注册对话类型
      */
@@ -135,9 +228,9 @@ public class HxHelper {
                 .addMessageType(EaseExpressionAdapterDelegate.class)       //自定义表情
                 .addMessageType(EaseFileAdapterDelegate.class)             //文件
                 .addMessageType(EaseImageAdapterDelegate.class)            //图片
-                .addMessageType(EaseLocationAdapterDelegate.class)         //定位
-                .addMessageType(EaseVideoAdapterDelegate.class)            //视频
-                .addMessageType(EaseVoiceAdapterDelegate.class)            //声音
+//                .addMessageType(EaseLocationAdapterDelegate.class)         //定位
+//                .addMessageType(EaseVideoAdapterDelegate.class)            //视频
+//                .addMessageType(EaseVoiceAdapterDelegate.class)            //声音
 //                .addMessageType(ChatConferenceInviteAdapterDelegate.class) //语音邀请
 //                .addMessageType(ChatRecallAdapterDelegate.class)           //消息撤回
 //                .addMessageType(ChatVideoCallAdapterDelegate.class)        //视频通话

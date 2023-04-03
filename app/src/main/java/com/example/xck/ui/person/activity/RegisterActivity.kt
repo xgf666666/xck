@@ -65,7 +65,7 @@ class RegisterActivity : BaseMvpActivity<RegisterPersenter>(),RegisterContract.V
         countDownTime()
     }
 
-    override fun register(register: Register) {
+    override fun register(register: Login) {
     }
 
     override fun registerIM() {

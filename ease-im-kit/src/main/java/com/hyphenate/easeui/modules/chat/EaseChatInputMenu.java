@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.modules.chat.interfaces.ChatInputMenuListener;
@@ -25,6 +26,7 @@ import com.hyphenate.easeui.modules.chat.interfaces.IChatExtendMenu;
 import com.hyphenate.easeui.modules.chat.interfaces.IChatInputMenu;
 import com.hyphenate.easeui.modules.chat.interfaces.IChatPrimaryMenu;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
+import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
 
@@ -38,9 +40,17 @@ public class EaseChatInputMenu extends LinearLayout implements IChatInputMenu, E
     private IChatEmojiconMenu emojiconMenu;
     private IChatExtendMenu extendMenu;
     private ChatInputMenuListener menuListener;
+    private String userId;//对话对方ID
 
     public EaseChatInputMenu(Context context) {
         this(context, null);
+    }
+    public void setUserId(String userId){
+        this.userId=userId;
+        if (primaryMenu!=null){
+            primaryMenu.setUserId(userId);
+        }
+
     }
 
     public EaseChatInputMenu(Context context, @Nullable AttributeSet attrs) {
@@ -58,7 +68,6 @@ public class EaseChatInputMenu extends LinearLayout implements IChatInputMenu, E
         chatMenuContainer = findViewById(R.id.chat_menu_container);
         primaryMenuContainer = findViewById(R.id.primary_menu_container);
         extendMenuContainer = findViewById(R.id.extend_menu_container);
-
         init();
     }
 

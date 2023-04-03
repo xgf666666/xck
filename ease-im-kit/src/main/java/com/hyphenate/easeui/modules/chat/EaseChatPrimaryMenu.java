@@ -21,10 +21,23 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.event.CallEvet;
+import com.hyphenate.easeui.event.FriendRequestEvent;
+import com.hyphenate.easeui.event.ReportQuotaEvent;
+import com.hyphenate.easeui.manager.EaseThreadManager;
 import com.hyphenate.easeui.modules.chat.interfaces.EaseChatPrimaryMenuListener;
 import com.hyphenate.easeui.modules.chat.interfaces.IChatPrimaryMenu;
+import com.hyphenate.exceptions.HyphenateException;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryMenu, View.OnClickListener, EaseInputEditText.OnEditTextChangeListener, TextWatcher {
     private LinearLayout rlBottom;
@@ -38,11 +51,13 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
     private ImageView faceChecked;
     private CheckBox buttonMore;
     private Button buttonSend;
+    private TextView tvCall;
 
     private EaseChatPrimaryMenuListener listener;
     private EaseInputMenuStyle menuType = EaseInputMenuStyle.All;//菜单展示形式
     protected InputMethodManager inputManager;
     protected Activity activity;
+    private String userId;//对话对方ID
 
     public EaseChatPrimaryMenu(Context context) {
         this(context, null);
@@ -61,6 +76,7 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
     }
 
     private void initViews() {
+        EventBus.getDefault().register(this);
         rlBottom = findViewById(R.id.rl_bottom);
         buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
         buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
@@ -72,10 +88,11 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
         faceChecked = findViewById(R.id.iv_face_checked);
         buttonMore = findViewById(R.id.btn_more);
         buttonSend = findViewById(R.id.btn_send);
+        tvCall = findViewById(R.id.tv_call);
 
-        editText.requestFocus();
+//        editText.requestFocus();
 
-        showNormalStatus();
+        showNormalStatusTwo();
 
         initListener();
     }
@@ -87,6 +104,7 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
         buttonMore.setOnClickListener(this);
         faceLayout.setOnClickListener(this);
         editText.setOnClickListener(this);
+        tvCall.setOnClickListener(this);
         editText.setOnEditTextChangeListener(this);
         editText.addTextChangedListener(this);
         buttonPressToSpeak.setOnTouchListener(new OnTouchListener() {
@@ -125,7 +143,7 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
     @Override
     public void showNormalStatus() {
         hideSoftKeyboard();
-        buttonSetModeVoice.setVisibility(VISIBLE);
+//        buttonSetModeVoice.setVisibility(VISIBLE);
         buttonSetModeKeyboard.setVisibility(GONE);
         edittext_layout.setVisibility(VISIBLE);
         buttonPressToSpeak.setVisibility(GONE);
@@ -133,10 +151,19 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
         checkSendButton();
         checkMenuType();
     }
-
+    public void showNormalStatusTwo() {
+//        hideSoftKeyboard();
+//        buttonSetModeVoice.setVisibility(VISIBLE);
+        buttonSetModeKeyboard.setVisibility(GONE);
+        edittext_layout.setVisibility(VISIBLE);
+        buttonPressToSpeak.setVisibility(GONE);
+        hideExtendStatus();
+        checkSendButton();
+        checkMenuType();
+    }
     @Override
     public void showTextStatus() {
-        buttonSetModeVoice.setVisibility(VISIBLE);
+//        buttonSetModeVoice.setVisibility(VISIBLE);
         buttonSetModeKeyboard.setVisibility(GONE);
         edittext_layout.setVisibility(VISIBLE);
         buttonPressToSpeak.setVisibility(GONE);
@@ -165,7 +192,7 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
 
     @Override
     public void showEmojiconStatus() {
-        buttonSetModeVoice.setVisibility(VISIBLE);
+//        buttonSetModeVoice.setVisibility(VISIBLE);
         buttonSetModeKeyboard.setVisibility(GONE);
         edittext_layout.setVisibility(VISIBLE);
         buttonPressToSpeak.setVisibility(GONE);
@@ -187,7 +214,7 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
     public void showMoreStatus() {
         if(buttonMore.isChecked()) {
             hideSoftKeyboard();
-            buttonSetModeVoice.setVisibility(VISIBLE);
+//            buttonSetModeVoice.setVisibility(VISIBLE);
             buttonSetModeKeyboard.setVisibility(GONE);
             edittext_layout.setVisibility(VISIBLE);
             buttonPressToSpeak.setVisibility(GONE);
@@ -251,6 +278,7 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
                 String s = editText.getText().toString();
                 editText.setText("");
                 listener.onSendBtnClicked(s);
+                EventBus.getDefault().post(new FriendRequestEvent(0));
             }
         }else if(id == R.id.btn_set_mode_voice) {//切换到语音模式
             showVoiceStatus();
@@ -262,9 +290,20 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
             showTextStatus();
         }else if (id == R.id.rl_face) {//切换到表情模式
             showEmojiconStatus();
+        }else if (id == R.id.tv_call){//发送打招呼
+            listener.onSendBtnClicked("你好!");
+            EventBus.getDefault().post(new CallEvet(0));
         }
     }
-
+    /**
+     * 没有额度
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void friendRequestEvent( ReportQuotaEvent event){
+        tvCall.setBackgroundResource(R.drawable.call_bg_not);
+        tvCall.setEnabled(false);
+        tvCall.setText("招呼已用完，请等待对方回复");
+    }
     @Override
     public void onClickKeyboardSendBtn(String content) {
         if(listener != null) {
@@ -354,6 +393,31 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
     }
 
     @Override
+    public void setUserId(String userId) {
+            this.userId=userId;
+        EaseThreadManager.getInstance().runOnIOThread(() -> {
+            try {
+                if (EMClient.getInstance().contactManager().getAllContactsFromServer().contains(userId)){
+                    EaseThreadManager.getInstance().runOnMainThread(() -> {
+                        tvCall.setVisibility(GONE);
+                        rlBottom.setVisibility(VISIBLE);
+                    });
+
+                }else {
+                    EaseThreadManager.getInstance().runOnMainThread(() -> {
+                        tvCall.setVisibility(VISIBLE);
+                        rlBottom.setVisibility(GONE);
+                    });
+                }
+            } catch (HyphenateException e) {
+                Log.i("xgf",e.getMessage());
+                e.printStackTrace();
+            }
+
+        });
+    }
+
+    @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
     }
@@ -370,6 +434,12 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
     @Override
     public void afterTextChanged(Editable s) {
         Log.e("TAG", this.getClass().getSimpleName() + " afterTextChanged s:"+s);
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        EventBus.getDefault().unregister(this);
     }
 }
 

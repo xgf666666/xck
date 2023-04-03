@@ -45,7 +45,7 @@ public class EaseHandleMessagePresenterImpl extends EaseHandleMessagePresenter {
             sendAtMessage(content);
             return;
         }
-        EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
+        EMMessage message = EMMessage.createTextSendMessage(content, toChatUsername);
         message.setIsNeedGroupAck(isNeedGroupAck);
         sendMessage(message);
     }

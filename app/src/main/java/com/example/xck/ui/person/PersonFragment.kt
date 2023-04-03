@@ -74,12 +74,14 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
             startActivity(Intent(context,ModifyPasswordActivity::class.java))
         }
         llLoginOut.setOnClickListener {
-            Constants.loginOut()
-            Constants.putToken("")
-            Constants.putPersonal(Login.UserInfoBean())
-            startActivity(Intent(context,LoginActivity::class.java))
-            EMClient.getInstance().logout(true)
+            Thread(Runnable {
+                Constants.loginOut()
+                Constants.putToken("")
+                Constants.putPersonal(Login.UserInfoBean())
+                EMClient.getInstance().logout(true)
+            }).start()
             ToastUtils.showShort("退出登录!")
+            startActivity(Intent(context,LoginActivity::class.java))
         }
     }
     override fun onHiddenChanged(hidden: Boolean) {

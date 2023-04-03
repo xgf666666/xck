@@ -1,11 +1,17 @@
 package com.example.xck.ui.person.mvp.persenter
 
 import android.text.TextUtils
+import android.util.Log
+import com.example.xck.App
+import com.example.xck.bean.Login
 import com.example.xck.common.Constants
 import com.example.xck.common.isPhone
 import com.example.xck.extensions.ui
+import com.example.xck.ui.person.activity.LoginActivity
 import com.example.xck.ui.person.mvp.contract.RegisterContract
 import com.example.xck.ui.person.mvp.model.RegisterModel
+import com.hyphenate.EMCallBack
+import com.hyphenate.chat.EMClient
 
 class RegisterPersenter(view: RegisterContract.View):RegisterContract.Persenter(view) {
     override fun getCodeImage() {
@@ -74,12 +80,10 @@ class RegisterPersenter(view: RegisterContract.View):RegisterContract.Persenter(
         if (password!=repassword){
             getView()?.showToast("确认密码与密码不一致")
             return
-
         }
-        this.mobile_phone=mobile_phone
-        this.password=password
        getView()?.showLoadingDialog()
        getModel().register(mobile_phone,vercode,smscode, key, password, repassword).ui({
+           register=it.data!!
            getView()?.register(it.data!!)
            registerIM(it.data!!.access_token)
 
@@ -89,25 +93,34 @@ class RegisterPersenter(view: RegisterContract.View):RegisterContract.Persenter(
            getView()?.showToast(it.message)
        })
     }
-
-    override fun login(mobile_phone: String, password: String) {
-        getModel().login(mobile_phone, password).ui({
-            getView()?.dismissLoadingDialog()
-            getView()?.login(it.data!!)
-        },{
-            getView()?.showToast(it.message)
-            getView()?.dismissLoadingDialog()
-        })
-    }
-    private var mobile_phone=""
-    private var password=""
+    var register: Login? =null
     override fun registerIM(authorization: String) {
+        //注册IM
         getModel().registerIM(authorization).ui({
-            Constants.putIMToken(it.data!!.access_token)
+            //获取IMToken
+            getModel().getImUserToken(register!!.access_token).ui({
+                //登录IM
+                EMClient.getInstance().loginWithToken("${register!!.user_info.id}", it.data!!.access_token, object :
+                    EMCallBack {
+                    override fun onSuccess() {
+                        Constants.putIMToken(it.data!!.access_token)
+                        register?.let { it1 -> getView()?.login(it1) }
+                        getView()?.dismissLoadingDialog()
+                    }
+                    override fun onError(code: Int, error: String) {
+                        getView()?.showToast(error)
+                        Log.i("xgf",error)
+                        getView()?.dismissLoadingDialog()
+                    }
+                })
+            },{
+                getView()?.showToast(it.message)
+            })
             getView()?.registerIM()
-            login(mobile_phone,password)
+//            login(mobile_phone,password)
         },{
             getView()?.showToast(it.message)
+            getView()?.dismissLoadingDialog()
         })
     }
 

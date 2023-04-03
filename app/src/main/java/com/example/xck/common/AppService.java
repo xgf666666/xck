@@ -1,7 +1,10 @@
 package com.example.xck.common;
 
 
+import androidx.annotation.AnyRes;
+
 import com.example.xck.bean.Banner;
+import com.example.xck.bean.CallIm;
 import com.example.xck.bean.Capitalist;
 import com.example.xck.bean.CodeImage;
 import com.example.xck.bean.Doc;
@@ -10,6 +13,7 @@ import com.example.xck.bean.Login;
 import com.example.xck.bean.Project;
 import com.example.xck.bean.Register;
 import com.example.xck.bean.RegisterIM;
+import com.example.xck.bean.ReportQuota;
 import com.example.xck.bean.Select;
 import com.example.xck.bean.UpLoadFile;
 import com.example.xck.bean.UserQuotaNum;
@@ -91,12 +95,12 @@ public interface AppService {
      */
     @FormUrlEncoded
     @POST("api/v1/passport/reg")
-    Observable<BaseResponseEntity<Register>> register(@Field("mobile_phone") String mobile_phone, @Field("vercode") String vercode, @Field("smscode") String smscode, @Field("key") String key, @Field("password") String password, @Field("repassword") String repassword);
+    Observable<BaseResponseEntity<Login>> register(@Field("mobile_phone") String mobile_phone, @Field("vercode") String vercode, @Field("smscode") String smscode, @Field("key") String key, @Field("password") String password, @Field("repassword") String repassword);
  /**
      * 注册IM
      */
     @GET("api/v1/user/regIm")
-    Observable<BaseResponseEntity<RegisterIM>> registerIM(@Header("Authorization") String authorization);
+    Observable<BaseResponseEntity<Object>> registerIM(@Header("Authorization") String authorization);
 
 
 
@@ -191,6 +195,24 @@ public interface AppService {
      */
     @GET("api/v1/user/getImUserToken")
     Observable<BaseResponseEntity<ImToken>> getImUserToken(@Header("Authorization") String authorization);
+
+    /**
+     * 打招呼
+     */
+    @FormUrlEncoded
+    @POST("api/v1/user/imGreetingCallBack")
+    Observable<BaseResponseEntity<Object>> sendCall(@Header("Authorization") String authorization, @Field("from_user_id") String from_user_id, @Field("msg_type") int msg_type); /**
+     /**
+     上报额度
+     */
+    @GET("api/v1/user/reportQuota")
+    Observable<BaseResponseEntity<ReportQuota>> reportQuota(@Header("Authorization") String authorization);
+
+    /**
+     获取用户打招呼记录
+     */
+    @GET("api/v1/user/imGreetingList")
+    Observable<BaseResponseEntity<CallIm>> getGreetingList(@Header("Authorization") String authorization);
 
 }
 

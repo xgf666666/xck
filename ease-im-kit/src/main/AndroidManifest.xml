@@ -1,5 +1,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hyphenate.easeui" >
 
-    <application></application>
+    <application>
+        <activity
+            android:name=".ui.EaseShowBigImageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.EaseShowNormalFileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+    </application>
 </manifest>

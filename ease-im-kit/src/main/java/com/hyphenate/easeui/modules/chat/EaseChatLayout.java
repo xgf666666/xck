@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -226,6 +227,7 @@ public class EaseChatLayout extends RelativeLayout implements IChatLayout, IHand
     public void init(EaseChatMessageListLayout.LoadDataType loadDataType, String conversationId, int chatType) {
         this.conversationId = conversationId;
         this.chatType = chatType;
+        inputMenu.setUserId(conversationId);
         messageListLayout.init(loadDataType, this.conversationId, chatType);
         presenter.setupWithToUser(chatType, this.conversationId);
         if(isChatRoomCon()) {
@@ -725,7 +727,7 @@ public class EaseChatLayout extends RelativeLayout implements IChatLayout, IHand
     }
 
     @Override
-    public void sendMessageFinish(EMMessage message) {
+    public void sendMessageFinish(EMMessage message) {//发送文本完成
         if(getChatMessageListLayout() != null) {
             getChatMessageListLayout().refreshToLatest();
         }

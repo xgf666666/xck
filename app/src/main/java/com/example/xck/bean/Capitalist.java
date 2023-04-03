@@ -41,7 +41,16 @@ public class Capitalist {
     private String create_time;
     private String update_time;
     private int user_id;
+    private String logo_image;
     private List<AttrListBean> attr_list;
+
+    public String getLogo_image() {
+        return logo_image;
+    }
+
+    public void setLogo_image(String logo_image) {
+        this.logo_image = logo_image;
+    }
 
     public int getId() {
         return id;

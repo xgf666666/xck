@@ -66,6 +66,7 @@ dependencies {
 
     //环信IM
     implementation 'io.hyphenate:hyphenate-chat:4.0.0'
+    implementation 'org.greenrobot:eventbus:3.0.0'
 
   /*  implementation 'io.hyphenate:ease-im-kit:4.0.0'*/
 }

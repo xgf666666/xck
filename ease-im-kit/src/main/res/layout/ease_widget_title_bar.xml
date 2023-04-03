@@ -11,7 +11,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:popupTheme="@style/Toolbar.PopupTheme"/>
+        app:popupTheme="@style/Toolbar.PopupTheme"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/left_layout"
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:scaleType="centerInside"
-            tools:src="@drawable/ease_mm_title_back"/>
+            tools:src="@drawable/ease_mm_title_back" />
 
     </RelativeLayout>
 
@@ -34,14 +35,14 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/em_toolbar_color_title"
         android:textSize="@dimen/em_toolbar_title_size"
-        android:maxLines="1"
-        android:ellipsize="end"
-        tools:text="标题"/>
+        tools:text="标题" />
 
     <RelativeLayout
         android:id="@+id/right_layout"
