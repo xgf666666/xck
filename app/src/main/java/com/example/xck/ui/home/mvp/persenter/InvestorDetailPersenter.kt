@@ -21,6 +21,13 @@ class InvestorDetailPersenter(view: InvestorDetailContract.View):InvestorDetailC
            getView()?.showToast(it.message)
        })
     }
+    override fun getGreetingList() {
+        getModel().getGreetingList().ui({
+            getView()?.getGreetingList(it.data!!)
+        },{
+
+        })
+    }
 
     override fun createModel(): InvestorDetailContract.Model =InvestorDetailModel()
 }

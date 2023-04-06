@@ -14,5 +14,21 @@ class MessagePersenter(view: MessageContract.View):MessageContract.Persenter(vie
         })
     }
 
+    override fun getInverstorDetail(authorization: String, user_id: Int) {
+        getModel().getInverstorDetail(authorization,user_id).ui({
+            getView()?.getInverstorDetail(it.data!!,user_id)
+        },{
+
+        })
+    }
+
+    override fun getProjectDetail(token: String,  user_id: Int) {
+        getModel().getProjectDetail(token, user_id).ui({
+            getView()?.getProjectDetail(it.data!!,user_id)
+        },{
+
+        })
+    }
+
     override fun createModel(): MessageContract.Model =MeesageModel()
 }

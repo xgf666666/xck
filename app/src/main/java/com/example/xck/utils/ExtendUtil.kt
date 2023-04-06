@@ -14,12 +14,13 @@ import com.example.xck.base.mvp.BaseFragment
 import com.example.xck.base.mvp.contract.BaseMvpView
 import com.xx.baseutilslibrary.network.exception.ApiFaileException
 import com.xx.baseutilslibrary.network.exception.TokenInvalidException
-import com.xx.baseutilslibrary.network.retrofit.Retrofit2Manager
 import retrofit2.HttpException
 import java.math.BigDecimal
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 
 /**
@@ -109,5 +110,17 @@ fun ImageView.loadImag(url: String) {
         .error(R.mipmap.icon_base)
         .into(this)
 }
+fun String.getFormFormatTime(): Long {
+//		String date = "2001-03-15 15-37-05";
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss") //24小时制
+    var time: Long = 0
+    try {
+        time = simpleDateFormat.parse(this).time
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    return time
+}
+
 
 

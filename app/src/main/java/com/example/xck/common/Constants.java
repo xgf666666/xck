@@ -7,6 +7,7 @@ import com.example.xck.bean.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -195,7 +196,12 @@ public class Constants {
      * @param
      */
     public static void putUserDetail(User user) {
-        List<User> users= new Gson().fromJson(SPUtils.getInstance().getString(USERDETAIL), new TypeToken<List<String>>() {}.getType());
+        List<User> users;
+        if (SPUtils.getInstance().getString(USERDETAIL)==null||SPUtils.getInstance().getString(USERDETAIL).isEmpty()){
+            users=new ArrayList<>();
+        }else {
+            users= new Gson().fromJson(SPUtils.getInstance().getString(USERDETAIL), new TypeToken<List<User>>() {}.getType());
+        }
        boolean isHas=false;
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getId()==user.getId()){
@@ -216,7 +222,10 @@ public class Constants {
      */
     public static List<User> getUserDetail() {
         String per=SPUtils.getInstance().getString(USERDETAIL);
-        return new Gson().fromJson(per, new TypeToken<List<String>>() {}.getType());
+        if (per.isEmpty()){
+            return new ArrayList<>();
+        }
+        return new Gson().fromJson(per, new TypeToken<List<User>>() {}.getType());
     }
     /**
      * 储存token

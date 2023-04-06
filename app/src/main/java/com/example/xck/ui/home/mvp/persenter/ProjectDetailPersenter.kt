@@ -25,6 +25,14 @@ class ProjectDetailPersenter(view: ProjectDetailContract.View):ProjectDetailCont
         })
     }
 
+    override fun getGreetingList() {
+        getModel().getGreetingList().ui({
+            getView()?.getGreetingList(it.data!!)
+        },{
+
+        })
+    }
+
 
     override fun createModel(): ProjectDetailContract.Model =ProjectDetailModel()
 }

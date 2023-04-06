@@ -75,12 +75,12 @@ class ChatFragment : EaseChatFragment() {
     /**
      * 打招呼
      */
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public fun callEvet(event: CallEvet){
         AppApi.Api().reportQuota(Constants.getToken()).ui({
-//            if (it.data!!.quota_num<=0){
+            if (it.data!!.quota_num<=0){
                 EventBus.getDefault().post(ReportQuotaEvent())
-//            }
+            }
         },{
             ToastUtils.showShort(it.message)
         })

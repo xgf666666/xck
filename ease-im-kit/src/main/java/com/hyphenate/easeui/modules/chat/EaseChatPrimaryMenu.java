@@ -439,7 +439,9 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
     @Override
     protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
-        EventBus.getDefault().unregister(this);
+        if (visibility!=View.VISIBLE){
+            EventBus.getDefault().unregister(this);
+        }
     }
 }
 
