@@ -11,22 +11,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
+import com.hyphenate.easeui.adapter.MyEaseMessageAdapter;
 import com.hyphenate.easeui.interfaces.MessageListItemClickListener;
 import com.hyphenate.easeui.interfaces.OnItemClickListener;
 import com.hyphenate.easeui.manager.EaseMessageTypeSetManager;
@@ -48,7 +52,7 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
     private static final int DEFAULT_PAGE_SIZE = 10;
     private static final String TAG = EaseChatMessageListLayout.class.getSimpleName();
     private EaseChatMessagePresenter presenter;
-    private EaseMessageAdapter messageAdapter;
+    private MyEaseMessageAdapter messageAdapter;
     private ConcatAdapter baseAdapter;
     /**
      * 加载数据的方式，目前有三种，常规模式（从本地加载），漫游模式，查询历史消息模式（通过数据库搜索）
@@ -61,6 +65,8 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
     private int pageSize = DEFAULT_PAGE_SIZE;
     private RecyclerView rvList;
     private SwipeRefreshLayout srlRefresh;
+    private TextView header_text_view;
+
     private LinearLayoutManager layoutManager;
     private EMConversation conversation;
     /**
@@ -172,18 +178,17 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
 
         rvList = findViewById(R.id.message_list);
         srlRefresh = findViewById(R.id.srl_refresh);
-
+        header_text_view = findViewById(R.id.header_text_view);
         srlRefresh.setEnabled(canUseRefresh);
-
         layoutManager = new LinearLayoutManager(getContext());
         rvList.setLayoutManager(layoutManager);
 
         baseAdapter = new ConcatAdapter();
-        messageAdapter = new EaseMessageAdapter();
+        messageAdapter = new MyEaseMessageAdapter();
         baseAdapter.addAdapter(messageAdapter);
         rvList.setAdapter(baseAdapter);
         registerChatType();
-//        messageAdapter.addHeaderView(LayoutInflater.from(context()).inflate(R.layout.ease_header_view,null));
+//        messageAdapter.setHeaderView(LayoutInflater.from(context()).inflate(R.layout.ease_header_view,null));
         initListener();
     }
 
@@ -251,7 +256,7 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
         }else if(loadDataType == LoadDataType.HISTORY) {
             presenter.loadMoreLocalHistoryMessages(msgId, pageSize, EMConversation.EMSearchDirection.DOWN);
         }else {
-            presenter.loadLocalMessages(pageSize);
+            presenter.loadLocalMessages(pageSize);//聊天记录第一次加载
         }
     }
 
@@ -513,23 +518,36 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
 
     @Override
     public void loadLocalMsgSuccess(List<EMMessage> data) {
+        if (data.size()<10){
+            messageAdapter.setVis(true);
+        }
         refreshToLatest();
     }
 
     @Override
-    public void loadNoLocalMsg() {
-
+    public void loadNoLocalMsg() {//没有本地聊天记录
+        header_text_view.setVisibility(VISIBLE);
     }
 
     @Override
-    public void loadMoreLocalMsgSuccess(List<EMMessage> data) {
+    public void loadMoreLocalMsgSuccess(List<EMMessage> data) {//加载更多，每次10条
         finishRefresh();
+       /* CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        layoutParams.height = 0;
+        appBarLayout.setLayoutParams(layoutParams);*/
         presenter.refreshCurrentConversation();
+        if (data.size()<10){
+            messageAdapter.setVis(true);
+        }
         post(()->smoothSeekToPosition(data.size() - 1));
     }
 
     @Override
-    public void loadNoMoreLocalMsg() {
+    public void loadNoMoreLocalMsg() {//没有加载跟多聊天记录
+        if (!messageAdapter.getVis()){
+            messageAdapter.setVis(true);
+            messageAdapter.notifyDataSetChanged();
+        }
         finishRefresh();
     }
 
@@ -566,7 +584,12 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
     }
 
     @Override
-    public void refreshCurrentConSuccess(List<EMMessage> data, boolean toLatest) {
+    public void refreshCurrentConSuccess(List<EMMessage> data, boolean toLatest) {//发送和接收
+
+        if (data.size()>0&&header_text_view!=null&&header_text_view.getVisibility()==View.VISIBLE){
+            header_text_view.setVisibility(GONE);
+            messageAdapter.setVis(true);
+        }
         messageAdapter.setData(data);
         if(toLatest) {
             seekToPosition(data.size() - 1);

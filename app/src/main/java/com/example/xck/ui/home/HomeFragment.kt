@@ -60,6 +60,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             homeProjectAdapter?.setOnItemClickListener { adapter, view, position ->
             val intent=Intent(this.context, ProjectDetailActivity::class.java)
                 intent.putExtra("project_id", homeProjectAdapter!!.data[position].id)
+                intent.putExtra("user_id", homeProjectAdapter!!.data[position].user_id)
                 this.startActivity(intent)
             }
            showLoadingDialog()
@@ -71,6 +72,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             homeAdapter?.setOnItemClickListener { adapter, view, position ->
                 var intent=Intent(this.context,InvestorDetailActivity::class.java)
                 intent.putExtra("capitalist_id", homeAdapter!!.data[position].id)
+                intent.putExtra("user_id", homeAdapter!!.data[position].user_id)
                 this.startActivity(intent)
             }
             showLoadingDialog()
@@ -133,14 +135,37 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
         })
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden){
+            if (Constants.getPersonal()!=null){
+                if (Constants.getPersonal().user_type_select==1){
+                    isProject=false
+                }else if (Constants.getPersonal().user_type_select==2){
+                    isProject=true
+                }
+            }
+            if (isProject){
+                getPresenter().getProjects(Constants.getToken(),attr,keyword,page,10)
+                getPresenter().getBanner("project_banner")
+            }else{
+                getPresenter().getCapitalists(Constants.getToken(),attr,keyword,page,10)
+                getPresenter().getBanner("capitalist_banner")
+            }
+
+        }
+    }
+
     override fun createPresenter(): HomePersenter =HomePersenter(this)
 
 
     override fun onRefresh() {
-        page==1
+        page=1
         if (isProject){
+                homeProjectAdapter?.loadMoreModule?.loadMoreComplete()
             getPresenter().getProjects(Constants.getToken(),attr,keyword,page,10)
         }else{
+                homeAdapter?.loadMoreModule?.loadMoreComplete()
             getPresenter().getCapitalists(Constants.getToken(),attr,keyword,page,10)
         }
 
@@ -167,7 +192,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             homeProjectAdapter?.data=projects.toMutableList()
         }
         if (projects.size<10){
-            homeProjectAdapter?.loadMoreModule?.loadMoreEnd(true)
+            homeProjectAdapter?.loadMoreModule?.loadMoreEnd(false)
         }
         homeProjectAdapter?.notifyDataSetChanged()
 

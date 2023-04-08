@@ -40,12 +40,18 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
     override fun initData() {
         tvTilte.text="详情"
         val caId = intent.getIntExtra("capitalist_id", 0)
+        val user_id = intent.getIntExtra("user_id", 0)
         getPresenter().getInverstorDetail(Constants.getToken(),caId)
         Thread(Runnable {
-            isFriend=EMClient.getInstance().contactManager().allContactsFromServer.contains("$caId")
-            getPresenter().getUserQuotaNum()//获取余额
+            isFriend=EMClient.getInstance().contactManager().allContactsFromServer.contains("$user_id")
         }).start()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getPresenter().getUserQuotaNum()//获取余额
+        getPresenter().getGreetingList()
     }
 
     override fun initEvent() {
@@ -61,7 +67,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
     override fun createPresenter(): InvestorDetailPersenter = InvestorDetailPersenter(this)
     override fun getInverstorDetail(capitalist: Capitalist) {
         this.capitalist=capitalist
-        Thread(Runnable { Constants.putUserDetail(User(capitalist.user_id,capitalist.logo_image,capitalist.capitalist_name)) }).start()
+        Thread(Runnable { Constants.putUserDetail(User(capitalist.user_id,capitalist.avatar,capitalist.capitalist_name)) }).start()
         icLoading.visibility=View.GONE
         var inverstor=""
         var address=""
@@ -90,7 +96,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
         tvMoeny.text=capitalist.single_amount
         tvInverstor.text=inverstor
         tvAddress.text=address
-        iv_person.loadImag(capitalist.logo_image)
+        iv_person.loadImag(capitalist.avatar)
         setSendState()
     }
 

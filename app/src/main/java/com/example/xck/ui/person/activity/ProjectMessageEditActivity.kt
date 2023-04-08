@@ -48,6 +48,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
     private var image=""
     private var fileString=""
     private var selectDialog:SelectDialog?=null
+    private var fileName=""
     private var filids: ArrayList<Int>?= ArrayList()
     private var fanances: ArrayList<Int>?= ArrayList()
     private var addresss: ArrayList<Int>?= ArrayList()
@@ -202,7 +203,10 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                     val args = data.getSerializableExtra(FxHelp.ACTIVITY_ARG_PARAM_NAME) as FxFileDialogArgs?
                     if (args != null) {
                         if (args.DialogResult == FxHelp.DLGRES_OK) {
-                            getPresenter().upload(File(args.FileName))
+                            var file=File(args.FileName)
+                            fileName=file.name
+                            getPresenter().upload(file)//上传商业书
+                            tvTishi.text=fileName
                         }
                     }
                 }

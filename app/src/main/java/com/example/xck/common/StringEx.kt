@@ -19,7 +19,7 @@ fun String.isPhone(): Boolean {
     // ^ 匹配输入字符串开始的位置
     // \d 匹配一个或多个数字，其中 \ 要转义，所以是 \\d
     // $ 匹配输入字符串结尾的位置
-    var regExp = "^((13[0-9])|(15[0-3, 5-9])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$"
+    var regExp = "^1[3-9]{1}[0-9]{9}\$"
     var p = Pattern.compile(regExp)
     var m = p.matcher(this)
     return m.matches()

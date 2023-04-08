@@ -37,7 +37,7 @@ public class EaseChatMessagePresenterImpl extends EaseChatMessagePresenter {
     }
 
     @Override
-    public void loadLocalMessages(int pageSize) {
+    public void loadLocalMessages(int pageSize) {//聊天记录第一次加载
         if(conversation == null) {
             throw new NullPointerException("should first set up with conversation");
         }

@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.event.CallEvet;
+import com.hyphenate.easeui.event.CallFromevent;
 import com.hyphenate.easeui.event.FriendRequestEvent;
 import com.hyphenate.easeui.event.ReportQuotaEvent;
 import com.hyphenate.easeui.manager.EaseThreadManager;
@@ -278,7 +279,7 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
                 String s = editText.getText().toString();
                 editText.setText("");
                 listener.onSendBtnClicked(s);
-                EventBus.getDefault().post(new FriendRequestEvent(0));
+                EventBus.getDefault().post(new FriendRequestEvent(0));//同意好友请求
             }
         }else if(id == R.id.btn_set_mode_voice) {//切换到语音模式
             showVoiceStatus();
@@ -303,6 +304,14 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
         tvCall.setBackgroundResource(R.drawable.call_bg_not);
         tvCall.setEnabled(false);
         tvCall.setText("招呼已用完，请等待对方回复");
+    }
+    /**
+     * 对方已打招呼
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void callFromevent( CallFromevent event){
+        tvCall.setVisibility(GONE);
+        rlBottom.setVisibility(VISIBLE);
     }
     @Override
     public void onClickKeyboardSendBtn(String content) {
@@ -394,7 +403,7 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
 
     @Override
     public void setUserId(String userId) {
-            this.userId=userId;
+        this.userId=userId;
         EaseThreadManager.getInstance().runOnIOThread(() -> {
             try {
                 if (EMClient.getInstance().contactManager().getAllContactsFromServer().contains(userId)){
@@ -407,6 +416,8 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
                     EaseThreadManager.getInstance().runOnMainThread(() -> {
                         tvCall.setVisibility(VISIBLE);
                         rlBottom.setVisibility(GONE);
+                       /* tvCall.setVisibility(GONE);
+                        rlBottom.setVisibility(VISIBLE);*/
                     });
                 }
             } catch (HyphenateException e) {

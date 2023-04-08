@@ -9,6 +9,7 @@ import com.example.xck.extensions.ui
 import com.hyphenate.chat.EMClient
 import com.hyphenate.easeui.constants.EaseConstant
 import com.hyphenate.easeui.event.CallEvet
+import com.hyphenate.easeui.event.CallFromevent
 import com.hyphenate.easeui.event.FriendRequestEvent
 import com.hyphenate.easeui.event.ReportQuotaEvent
 import com.hyphenate.easeui.manager.EaseThreadManager
@@ -43,6 +44,24 @@ class ChatFragment : EaseChatFragment() {
 
     override fun initData() {
         super.initData()
+        Thread(Runnable {
+           var isFriend=EMClient.getInstance().contactManager().allContactsFromServer.contains(conversationId)
+            if (!isFriend){
+                AppApi.Api().getGreetingList(Constants.getToken()).ui({ it1 ->
+                    it1.data?.let {
+                        it.receive.forEachIndexed { index, activeBean ->
+                            if ("${activeBean.id}" == conversationId){
+                                EventBus.getDefault().post( CallFromevent())//对方已经打招呼
+                            }
+                        }
+
+                    }
+                },{
+
+                })
+
+            }
+        }).start()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -57,7 +76,11 @@ class ChatFragment : EaseChatFragment() {
      */
     private fun sendFriendRequst(){
         EaseThreadManager.getInstance().runOnIOThread {
-            if (!Constants.getFriendIDs().contains(conversationId)){
+            var isFriend=false;//Constants.getFriendIDs()
+            if (!isFriend){
+                isFriend=EMClient.getInstance().contactManager().allContactsFromServer.contains(conversationId)
+            }
+            if (!isFriend){
                 EMClient.getInstance().contactManager().acceptInvitation(conversationId);
             }
 

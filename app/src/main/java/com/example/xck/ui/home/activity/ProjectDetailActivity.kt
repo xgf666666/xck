@@ -36,10 +36,11 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
     override fun initData() {
         tvTilte.text="详情"
         val projectId = intent.getIntExtra("project_id", 0)
+        val user_id = intent.getIntExtra("user_id", 0)
         getPresenter().getProjectDetail(Constants.getToken(),projectId,0)
 
         Thread(Runnable {
-            isFriend= EMClient.getInstance().contactManager().allContactsFromServer.contains("$projectId")
+            isFriend= EMClient.getInstance().contactManager().allContactsFromServer.contains("$user_id")
             if (!isFriend) {
                 getPresenter().getGreetingList()//请求打招呼
             }
@@ -57,10 +58,17 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        getPresenter().getUserQuotaNum()//获取余额
+        getPresenter().getGreetingList()//打招呼列表
+    }
+
+
     override fun createPresenter(): ProjectDetailPersenter = ProjectDetailPersenter(this)
     override fun getProjectDetail(project: Project) {
         this.project=project
-        Thread(Runnable { Constants.putUserDetail(User(project.user_id,project.logo_image,project.project_name)) }).start()
+        Thread(Runnable { Constants.putUserDetail(User(project.user_id,project.logo_image,project.project_name)) }).start()//存储信息给打招呼和沟通中使用
 
         icLoading.visibility=View.GONE
         tvName.text=project.project_name

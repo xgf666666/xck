@@ -22,7 +22,8 @@
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="@color/black"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_marginBottom="5dp"/>
 
     <LinearLayout
         android:id="@+id/rl_bottom"
