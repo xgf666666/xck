@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dialog_login_out_login">
+    <TextView
+        android:id="@+id/tvOut"
+        android:layout_width="@dimen/DIMEN_WIDTH_600_DP"
+        android:layout_height="wrap_content"
+        android:text="是否退出登录"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/DIMEN_WIDTH_80_DP"
+        android:gravity="center"
+        />
+    <View
+        android:id="@+id/vw_line"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvOut"
+        android:layout_height="1dp"
+        android:background="@color/text_FFF9F9F8"
+        android:layout_marginTop="@dimen/DIMEN_WIDTH_80_DP"/>
+
+    <LinearLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vw_line"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/DIMEN_WIDTH_100_DP"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvExit"
+            android:layout_width="@dimen/DIMEN_WIDTH_300_DP"
+            android:layout_height="match_parent"
+            android:text="取消"
+            android:gravity="center"
+            android:textColor="@color/text_333333"
+            android:textSize="18sp"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/DIMEN_WIDTH_80_DP"
+            android:background="@color/text_FFF9F9F8"/>
+        <TextView
+            android:id="@+id/tvSure"
+            android:layout_width="@dimen/DIMEN_WIDTH_300_DP"
+            android:layout_height="match_parent"
+            android:text="确定"
+            android:gravity="center"
+            android:textColor="@color/colorMain"
+            android:textSize="18sp"
+            />
+
+
+    </LinearLayout>
+    
+
+</androidx.constraintlayout.widget.ConstraintLayout>

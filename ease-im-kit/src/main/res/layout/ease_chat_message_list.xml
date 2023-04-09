@@ -5,47 +5,15 @@
     android:id="@+id/srl_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<!--  <androidx.coordinatorlayout.widget.CoordinatorLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-      <View
-          android:id="@+id/views"
-          android:layout_width="match_parent"
-          android:layout_height="50dp"
-          android:background="#5FF"
-          app:layout_scrollFlags="exitUntilCollapsed"
-          />&lt;!&ndash; app:layout_scrollFlags="scroll|enterAlwaysCollapsed"&ndash;&gt;
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-
-
-  </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
-<!--
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/message_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
--->
-
-  <!--</LinearLayout>-->
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
+    <include layout="@layout/header_view"
         android:id="@+id/header_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这是最后一条聊天记录"
-        android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_list"
         android:layout_width="match_parent"

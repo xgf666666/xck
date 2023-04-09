@@ -6,6 +6,7 @@ import com.example.xck.bean.Login;
 import com.example.xck.bean.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hyphenate.easeui.constants.EaseCommom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,6 +163,7 @@ public class Constants {
      * @param
      */
     public static void putPersonal(Login.UserInfoBean loginEntity) {
+        EaseCommom.getInstance().setProject(loginEntity.getUser_type_select()==1);
         SPUtils.getInstance().put(KEY_SP_PERSON, new Gson().toJson(loginEntity));
     }
     /**

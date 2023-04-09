@@ -65,7 +65,7 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_marginRight">@dimen/ease_chat_avatar_margin</item>
-        <item name="android:src">@drawable/ease_default_avatar</item>
+        <item name="android:src">@drawable/icon_base</item>
         <item name="android:scaleType">fitXY</item>
     </style>
 
@@ -75,7 +75,7 @@
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_marginLeft">@dimen/ease_chat_avatar_margin</item>
-        <item name="android:src">@drawable/ease_default_avatar</item>
+        <item name="android:src">@drawable/icon_base</item>
         <item name="android:scaleType">fitXY</item>
     </style>
 

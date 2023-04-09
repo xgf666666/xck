@@ -43,7 +43,13 @@ class ProjectMessageEditModel :ProjectMessageEditContract.Model{
         stages: IntArray,
         location: IntArray,
         id: Int
-    ):Observable<BaseResponseEntity<Any>> =AppApi.Api().setProject(Authorization, project_name, logo_image, found_time, introduction, wait_finance, operation, advantage, history_financice, project_file, team_member, industries, stages, location,id)
+    ):Observable<BaseResponseEntity<Any>> {
+        return if (id==0){
+            AppApi.Api().setProject(Authorization, project_name, logo_image, found_time, introduction, wait_finance, operation, advantage, history_financice, project_file, team_member, industries, stages, location)
+        }else{
+            AppApi.Api().setProject(Authorization, project_name, logo_image, found_time, introduction, wait_finance, operation, advantage, history_financice, project_file, team_member, industries, stages, location,id)
+        }
+    }
 
     override fun getProjectDetail(
         token: String,

@@ -129,7 +129,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
             .setOnFinishChooseAndCropImageListener { bitmap, file ->
                 //                    显示选好得图片
 //                iv_hand.setImageBitmap(bitmap)
-                ivPerson.setImageBitmap(bitmap)
+//                ivPerson.setImageBitmap(bitmap)
                 showLoadingDialog()
                 getPresenter().upload(file)
             }
@@ -221,6 +221,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
             fileString=upLoadFile.url
         }else{
             image=upLoadFile.url
+            ivPerson.loadImag(image)
         }
 
     }
@@ -291,6 +292,9 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 var field=""
                 var fananceStr=""
                 var addressStr=""
+                filids?.clear()
+                fanances?.clear()
+                addresss?.clear()
                 for (i in 0 until filid.size){
                     filids!!.add(filid[i].id)
                     if (i==0){

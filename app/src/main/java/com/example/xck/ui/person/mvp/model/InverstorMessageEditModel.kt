@@ -41,7 +41,13 @@ class InverstorMessageEditModel :InverstorMessageEditContract.Model{
         stages: IntArray,
         location: IntArray,
         id:Int
-    ): Observable<BaseResponseEntity<Any>> =AppApi.Api().setCapitalist(Authorization, capitalist_name, contact_name, position, single_amount, avatar, introduction, cases, business_card_img, industries, stages, location,id)
+    ): Observable<BaseResponseEntity<Any>>{
+        return if (id==0){
+            AppApi.Api().setCapitalist(Authorization, capitalist_name, contact_name, position, single_amount, avatar, introduction, cases, business_card_img, industries, stages, location)
+        }else{
+            AppApi.Api().setCapitalist(Authorization, capitalist_name, contact_name, position, single_amount, avatar, introduction, cases, business_card_img, industries, stages, location,id)
+        }
+    }
 
     override fun getInverstorDetail(
         authorization: String,

@@ -8,6 +8,7 @@ import com.example.xck.R
 import com.example.xck.base.mvp.BaseMvpFragment
 import com.example.xck.bean.Login
 import com.example.xck.common.Constants
+import com.example.xck.dialog.LoginOutDialog
 import com.example.xck.ui.person.activity.*
 import com.example.xck.ui.person.mvp.contract.PersonContract
 import com.example.xck.ui.person.mvp.persenter.PersonPersenter
@@ -54,34 +55,43 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
             if (Constants.getPersonal().user_type_select==1){
                 if (Constants.getPersonal().proof_status==2){
                     intent = Intent(context, ProjectMessageEditActivity::class.java)
+                    intent?.putExtra("complete_status",Constants.getPersonal().complete_status)
+                    context?.startActivity(intent)
                 }else{
                     ToastUtils.showShort(message)
                     return@setOnClickListener
                 }
-
             }else if (Constants.getPersonal().user_type_select==2){
                 if (Constants.getPersonal().proof_status==2){
                     intent = Intent(context, InvestorMessageEditActivity::class.java)
+                    intent?.putExtra("complete_status",Constants.getPersonal().complete_status)
+                    context?.startActivity(intent)
                 }else{
                     ToastUtils.showShort(message)
                     return@setOnClickListener
                 }
             }
-            intent?.putExtra("complete_status",Constants.getPersonal().complete_status)
-            context?.startActivity(intent)
         }
         ll_identifyPw.setOnClickListener {
             startActivity(Intent(context,ModifyPasswordActivity::class.java))
         }
         llLoginOut.setOnClickListener {
-            Thread(Runnable {
-                Constants.loginOut()
-                Constants.putToken("")
-                Constants.putPersonal(Login.UserInfoBean())
-                EMClient.getInstance().logout(true)
-            }).start()
-            ToastUtils.showShort("退出登录!")
-            startActivity(Intent(context,LoginActivity::class.java))
+            var loginOutDialog = context?.let { it1 -> LoginOutDialog(it1) }
+            loginOutDialog?.setLoginOutClickListener(object :LoginOutDialog.LoginOutClickListener{
+                override fun sure() {
+                    Thread(Runnable {
+                        Constants.loginOut()
+                        Constants.putToken("")
+                        Constants.putPersonal(Login.UserInfoBean())
+                        EMClient.getInstance().logout(true)
+                    }).start()
+                    ToastUtils.showShort("退出登录!")
+                    startActivity(Intent(context,LoginActivity::class.java))
+                }
+            })
+            loginOutDialog?.show()
+
+
         }
     }
     override fun onHiddenChanged(hidden: Boolean) {

@@ -118,6 +118,16 @@ public interface AppService {
                                                       @Field("found_time") String found_time,@Field("introduction") String introduction,@Field("wait_finance") String wait_finance,@Field("operation") String operation,
                                                       @Field("advantage") String advantage,@Field("history_financice") String history_financice,@Field("project_file") String project_file,@Field("team_member") String team_member,@Field("industries[]") int[] industries,
                                                       @Field("stages[]") int[] stages,@Field("location[]") int[] location,@Field("id") int id);
+
+    /**
+     * 设置项目信息
+     */
+    @FormUrlEncoded
+    @POST("api/v1/user/setProject")
+    Observable<BaseResponseEntity<Object>> setProject(@Header("Authorization") String Authorization,@Field("project_name")String project_name,@Field("logo_image")String logo_image,
+                                                      @Field("found_time") String found_time,@Field("introduction") String introduction,@Field("wait_finance") String wait_finance,@Field("operation") String operation,
+                                                      @Field("advantage") String advantage,@Field("history_financice") String history_financice,@Field("project_file") String project_file,@Field("team_member") String team_member,@Field("industries[]") int[] industries,
+                                                      @Field("stages[]") int[] stages,@Field("location[]") int[] location);
     /**
      * 设置机构信息
      */
@@ -127,6 +137,16 @@ public interface AppService {
                                                       @Field("position") String position,@Field("single_amount") String single_amount,@Field("avatar") String avatar,@Field("introduction") String introduction,
                                                       @Field("cases") String cases,@Field("business_card_img") String business_card_img,@Field("industries[]") int[] industries,
                                                       @Field("stages[]") int[] stages,@Field("location[]") int[] location,@Field("id") int id);
+    /**
+     * 设置机构信息
+     */
+    @FormUrlEncoded
+    @POST("api/v1/user/setCapitalist")
+    Observable<BaseResponseEntity<Object>> setCapitalist(@Header("Authorization") String Authorization,@Field("capitalist_name")String capitalist_name,@Field("contact_name")String contact_name,
+                                                         @Field("position") String position,@Field("single_amount") String single_amount,@Field("avatar") String avatar,@Field("introduction") String introduction,
+                                                         @Field("cases") String cases,@Field("business_card_img") String business_card_img,@Field("industries[]") int[] industries,
+                                                         @Field("stages[]") int[] stages,@Field("location[]") int[] location);
+
     /**
      * 角色认证
      */

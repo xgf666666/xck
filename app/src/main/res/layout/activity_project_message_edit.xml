@@ -82,7 +82,7 @@
                         android:layout_marginRight="20dp"
                         android:src="@mipmap/gengduo" />
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivPerson"
                         android:layout_width="39dp"
                         android:layout_height="39dp"

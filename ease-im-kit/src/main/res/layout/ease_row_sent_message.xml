@@ -6,11 +6,8 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="13dp">
-    <TextView
-        android:id="@+id/header_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这是最后一条聊天记录"/>
+    <include layout="@layout/header_view"
+        android:id="@+id/header_text_view" />
 
     <TextView
         android:id="@+id/timestamp"

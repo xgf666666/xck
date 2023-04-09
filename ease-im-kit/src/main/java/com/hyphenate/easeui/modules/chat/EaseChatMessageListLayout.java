@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ConcatAdapter;
@@ -31,6 +32,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.adapter.MyEaseMessageAdapter;
+import com.hyphenate.easeui.constants.EaseCommom;
 import com.hyphenate.easeui.interfaces.MessageListItemClickListener;
 import com.hyphenate.easeui.interfaces.OnItemClickListener;
 import com.hyphenate.easeui.manager.EaseMessageTypeSetManager;
@@ -65,7 +67,9 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
     private int pageSize = DEFAULT_PAGE_SIZE;
     private RecyclerView rvList;
     private SwipeRefreshLayout srlRefresh;
-    private TextView header_text_view;
+    private ConstraintLayout header_text_view;
+    private RelativeLayout rlInvestorTitle;
+    private RelativeLayout rlProjectTitle;
 
     private LinearLayoutManager layoutManager;
     private EMConversation conversation;
@@ -179,6 +183,8 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
         rvList = findViewById(R.id.message_list);
         srlRefresh = findViewById(R.id.srl_refresh);
         header_text_view = findViewById(R.id.header_text_view);
+        rlInvestorTitle = findViewById(R.id.rlInvestorTitle);
+        rlProjectTitle = findViewById(R.id.rlProjectTitle);
         srlRefresh.setEnabled(canUseRefresh);
         layoutManager = new LinearLayoutManager(getContext());
         rvList.setLayoutManager(layoutManager);
@@ -527,6 +533,13 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
     @Override
     public void loadNoLocalMsg() {//没有本地聊天记录
         header_text_view.setVisibility(VISIBLE);
+        if (EaseCommom.getInstance().isProject()){
+            rlProjectTitle.setVisibility(GONE);
+            rlInvestorTitle.setVisibility(VISIBLE);
+        }else {
+            rlProjectTitle.setVisibility(VISIBLE);
+            rlInvestorTitle.setVisibility(GONE);
+        }
     }
 
     @Override

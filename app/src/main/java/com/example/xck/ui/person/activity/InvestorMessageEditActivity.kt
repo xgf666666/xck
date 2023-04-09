@@ -100,16 +100,16 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
             .setSize(120, 120)//裁剪尺寸
             .setOnFinishChooseAndCropImageListener { bitmap, file ->
                 //                    显示选好得图片
-                ivPerson.setImageBitmap(bitmap)
+//                ivPerson.setImageBitmap(bitmap)
                 showLoadingDialog()
                 getPresenter().upload(file)
             }
             .setOnFinishChooseImageListener { uri, file ->
-                if (card){
+               /* if (card){
                     iv_card.setImageURI(uri)
                 }else{
                     ivPerson.setImageURI(uri)
-                }
+                }*/
                 showLoadingDialog()
                 getPresenter().upload(file)
             }
@@ -153,6 +153,9 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
                 var field=""
                 var fananceStr=""
                 var addressStr=""
+                filids?.clear()
+                fanances?.clear()
+                addresss?.clear()
                 for (i in 0 until filid.size){
                     filids!!.add(filid[i].id)
                     if (i==0){
@@ -197,8 +200,10 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
     override fun getloadFile(upLoadFile: UpLoadFile) {
         if (card){
             cardUri=upLoadFile.url
+            iv_card.loadImag(cardUri!!)
         }else{
             imageUri=upLoadFile.url
+            ivPerson.loadImag(imageUri!!)
         }
     }
 

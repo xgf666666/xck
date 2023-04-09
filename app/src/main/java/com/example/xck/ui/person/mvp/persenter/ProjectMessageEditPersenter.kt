@@ -83,7 +83,7 @@ class ProjectMessageEditPersenter(view: ProjectMessageEditContract.View) :
             ToastUtils.showShort("请选择融资阶段")
             return
         }
-        if (stages.isEmpty()) {
+        if (location.isEmpty()) {
             ToastUtils.showShort("请选择项目地点")
             return
         }

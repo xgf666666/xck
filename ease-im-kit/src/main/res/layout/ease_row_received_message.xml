@@ -5,13 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingTop="13dp">
-    <TextView
-        android:id="@+id/header_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这是最后一条聊天记录"
-        android:layout_gravity="center" />
-
+    <include layout="@layout/header_view"
+        android:id="@+id/header_text_view" />
     <TextView
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"
@@ -44,15 +39,15 @@
                 android:id="@+id/tv_chatcontent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autoLink="web"
                 android:layout_centerInParent="true"
+                android:autoLink="web"
                 android:gravity="center|left"
                 android:lineSpacingExtra="2dp"
-                android:minHeight="@dimen/ease_chat_text_min_height"
                 android:maxWidth="225.0dip"
+                android:minHeight="@dimen/ease_chat_text_min_height"
                 android:textColor="#ff000000"
                 android:textSize="15sp"
-                tools:text="环信"/>
+                tools:text="环信" />
         </RelativeLayout>
 
         <TextView

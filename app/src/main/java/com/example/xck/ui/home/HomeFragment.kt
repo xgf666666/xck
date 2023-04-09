@@ -52,29 +52,33 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
                 isProject=true
             }
         }
-        if (isProject){
-            homeProjectAdapter= HomeProjectAdapter()
-            rvHome.adapter=homeProjectAdapter
-            homeProjectAdapter?.loadMoreModule?.setOnLoadMoreListener(this)
-            homeProjectAdapter?.loadMoreModule?.isAutoLoadMore=true
-            homeProjectAdapter?.setOnItemClickListener { adapter, view, position ->
+        homeProjectAdapter= HomeProjectAdapter()
+        homeProjectAdapter?.loadMoreModule?.setOnLoadMoreListener(this)
+        homeProjectAdapter?.loadMoreModule?.isAutoLoadMore=true
+        homeProjectAdapter?.setOnItemClickListener { adapter, view, position ->
             val intent=Intent(this.context, ProjectDetailActivity::class.java)
-                intent.putExtra("project_id", homeProjectAdapter!!.data[position].id)
-                intent.putExtra("user_id", homeProjectAdapter!!.data[position].user_id)
-                this.startActivity(intent)
-            }
+            intent.putExtra("project_id", homeProjectAdapter!!.data[position].id)
+            intent.putExtra("user_id", homeProjectAdapter!!.data[position].user_id)
+            this.startActivity(intent)
+        }
+
+        homeAdapter= HomeAdapter()
+        homeAdapter?.loadMoreModule?.setOnLoadMoreListener(this)
+        homeAdapter?.loadMoreModule?.isAutoLoadMore=true
+        homeAdapter?.setOnItemClickListener { adapter, view, position ->
+            var intent=Intent(this.context,InvestorDetailActivity::class.java)
+            intent.putExtra("capitalist_id", homeAdapter!!.data[position].id)
+            intent.putExtra("user_id", homeAdapter!!.data[position].user_id)
+            this.startActivity(intent)
+        }
+
+        if (isProject){
+            rvHome.adapter=homeProjectAdapter
            showLoadingDialog()
             getPresenter().getProjects(Constants.getToken(),attr,keyword,page,10)
             getPresenter().getBanner("project_banner")
         }else{
-            homeAdapter= HomeAdapter()
             rvHome.adapter=homeAdapter
-            homeAdapter?.setOnItemClickListener { adapter, view, position ->
-                var intent=Intent(this.context,InvestorDetailActivity::class.java)
-                intent.putExtra("capitalist_id", homeAdapter!!.data[position].id)
-                intent.putExtra("user_id", homeAdapter!!.data[position].user_id)
-                this.startActivity(intent)
-            }
             showLoadingDialog()
             getPresenter().getCapitalists(Constants.getToken(),attr,keyword,page,10)
             getPresenter().getBanner("capitalist_banner")
@@ -145,10 +149,13 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
                     isProject=true
                 }
             }
+            page=1
             if (isProject){
+                rvHome.adapter=homeProjectAdapter
                 getPresenter().getProjects(Constants.getToken(),attr,keyword,page,10)
                 getPresenter().getBanner("project_banner")
             }else{
+                rvHome.adapter=homeAdapter
                 getPresenter().getCapitalists(Constants.getToken(),attr,keyword,page,10)
                 getPresenter().getBanner("capitalist_banner")
             }
@@ -209,7 +216,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             homeAdapter?.data=projects.toMutableList()
         }
         if (projects.size<10){
-            homeAdapter?.loadMoreModule?.loadMoreEnd(true)
+            homeAdapter?.loadMoreModule?.loadMoreEnd(false)
         }
 
         homeAdapter?.notifyDataSetChanged()
