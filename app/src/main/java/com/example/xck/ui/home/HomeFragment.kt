@@ -3,10 +3,8 @@ package com.example.xck.ui.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -28,6 +26,7 @@ import com.example.xck.ui.home.mvp.contract.HomeContract
 import com.example.xck.ui.home.mvp.persenter.HomePersenter
 import com.example.xck.utils.SoftKeyboardUtils
 import com.example.xck.utils.loadImag
+import com.hyphenate.easeui.constants.EaseCommom
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -46,6 +45,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
     override fun init(view: View?) {
         rvHome.layoutManager=LinearLayoutManager(this.context)
         if (Constants.getPersonal()!=null){
+            EaseCommom.getInstance().isProject = Constants.getPersonal().user_type_select == 1
             if (Constants.getPersonal().user_type_select==1){
                 isProject=false
             }else if (Constants.getPersonal().user_type_select==2){

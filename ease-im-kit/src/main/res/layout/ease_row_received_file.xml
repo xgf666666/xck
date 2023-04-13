@@ -5,6 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingTop="13dp">
+    <include layout="@layout/header_view"
+        android:id="@+id/header_text_view"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/timestamp"

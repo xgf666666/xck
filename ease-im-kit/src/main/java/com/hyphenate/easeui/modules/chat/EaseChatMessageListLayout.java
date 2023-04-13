@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
@@ -33,6 +34,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.adapter.MyEaseMessageAdapter;
 import com.hyphenate.easeui.constants.EaseCommom;
+import com.hyphenate.easeui.constants.UserMessage;
 import com.hyphenate.easeui.interfaces.MessageListItemClickListener;
 import com.hyphenate.easeui.interfaces.OnItemClickListener;
 import com.hyphenate.easeui.manager.EaseMessageTypeSetManager;
@@ -45,6 +47,7 @@ import com.hyphenate.easeui.modules.chat.presenter.EaseChatMessagePresenter;
 import com.hyphenate.easeui.modules.chat.presenter.EaseChatMessagePresenterImpl;
 import com.hyphenate.easeui.modules.chat.presenter.IChatMessageListView;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.widget.EaseImageView;
 
 import java.util.List;
 
@@ -68,6 +71,15 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
     private RecyclerView rvList;
     private SwipeRefreshLayout srlRefresh;
     private ConstraintLayout header_text_view;
+    private TextView tvName;
+    private TextView tvCompany;
+    private TextView tvAddress;
+    private TextView tvCase;
+    private EaseImageView iv_userHead;
+    private EaseImageView iv_userHeadInvestor;
+    private TextView tvRealName;
+    private TextView tvInvestorName;
+    private TextView tvInvestorCompany;
     private RelativeLayout rlInvestorTitle;
     private RelativeLayout rlProjectTitle;
 
@@ -182,7 +194,19 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
 
         rvList = findViewById(R.id.message_list);
         srlRefresh = findViewById(R.id.srl_refresh);
+
         header_text_view = findViewById(R.id.header_text_view);
+        tvName = findViewById(R.id.tvName);
+        tvCompany = findViewById(R.id.tvCompany);
+        tvAddress = findViewById(R.id.tvAddress);
+        tvCase = findViewById(R.id.tvCase);
+        iv_userHead = findViewById(R.id.iv_userHeadProject);
+        tvRealName = findViewById(R.id.tvRealName);
+
+        tvInvestorName = findViewById(R.id.tvInvestorName);
+        tvInvestorCompany = findViewById(R.id.tvInvestorCompany);
+        iv_userHeadInvestor = findViewById(R.id.iv_userHeadInvestor);
+
         rlInvestorTitle = findViewById(R.id.rlInvestorTitle);
         rlProjectTitle = findViewById(R.id.rlProjectTitle);
         srlRefresh.setEnabled(canUseRefresh);
@@ -196,6 +220,29 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
         registerChatType();
 //        messageAdapter.setHeaderView(LayoutInflater.from(context()).inflate(R.layout.ease_header_view,null));
         initListener();
+        setData();
+    }
+    private void setData(){
+        UserMessage userMessage = EaseCommom.getInstance().getUserMessage();
+        if (userMessage==null) return;
+        if (EaseCommom.getInstance().isProject()){
+            tvInvestorName.setText(userMessage.getName());
+            tvInvestorCompany.setText(userMessage.getPosition()+"  |  "+userMessage.getFinancing());
+            Glide.with(context()).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
+                    .dontAnimate()
+                    .error(R.drawable.icon_base)
+                    .into(iv_userHeadInvestor);
+
+        }else {
+            tvName.setText(userMessage.getName());
+            tvCompany.setText(userMessage.getTrade()+"  |  "+userMessage.getFinancing());
+            tvAddress.setText(userMessage.getAddress());
+            tvCase.setText(userMessage.getDescribe());
+            Glide.with(context()).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
+                    .dontAnimate()
+                    .error(R.drawable.icon_base)
+                    .into(iv_userHead);
+        }
     }
 
     @Override

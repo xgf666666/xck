@@ -50,7 +50,7 @@ class ChatFragment : EaseChatFragment() {
                 AppApi.Api().getGreetingList(Constants.getToken()).ui({ it1 ->
                     it1.data?.let {
                         it.receive.forEachIndexed { index, activeBean ->
-                            if ("${activeBean.id}" == conversationId){
+                            if ("${activeBean.user_id}" == conversationId){
                                 EventBus.getDefault().post( CallFromevent())//对方已经打招呼
                             }
                         }
@@ -74,9 +74,9 @@ class ChatFragment : EaseChatFragment() {
     /**
      * 同意好友请求
      */
+    var isFriend=false;//Constants.getFriendIDs()
     private fun sendFriendRequst(){
         EaseThreadManager.getInstance().runOnIOThread {
-            var isFriend=false;//Constants.getFriendIDs()
             if (!isFriend){
                 isFriend=EMClient.getInstance().contactManager().allContactsFromServer.contains(conversationId)
             }

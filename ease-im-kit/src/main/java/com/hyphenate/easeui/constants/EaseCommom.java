@@ -8,6 +8,15 @@ package com.hyphenate.easeui.constants;
 public class EaseCommom {
     private static EaseCommom instance;
     private boolean isProject;
+    private UserMessage userMessage;
+
+    public UserMessage getUserMessage() {
+        return userMessage;
+    }
+
+    public void setUserMessage(UserMessage userMessage) {
+        this.userMessage = userMessage;
+    }
 
     public boolean isProject() {
         return isProject;

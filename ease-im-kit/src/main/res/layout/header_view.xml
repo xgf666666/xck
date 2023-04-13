@@ -1,63 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rlProjectTitle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/chat_title_bg"
-        android:visibility="gone">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible">
+
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="苏南心"
-            android:textSize="17sp"
-            android:textColor="#333333"
-            android:textStyle="bold"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:text="苏南心"
+            android:textColor="#333333"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvCompany"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvName"
-            android:text="乐融资本|高级投资经理"
-            android:textSize="14sp"
-            android:textColor="#333333"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="乐融资本|高级投资经理"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/tvAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="杭州"
-            android:textSize="14sp"
             android:layout_alignTop="@+id/tvName"
-            android:textColor="#333333"
+            android:layout_alignParentRight="true"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            />
+            android:text="杭州"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/tvCase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCompany"
             android:layout_alignLeft="@+id/tvCompany"
-            android:text="投资案例：猫眼咖啡、爵士板鞋"
-            android:textSize="13sp"
-            android:textColor="#666666"
             android:layout_marginTop="7dp"
-            android:layout_below="@+id/tvCompany"/>
+            android:text="投资案例：猫眼咖啡、爵士板鞋"
+            android:textColor="#666666"
+            android:textSize="13sp" />
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,66 +70,72 @@
             android:layout_alignStart="@+id/tvCase"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="15dp">
+
             <com.hyphenate.easeui.widget.EaseImageView
-                android:id="@+id/iv_userHead"
+                android:id="@+id/iv_userHeadProject"
                 android:layout_width="@dimen/size_avatar"
                 android:layout_height="@dimen/size_avatar"
                 android:src="@drawable/icon_base"
-               />
+                app:ease_shape_type="round"/>
             <TextView
                 android:id="@+id/tvRealName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/iv_userHead"
-                android:text="张三"
-                android:textSize="14sp"
-                android:textColor="#333333"
-                android:layout_alignBaseline="@+id/iv_userHead"
+                android:layout_alignBaseline="@+id/iv_userHeadProject"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="11dp"/>
+                android:layout_marginLeft="11dp"
+                android:layout_toRightOf="@+id/iv_userHeadProject"
+                android:text="张三"
+                android:textColor="#333333"
+                android:textSize="14sp" />
         </RelativeLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rlInvestorTitle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/chat_title_bg">
+        android:background="@drawable/chat_title_bg"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/tvInvestorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
             android:text="同创资本"
-            android:textSize="17sp"
             android:textColor="#333333"
-            android:textStyle="bold"
-            android:layout_marginLeft="12dp" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvInvestorCompany"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvInvestorName"
-            android:text="乐融资本  |  高级投资经理"
-            android:textSize="14sp"
-            android:textColor="#333333"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="乐融资本  |  高级投资经理"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
         <com.hyphenate.easeui.widget.EaseImageView
             android:id="@+id/iv_userHeadInvestor"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
-            android:src="@drawable/icon_base"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            />
+            android:src="@drawable/icon_base"
+            app:ease_shape_type="round"/>
 
     </RelativeLayout>
 

@@ -16,7 +16,9 @@ import com.example.xck.ui.home.mvp.persenter.InvestorDetailPersenter
 import com.example.xck.ui.person.activity.ChatActivity
 import com.example.xck.utils.loadImag
 import com.hyphenate.chat.EMClient
+import com.hyphenate.easeui.constants.EaseCommom
 import com.hyphenate.easeui.constants.EaseConstant
+import com.hyphenate.easeui.constants.UserMessage
 import kotlinx.android.synthetic.main.activity_investor_detail.*
 import kotlinx.android.synthetic.main.activity_investor_detail.icLoading
 import kotlinx.android.synthetic.main.activity_investor_detail.iv_person
@@ -57,6 +59,30 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
     override fun initEvent() {
         tvSend.setOnClickListener {
             capitalist?.let { it1 ->
+                Thread(Runnable {
+                    var userMessage = UserMessage()
+                    var inverstor=""
+                    var address=""
+                    var trade=""
+                    for (i in 0 until it1.attr_list.size){
+                        if (it1.attr_list[i].attr_parent_id==3){
+                            inverstor+=it1.attr_list[i].attr_name+"  "
+                        }else if (it1.attr_list[i].attr_parent_id==2){
+                            address+=it1.attr_list[i].attr_name+"  "
+                        }else if (it1.attr_list[i].attr_parent_id==1){
+                            trade+=it1.attr_list[i].attr_name+"  "
+                        }
+                    }
+                    userMessage.id=it1.user_id
+                    userMessage.financing=inverstor
+                    userMessage.address=address
+                    userMessage.name=it1.capitalist_name
+                    userMessage.position=it1.contact_name
+                    userMessage.describe=it1.introduction
+                    userMessage.logo=it1.avatar
+                    userMessage.trade=trade
+                    EaseCommom.getInstance().userMessage=userMessage
+                }).start()
                 ChatActivity.actionStart(this,"${it1.user_id}", EaseConstant.CHATTYPE_SINGLE,
                     it1.capitalist_name)
             }
@@ -67,7 +93,32 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
     override fun createPresenter(): InvestorDetailPersenter = InvestorDetailPersenter(this)
     override fun getInverstorDetail(capitalist: Capitalist) {
         this.capitalist=capitalist
-        Thread(Runnable { Constants.putUserDetail(User(capitalist.user_id,capitalist.avatar,capitalist.capitalist_name)) }).start()
+        Thread(Runnable {
+            var userMessage = UserMessage()
+            var inverstor=""
+            var address=""
+            var trade=""
+            for (i in 0 until capitalist.attr_list.size){
+                if (capitalist.attr_list[i].attr_parent_id==3){
+                    inverstor+=capitalist.attr_list[i].attr_name+"  "
+                }else if (capitalist.attr_list[i].attr_parent_id==2){
+                    address+=capitalist.attr_list[i].attr_name+"  "
+                }else if (capitalist.attr_list[i].attr_parent_id==1){
+                    trade+=capitalist.attr_list[i].attr_name+"  "
+                }
+            }
+            userMessage.id=capitalist.user_id
+            userMessage.financing=inverstor
+            userMessage.address=address
+            userMessage.name=capitalist.capitalist_name
+            userMessage.position=capitalist.position
+            userMessage.describe=capitalist.introduction
+            userMessage.logo=capitalist.avatar
+            userMessage.trade=trade
+            var user = User(capitalist.user_id, capitalist.avatar, capitalist.capitalist_name)
+            user.userMessage=userMessage
+            Constants.putUserDetail(user)
+        }).start()
         icLoading.visibility=View.GONE
         var inverstor=""
         var address=""
@@ -82,8 +133,8 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
             }
         }
 
-        tvName.text=capitalist.contact_name
-        tvCompany.text=capitalist.capitalist_name+"|"+capitalist.position
+        tvName.text=capitalist.capitalist_name
+        tvCompany.text=capitalist.contact_name+"|"+capitalist.position
         tvOrgan.text=capitalist.introduction
         rcType.visibility= View.VISIBLE
         var layoutManager= LinearLayoutManager(this)
@@ -125,7 +176,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
                 var isHas=false
                 Thread(Runnable {
                     callIm!!.receive.forEachIndexed { index, activeBean ->
-                        if (activeBean.id== capitalist!!.user_id){
+                        if (activeBean.user_id== capitalist!!.user_id){
                             isHas=true
                             return@forEachIndexed
                         }

@@ -1,5 +1,7 @@
 package com.example.xck.bean;
 
+import com.hyphenate.easeui.constants.UserMessage;
+
 /**
  * author ： xiaogf
  * time    ： 2023/4/3
@@ -12,6 +14,15 @@ public class User {
     private int messageNum;
     private String time;
     private String name;
+    private UserMessage userMessage;
+
+    public UserMessage getUserMessage() {
+        return userMessage;
+    }
+
+    public void setUserMessage(UserMessage userMessage) {
+        this.userMessage = userMessage;
+    }
 
     public String getName() {
         return name;

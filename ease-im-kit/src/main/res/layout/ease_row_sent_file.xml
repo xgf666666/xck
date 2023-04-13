@@ -6,7 +6,9 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="13dp" >
-
+    <include layout="@layout/header_view"
+        android:id="@+id/header_text_view"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"

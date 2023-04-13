@@ -26,7 +26,9 @@ import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMTextMessageBody
 import com.hyphenate.chat.adapter.message.EMATextMessageBody
+import com.hyphenate.easeui.constants.EaseCommom
 import com.hyphenate.easeui.constants.EaseConstant
+import com.hyphenate.easeui.constants.UserMessage
 import com.hyphenate.exceptions.HyphenateException
 import kotlinx.android.synthetic.main.activity_prepare_login.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -58,14 +60,20 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
         messageAdapter!!.setOnItemClickListener { adapter, view, position ->
             var bean = adapter.data[position] as User
             context?.let {
+                EaseCommom.getInstance().userMessage=bean.userMessage
                 ChatActivity.actionStart(
                     it,"${bean.id}", EaseConstant.CHATTYPE_SINGLE,
                     bean.name)
             }
         }
         EMClient.getInstance().contactManager().setContactListener(object : EMContactListener {//好友请求回调
-            override fun onContactAdded(username: String?) {
+            override fun onContactAdded(username: String?) {//同意别人的好友请求
+            if (username != null) {
+                allContactsFromServer.add(username)
+//                    Constants.putFriendIDs(allContactsFromServer)
+                call?.let { setMessageInfo(it) }
             }
+        }
 
             override fun onContactDeleted(username: String?) {
             }
@@ -78,7 +86,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                 if (username != null) {
                     allContactsFromServer.add(username)
 //                    Constants.putFriendIDs(allContactsFromServer)
-                    setMessageInfo()
+                    call?.let { setMessageInfo(it) }
                 }
             }
 
@@ -161,7 +169,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             override fun onMessageReceived(messages: List<EMMessage?>?) {
               Log.i("xgf","收到一条消息")
                 if (!hidden){
-                    setMessageInfo()
+                    getPresenter().getGreetingList()
                 }
             }
 
@@ -207,38 +215,80 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                         allContactsFromServer = EMClient.getInstance().contactManager().allContactsFromServer
 //                        Constants.putFriendIDs(allContactsFromServer)
                         Log.i("xgf",allContactsFromServer.toString())
-//                        getPresenter().getGreetingList()
-                        setMessageInfo()
+                        getPresenter().getGreetingList()
+//                        setMessageInfo()
                     } catch (e: HyphenateException) {
                         e.printStackTrace()
                     }
                 }).start()
             }else{
-//                getPresenter().getGreetingList()
-                setMessageInfo()
+                getPresenter().getGreetingList()
+//                setMessageInfo()
             }
         }else{
             icPrePareLogin.visibility=View.VISIBLE
         }
     }
-
+    private var call: CallIm? =null
     override fun getGreetingList(call: CallIm) {//得到打招呼列表
-
-
+        this.call=call
+        setMessageInfo(call)
     }
-    fun setMessageInfo(){//对打招呼列表和沟通中列表处理
+    fun setMessageInfo(call: CallIm){//对打招呼列表和沟通中列表处理
         Thread(Runnable {
-            var users=Constants.getUserDetail()//得到缓存的用户信息
             callUsers.clear()
             friendUsers.clear()
+
+            var users=Constants.getUserDetail()//得到缓存的用户信息
+            call.active.forEach {
+                var isHas=false
+                users.forEachIndexed { index, user ->
+                    if (it.from_user_id==user.id){
+                        isHas=true
+                        callUsers.add(user)
+                        return@forEachIndexed
+                    }
+                }
+                if (!isHas){
+                    var userBean=User()
+                    userBean.id=it.from_user_id
+                    callUsers.add(userBean)
+                    if (Constants.getPersonal().user_type_select==1){//创业者
+                        getPresenter().getInverstorDetail(Constants.getToken(),it.from_user_id)
+                    }else {
+                        getPresenter().getProjectDetail(Constants.getToken(),it.from_user_id)
+                    }
+                }
+            }
+            call.receive.forEach {
+                var isHas=false
+                users.forEachIndexed { index, user ->
+                    if (it.user_id==user.id){
+                        isHas=true
+                        callUsers.add(user)
+                        return@forEachIndexed
+                    }
+                }
+                if (!isHas){
+                    var userBean=User()
+                     userBean.id=it.user_id
+                    callUsers.add(userBean)
+                    if (Constants.getPersonal().user_type_select==1){//创业者
+                        getPresenter().getInverstorDetail(Constants.getToken(),it.user_id)
+                    }else {
+                        getPresenter().getProjectDetail(Constants.getToken(),it.user_id)
+                    }
+                }
+            }
+
+
+
             var chat=EMClient.getInstance().chatManager().allConversations//获取所有会话
             var iterator=chat.iterator()
             while (iterator.hasNext()){
                 var next=iterator.next()
-                var isHas=false
-                users.forEachIndexed { index, user ->
+                callUsers.forEachIndexed { index, user ->
                     if (next.key.equals("${user.id}")){
-                        isHas=true
                         val lastMessage = next.value.lastMessage
                         if (lastMessage!=null){
                             if (lastMessage.body is EMTextMessageBody){
@@ -249,27 +299,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                             user.time=TimeUtil.getDate(lastMessage.msgTime)
                         }
                         user.messageNum=next.value.unreadMsgCount
-                        callUsers.add(user)
                         return@forEachIndexed
-                    }
-                }
-                if (!isHas){
-                    var user=User()
-                    user.id=next.key.toInt()
-                    val lastMessage = next.value.lastMessage
-                    if (lastMessage.body is EMATextMessageBody){
-                        user.message=(lastMessage.body as EMATextMessageBody).text()
-                    }else{
-                        user.message=lastMessage.body.toString()
-                    }
-
-                    user.messageNum=next.value.unreadMsgCount
-                    user.time=TimeUtil.getDate(next.value.lastMessage.msgTime)
-                    callUsers.add(user)
-                    if (Constants.getPersonal().user_type_select==1){//创业者
-                        getPresenter().getInverstorDetail(Constants.getToken(),user.id)
-                    }else {
-                        getPresenter().getProjectDetail(Constants.getToken(),user.id)
                     }
                 }
             }
@@ -281,14 +311,26 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
 
             allContactsFromServer.forEach {
                 var i = 0
+                var isHas=false
                 while (i < callUsers.size) {
                     if (callUsers[i].id==it.toInt()){
+                        isHas=true
                         friendUsers.add(callUsers[i]);
                         callUsers.removeAt(i)
                         i--
                         break
                     }
                     i++
+                }
+                if (!isHas){
+                    var user=User()
+                    user.id=it.toInt()
+                    friendUsers.add(user);
+                    if (Constants.getPersonal().user_type_select==1){//创业者
+                        getPresenter().getInverstorDetail(Constants.getToken(),user.id)
+                    }else {
+                        getPresenter().getProjectDetail(Constants.getToken(),user.id)
+                    }
                 }
             }
             friendUsers.sortByDescending {
@@ -312,10 +354,32 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             if (capitalist.user_id==0){
                 EMClient.getInstance().chatManager().deleteConversation("$user_id",true)
             }
+            var userMessage = UserMessage()
+            var inverstor=""
+            var address=""
+            var trade=""
+            for (i in 0 until capitalist.attr_list.size){
+                if (capitalist.attr_list[i].attr_parent_id==3){
+                    inverstor+=capitalist.attr_list[i].attr_name+"  "
+                }else if (capitalist.attr_list[i].attr_parent_id==2){
+                    address+=capitalist.attr_list[i].attr_name+"  "
+                }else if (capitalist.attr_list[i].attr_parent_id==1){
+                    trade+=capitalist.attr_list[i].attr_name+"  "
+                }
+            }
+            userMessage.id=capitalist.user_id
+            userMessage.financing=inverstor
+            userMessage.address=address
+            userMessage.name=capitalist.capitalist_name
+            userMessage.position=capitalist.contact_name
+            userMessage.describe=capitalist.introduction
+            userMessage.logo=capitalist.avatar
+            userMessage.trade=trade
             callUsers.forEachIndexed { index, user ->
                 if (user.id==capitalist.user_id){
                     user.avatar=capitalist.logo_image
                     user.name=capitalist.capitalist_name
+                    user.userMessage=userMessage
                     Constants.putUserDetail(user)
                     isHas=true
                     return@forEachIndexed
@@ -326,6 +390,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                     if (user.id==capitalist.user_id){
                         user.avatar=capitalist.logo_image
                         user.name=capitalist.capitalist_name
+                        user.userMessage=userMessage
                         Constants.putUserDetail(user)
                         return@forEachIndexed
                     }
@@ -345,11 +410,35 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             if (project.user_id==0){
                 EMClient.getInstance().chatManager().deleteConversation("$user_id",true)
             }
+            var userMessage = UserMessage()
+            var inverstor=""
+            var address=""
+            var trade=""
+            if (project.attr_list!=null){
+                for (i in 0 until project.attr_list.size){
+                    if (project.attr_list[i].attr_parent_id==3){
+                        inverstor+=project.attr_list[i].attr_name+"  "
+                    }else if (project.attr_list[i].attr_parent_id==2){
+                        address+=project.attr_list[i].attr_name+"  "
+                    }else if (project.attr_list[i].attr_parent_id==1){
+                        trade+=project.attr_list[i].attr_name+"  "
+                    }
+                }
+            }
+            userMessage.id=project.user_id
+            userMessage.financing=inverstor
+            userMessage.address=address
+            userMessage.name=project.project_name
+//            userMessage.position=project.position
+            userMessage.describe=project.introduction
+            userMessage.logo=project.logo_image
+            userMessage.trade=trade
             var isHas=false
             callUsers.forEachIndexed { index, user ->
                 if (user.id == project.user_id) {
                     user.avatar = project.logo_image
                     user.name = project.project_name
+                    user.userMessage=userMessage
                     Constants.putUserDetail(user)
                     isHas = true
                     return@forEachIndexed
@@ -361,6 +450,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                         if (user.id==project.user_id){
                             user.avatar=project.logo_image
                             user.name=project.project_name
+                            user.userMessage=userMessage
                             Constants.putUserDetail(user)
                             return@forEachIndexed
                         }

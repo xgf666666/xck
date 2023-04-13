@@ -14,7 +14,9 @@ import com.example.xck.ui.home.mvp.persenter.ProjectDetailPersenter
 import com.example.xck.ui.person.activity.ChatActivity
 import com.example.xck.utils.loadImag
 import com.hyphenate.chat.EMClient
+import com.hyphenate.easeui.constants.EaseCommom
 import com.hyphenate.easeui.constants.EaseConstant
+import com.hyphenate.easeui.constants.UserMessage
 import kotlinx.android.synthetic.main.activity_project_detail.*
 import kotlinx.android.synthetic.main.activity_project_detail.icLoading
 import kotlinx.android.synthetic.main.activity_project_detail.tvAddress
@@ -52,6 +54,30 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
     override fun initEvent() {
         tvSend.setOnClickListener {
             project?.let { it1 ->
+                Thread(Runnable {
+                    var userMessage = UserMessage()
+                    var inverstor=""
+                    var address=""
+                    var trade=""
+                    for (i in 0 until it1.attr_list.size){
+                        if (it1.attr_list[i].attr_parent_id==3){
+                            inverstor+=it1.attr_list[i].attr_name+"  "
+                        }else if (it1.attr_list[i].attr_parent_id==2){
+                            address+=it1.attr_list[i].attr_name+"  "
+                        }else if (it1.attr_list[i].attr_parent_id==1){
+                            trade+=it1.attr_list[i].attr_name+"  "
+                        }
+                    }
+                    userMessage.id=it1.user_id
+                    userMessage.financing=inverstor
+                    userMessage.address=address
+                    userMessage.name=it1.project_name
+                    userMessage.position=it1.operation
+                    userMessage.describe=it1.introduction
+                    userMessage.logo=it1.logo_image
+                    userMessage.trade=trade
+                    EaseCommom.getInstance().userMessage=userMessage
+                }).start()
                 ChatActivity.actionStart(this,"${it1.user_id}", EaseConstant.CHATTYPE_SINGLE,
                     it1.project_name)
             }
@@ -68,7 +94,32 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
     override fun createPresenter(): ProjectDetailPersenter = ProjectDetailPersenter(this)
     override fun getProjectDetail(project: Project) {
         this.project=project
-        Thread(Runnable { Constants.putUserDetail(User(project.user_id,project.logo_image,project.project_name)) }).start()//存储信息给打招呼和沟通中使用
+        Thread(Runnable {
+            var userMessage = UserMessage()
+            var inverstor=""
+            var address=""
+            var trade=""
+            for (i in 0 until project.attr_list.size){
+                if (project.attr_list[i].attr_parent_id==3){
+                    inverstor+=project.attr_list[i].attr_name+"  "
+                }else if (project.attr_list[i].attr_parent_id==2){
+                    address+=project.attr_list[i].attr_name+"  "
+                }else if (project.attr_list[i].attr_parent_id==1){
+                    trade+=project.attr_list[i].attr_name+"  "
+                }
+            }
+            userMessage.id=project.user_id
+            userMessage.financing=inverstor
+            userMessage.address=address
+            userMessage.name=project.project_name
+//            userMessage.position=project.position
+            userMessage.describe=project.introduction
+            userMessage.logo=project.logo_image
+            userMessage.trade=trade
+            var user = User(project.user_id, project.logo_image, project.project_name)
+            user.userMessage=userMessage
+            Constants.putUserDetail(user)
+        }).start()//存储信息给打招呼和沟通中使用
 
         icLoading.visibility=View.GONE
         tvName.text=project.project_name
@@ -122,7 +173,7 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
                 var isHas=false
                Thread(Runnable {
                    callIm!!.receive.forEachIndexed { index, activeBean ->
-                       if (activeBean.id== project!!.user_id){
+                       if (activeBean.user_id== project!!.user_id){
                            isHas=true
                            return@forEachIndexed
                        }

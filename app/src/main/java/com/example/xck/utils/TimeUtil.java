@@ -178,6 +178,7 @@ public class TimeUtil {
     }
 
     public static long getFormFormatTime(String date) {
+        if (date==null||date.isEmpty()) return 0;
 //		String date = "2001-03-15 15-37-05";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//24小时制
         long time = 0;
