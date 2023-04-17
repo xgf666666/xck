@@ -1,9 +1,14 @@
 package com.example.xck.ui.person
 
+import android.Manifest
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.UtilsTransActivity
 import com.bumptech.glide.Glide
+import com.example.xck.BuildConfig
 import com.example.xck.R
 import com.example.xck.base.mvp.BaseMvpFragment
 import com.example.xck.bean.Login
@@ -13,10 +18,17 @@ import com.example.xck.ui.person.activity.*
 import com.example.xck.ui.person.mvp.contract.PersonContract
 import com.example.xck.ui.person.mvp.persenter.PersonPersenter
 import com.example.xck.utils.changeKm
+import com.example.xck.utils.filechoose.FxFileDialogArgs
+import com.example.xck.utils.filechoose.FxHelp
 import com.example.xck.utils.loadImag
 import com.hyphenate.chat.EMClient
+import com.hyphenate.easeui.constants.EaseCommom
+import com.xx.baseutilslibrary.common.ImageChooseHelper
 import kotlinx.android.synthetic.main.activity_prepare_login.*
+import kotlinx.android.synthetic.main.activity_project_message_edit.*
 import kotlinx.android.synthetic.main.fragment_person.*
+import kotlinx.android.synthetic.main.fragment_person.ivPerson
+import java.io.File
 
 /**
  *   author ： xiaogf
@@ -25,8 +37,10 @@ import kotlinx.android.synthetic.main.fragment_person.*
 class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
     var isHide=false;
     var message:String=""
+    private var imageChooseHelper: ImageChooseHelper? = null
     override fun getFragmentLayoutId(): Int = R.layout.fragment_person
     override fun init(view: View?) {
+        initImageChooseHelper()
         tvToLogin.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
             this?.startActivity(intent)
@@ -93,6 +107,55 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
 
 
         }
+        ivPerson.setOnClickListener {
+            showEditAvatarDialog()
+        }
+    }
+    private fun initImageChooseHelper(){
+        imageChooseHelper = ImageChooseHelper.Builder()
+            .setUpActivity(activity)
+            .setAuthority("${BuildConfig.APPLICATION_ID}.fileprovider")//设置文件提供者
+            .setDirPath(Constants.DOWNLOAD_PATH)//设置文件存储路径
+            .isCrop(false)//开启裁剪
+            .setCompressQuality(100)//压缩质量[1,100]
+            .setSize(120, 120)//裁剪尺寸
+            .setOnFinishChooseAndCropImageListener { bitmap, file ->
+                //                    显示选好得图片
+//                iv_hand.setImageBitmap(bitmap)
+//                ivPerson.setImageBitmap(bitmap)
+                showLoadingDialog()
+                getPresenter().upload(file)
+            }
+            .setOnFinishChooseImageListener { uri, file ->
+//                ivPerson.setImageURI(uri)
+                showLoadingDialog()
+                getPresenter().upload(file)
+            }
+            .create()
+    }
+    /**
+     * 显示修改头像弹窗
+     */
+    private fun showEditAvatarDialog() {
+        //选图弹窗
+        //请求相机和内存读取权限
+        PermissionUtils.permission(
+//            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            , Manifest.permission.READ_EXTERNAL_STORAGE)
+            .callback(object : PermissionUtils.SimpleCallback {
+                override fun onGranted() {
+                    //被给予权限,调起选图弹窗
+                    imageChooseHelper!!.startImageChoose();
+                }
+
+                override fun onDenied() {
+
+                }
+            })
+            .rationale { utilsTransActivity: UtilsTransActivity, shouldRequest: PermissionUtils.OnRationaleListener.ShouldRequest -> shouldRequest.again(true)
+            }
+            .request()
     }
     override fun onHiddenChanged(hidden: Boolean) {
         isHide=hidden
@@ -123,6 +186,7 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
     override fun createPresenter(): PersonPersenter = PersonPersenter(this)
     override fun userInfo(userInfo: Login.UserInfoBean) {
         Constants.putPersonal(userInfo)
+        EaseCommom.getInstance().avatar=userInfo.avatar
         ivPerson.loadImag(userInfo.avatar)
         if (userInfo.user_type_select==1){
             tvMessage.text="创业项目信息"
@@ -170,6 +234,11 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
             }
         }
         tvRenMessage.text=message
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+            imageChooseHelper!!.onActivityResult(requestCode,resultCode,data)
     }
 
 }

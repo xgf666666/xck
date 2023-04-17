@@ -46,6 +46,7 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
         rvHome.layoutManager=LinearLayoutManager(this.context)
         if (Constants.getPersonal()!=null){
             EaseCommom.getInstance().isProject = Constants.getPersonal().user_type_select == 1
+            EaseCommom.getInstance().avatar=Constants.getPersonal().avatar
             if (Constants.getPersonal().user_type_select==1){
                 isProject=false
             }else if (Constants.getPersonal().user_type_select==2){

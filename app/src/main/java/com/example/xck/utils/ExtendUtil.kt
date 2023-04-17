@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.MemoryCategory
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.xck.R
 import com.example.xck.base.mvp.BaseActivity
 import com.example.xck.base.mvp.BaseFragment
@@ -106,6 +107,7 @@ fun ImageView.loadImag(url: String) {
     Glide.get(context).setMemoryCategory(MemoryCategory.HIGH)
     Glide.with(this.context).load(urltemp)
         .placeholder(R.mipmap.icon_base)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
         .dontAnimate()
         .error(R.mipmap.icon_base)
         .into(this)

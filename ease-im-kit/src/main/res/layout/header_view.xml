@@ -62,13 +62,20 @@
             android:text="投资案例：猫眼咖啡、爵士板鞋"
             android:textColor="#666666"
             android:textSize="13sp" />
+        <View
+            android:id="@+id/iwLine"
+            android:layout_below="@+id/tvCase"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/error_item_color"
+            android:layout_marginTop="15dp"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCase"
+            android:layout_below="@+id/iwLine"
             android:layout_alignStart="@+id/tvCase"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
 
             <com.hyphenate.easeui.widget.EaseImageView

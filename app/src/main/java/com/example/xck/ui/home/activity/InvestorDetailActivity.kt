@@ -3,6 +3,7 @@ package com.example.xck.ui.home.activity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ThreadUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
 import com.example.xck.bean.CallIm
@@ -43,6 +44,9 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
         tvTilte.text="详情"
         val caId = intent.getIntExtra("capitalist_id", 0)
         val user_id = intent.getIntExtra("user_id", 0)
+        if (Constants.getPersonal().user_type_select==0){
+            tvSend.text = "先完善角色信息再打招呼"
+        }
         getPresenter().getInverstorDetail(Constants.getToken(),caId)
         Thread(Runnable {
             isFriend=EMClient.getInstance().contactManager().allContactsFromServer.contains("$user_id")
@@ -58,6 +62,10 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
 
     override fun initEvent() {
         tvSend.setOnClickListener {
+            if (Constants.getPersonal().user_type_select==0){
+                ToastUtils.showShort("先完善角色信息再打招呼")
+                return@setOnClickListener
+            }
             capitalist?.let { it1 ->
                 Thread(Runnable {
                     var userMessage = UserMessage()

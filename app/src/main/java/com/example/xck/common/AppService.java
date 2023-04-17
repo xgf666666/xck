@@ -233,7 +233,12 @@ public interface AppService {
      */
     @GET("api/v1/user/imGreetingList")
     Observable<BaseResponseEntity<CallIm>> getGreetingList(@Header("Authorization") String authorization);
-
+    /**
+     更新用户信息
+     */
+    @FormUrlEncoded
+    @POST("api/v1/user/setUserInfo")
+    Observable<BaseResponseEntity<Object>> setMessageImage(@Header("Authorization") String authorization,@Field("avatar") String avatar);
 }
 
 

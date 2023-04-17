@@ -19,8 +19,8 @@ import com.example.xck.utils.loadImag
 class HomeAdapter : BaseQuickAdapter<Capitalist,BaseViewHolder>(R.layout.item_home),LoadMoreModule{
 
     override fun convert(holder: BaseViewHolder, item: Capitalist) {
-        holder.setText(R.id.tvName,item.capitalist_name)
-        holder.setText(R.id.tvCompany,item.contact_name+"|"+item.position)
+        holder.setText(R.id.tvName,item.contact_name)
+        holder.setText(R.id.tvCompany,item.capitalist_name+"|"+item.position)
         holder.setText(R.id.tvCase,"投资案例:"+item.cases)
         holder.setText(R.id.tvCapital,item.single_amount)
         var iv_person=holder.getView<ImageView>(R.id.iv_person)

@@ -292,7 +292,7 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
         }else if (id == R.id.rl_face) {//切换到表情模式
             showEmojiconStatus();
         }else if (id == R.id.tv_call){//发送打招呼
-            listener.onSendBtnClicked("你好!");
+            listener.onSendBtnClicked("您好,方便沟通一下吗？");
             EventBus.getDefault().post(new CallEvet(0));
         }
     }

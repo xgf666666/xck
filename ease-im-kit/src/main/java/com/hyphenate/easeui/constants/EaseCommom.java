@@ -9,6 +9,15 @@ public class EaseCommom {
     private static EaseCommom instance;
     private boolean isProject;
     private UserMessage userMessage;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public UserMessage getUserMessage() {
         return userMessage;

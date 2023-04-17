@@ -1,5 +1,7 @@
 package com.example.xck
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.view.ContextMenu
@@ -65,6 +67,13 @@ class MainActivity : BaseMvpViewActivity() {
             }
         }
         fragmentTransaction.commit()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==2&&resultCode==Activity.RESULT_OK){
+            mFragments[2]?.onActivityResult(requestCode,resultCode,data)
+        }
     }
 
 

@@ -2,6 +2,7 @@ package com.example.xck.ui.home.activity
 
 import android.view.View
 import com.blankj.utilcode.util.ThreadUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
 import com.example.xck.bean.CallIm
@@ -39,6 +40,9 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
         tvTilte.text="详情"
         val projectId = intent.getIntExtra("project_id", 0)
         val user_id = intent.getIntExtra("user_id", 0)
+        if (Constants.getPersonal().user_type_select==0){
+            tvSend.text = "先完善角色信息再打招呼"
+        }
         getPresenter().getProjectDetail(Constants.getToken(),projectId,0)
 
         Thread(Runnable {
@@ -53,6 +57,10 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
 
     override fun initEvent() {
         tvSend.setOnClickListener {
+            if (Constants.getPersonal().user_type_select==0){
+                ToastUtils.showShort("先完善角色信息再打招呼")
+               return@setOnClickListener
+            }
             project?.let { it1 ->
                 Thread(Runnable {
                     var userMessage = UserMessage()

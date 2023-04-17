@@ -5,7 +5,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class TimeUtil {
@@ -145,6 +147,24 @@ public class TimeUtil {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String str = df.format(timeStr);
         return str;
+    }
+    public static String formatDate(long timeInMillis) {
+        Calendar now = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeInMillis);
+
+        // 判断时间是否是当天
+        if (now.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+                && now.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+                && now.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)) {
+            // 如果是当天时间，显示时分
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            return sdf.format(new Date(timeInMillis));
+        } else {
+            // 如果不是当天时间，显示年月日时分
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+            return sdf.format(new Date(timeInMillis));
+        }
     }
 
 	private static String format;

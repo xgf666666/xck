@@ -1,9 +1,13 @@
 package com.example.xck .ui.message
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.util.TypedValue.COMPLEX_UNIT_DIP
+import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ThreadUtils
 import com.example.xck.R
@@ -51,6 +55,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
     var hidden=false
     private var ifFirstLoad=false
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun init(view: View?) {
 
         messageAdapter= MessageAdapter()
@@ -99,7 +104,8 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
         })
         initEvent()
     }
-
+    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("ResourceAsColor")
     private fun initEvent() {
         tvToLogin.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
@@ -108,6 +114,28 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
         tvRegister.setOnClickListener {
             startActivity(Intent(context, RegisterActivity::class.java))
         }
+        option_1.setOnClickListener {
+            if (isCall){
+                isCall=false
+                messageAdapter?.setNewInstance(friendUsers)
+                option_1.setTextSize(COMPLEX_UNIT_SP,19f)
+                option_1.setTextColor(resources.getColor(R.color.text_333333,null))
+                option_2.setTextSize(COMPLEX_UNIT_SP,17f)
+                option_2.setTextColor(resources.getColor(R.color.text_999999,null))
+            }
+        }
+        option_2.setOnClickListener {
+            if (!isCall){
+            isCall=true
+            messageAdapter?.setNewInstance(callUsers)
+                option_1.setTextSize(COMPLEX_UNIT_SP,17f)
+                option_1.setTextColor(resources.getColor(R.color.text_999999,null))
+                option_2.setTextSize(COMPLEX_UNIT_SP,19f)
+                option_2.setTextColor(resources.getColor(R.color.text_333333,null))
+            }
+
+        }
+/*
         rgSel.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId==R.id.tvCommunicate){
                 isCall=false
@@ -121,6 +149,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                 tvCall.setTextSize(COMPLEX_UNIT_DIP,19f)
             }
         }
+*/
         et_search.setOnEditorActionListener { v, actionId, event ->
             var keyword=v.text.toString()
             search.clear()
@@ -234,8 +263,12 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
         this.call=call
         setMessageInfo(call)
     }
+    private var callNum=0
+    private var friendNum=0
     fun setMessageInfo(call: CallIm){//对打招呼列表和沟通中列表处理
         Thread(Runnable {
+            friendNum=0
+            callNum=0
             callUsers.clear()
             friendUsers.clear()
 
@@ -296,9 +329,10 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                             }else{
                                 user.message=lastMessage.body.toString()
                             }
-                            user.time=TimeUtil.getDate(lastMessage.msgTime)
+                            user.time=TimeUtil.formatDate(lastMessage.msgTime)
                         }
                         user.messageNum=next.value.unreadMsgCount
+                        callNum+=user.messageNum
                         return@forEachIndexed
                     }
                 }
@@ -316,6 +350,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                     if (callUsers[i].id==it.toInt()){
                         isHas=true
                         friendUsers.add(callUsers[i]);
+                        friendNum+=callUsers[i].messageNum
                         callUsers.removeAt(i)
                         i--
                         break
@@ -340,6 +375,25 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
 
             ThreadUtils.runOnUiThread(Runnable {
                     messageAdapter?.notifyDataSetChanged()
+                if (friendNum==0){
+                    option_1_unread_count.visibility=View.INVISIBLE
+                }else if (friendNum>99){
+                    option_1_unread_count.visibility=View.VISIBLE
+                    option_1_unread_count.text = "99+"
+                }else{
+                    option_1_unread_count.visibility=View.VISIBLE
+                    option_1_unread_count.text = "$friendNum"
+                }
+                if ((callNum-friendNum)==0){
+                    option_2_unread_count.visibility=View.INVISIBLE
+                }else if ((callNum-friendNum)>99){
+                    option_2_unread_count.visibility=View.VISIBLE
+                    option_2_unread_count.text = "99+"
+                }else{
+                    option_2_unread_count.visibility=View.VISIBLE
+                    option_2_unread_count.text = "$callNum"
+                }
+
             })
         }).start()
 

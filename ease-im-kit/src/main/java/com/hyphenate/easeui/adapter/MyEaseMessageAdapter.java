@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.constants.EaseCommom;
@@ -48,18 +49,34 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
+
+       /* if (EaseChatItemStyleHelper.getInstance().getStyle().getItemShowType()==2){
+
+        }*/
         ConstraintLayout header_text_view =holder.itemView.findViewById(R.id.header_text_view);
 
         EaseImageView iv_userhead =holder.itemView.findViewById(R.id.iv_userhead);//对话框头像
 
-
         UserMessage userMessage = EaseCommom.getInstance().getUserMessage();
         if (iv_userhead!=null){
-            Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
-                    .dontAnimate()
-                    .error(R.drawable.icon_base)
-                    .into(iv_userhead);
+            iv_userhead.setShapeType(1);
+            if (holder instanceof EaseChatRowViewHolder){
+                if (((EaseChatRowViewHolder)holder).getChatRow().isSender()){
+                    Glide.with(mContext).load(EaseCommom.getInstance().getAvatar()).placeholder(R.drawable.icon_base)
+                            .dontAnimate()
+                            .error(R.drawable.icon_base)
+                            .into(iv_userhead);
+                }else {
+
+                    Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
+                            .dontAnimate()
+                            .error(R.drawable.icon_base)
+                            .into(iv_userhead);
+
+                }
+            }
         }
+
 
         if (header_text_view!=null){
             if (position==0&&isVis){
@@ -89,6 +106,7 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
                     tvInvestorCompany.setText(userMessage.getPosition()+"  |  "+userMessage.getFinancing());
                     Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
                             .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .error(R.drawable.icon_base)
                             .into(iv_userHeadInvestor);
 
@@ -99,6 +117,7 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
                     tvCase.setText(userMessage.getDescribe());
                     Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
                             .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .error(R.drawable.icon_base)
                             .into(iv_userHeadProject);
                 }
@@ -106,6 +125,7 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
                 header_text_view.setVisibility(View.GONE);
             }
         }
+
     }
 
     @Override
@@ -124,16 +144,16 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
             iv_userhead.setShapeType(1);
             if (holder instanceof EaseChatRowViewHolder){
               if (((EaseChatRowViewHolder)holder).getChatRow().isSender()){
-/*
-                  Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
+                  Glide.with(mContext).load(EaseCommom.getInstance().getAvatar()).placeholder(R.drawable.icon_base)
                           .dontAnimate()
+                          .diskCacheStrategy(DiskCacheStrategy.ALL)
                           .error(R.drawable.icon_base)
                           .into(iv_userhead);
-*/
               }else {
 
                   Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
                           .dontAnimate()
+                          .diskCacheStrategy(DiskCacheStrategy.ALL)
                           .error(R.drawable.icon_base)
                           .into(iv_userhead);
 

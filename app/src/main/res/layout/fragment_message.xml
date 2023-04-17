@@ -9,35 +9,70 @@
         android:id="@+id/icPrePareLogin"
         layout="@layout/activity_prepare_login"
         android:visibility="gone"/>
-    <RadioGroup
-        android:id="@+id/rgSel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="11dp">
-    <RadioButton
-        android:id="@+id/tvCommunicate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="沟通中"
-        android:textSize="19sp"
-        android:button="@null"
-        android:checked="true"
-        android:textColor="@color/sel_message"
-        />
-        <RadioButton
-            android:id="@+id/tvCall"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:padding="16dp">
+
+        <!-- 第一项选择项 -->
+        <TextView
+            android:id="@+id/option_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="沟通中"
+            android:textSize="19sp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_333333"
+            android:layout_alignParentBottom="true"
+            />
+
+        <!-- 第一项选择项的未读计数 -->
+        <TextView
+            android:id="@+id/option_1_unread_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/option_1"
+            android:layout_marginLeft="3dp"
+            android:text="10"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:background="@drawable/message_num"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:visibility="invisible"/>
+
+        <!-- 第二项选择项 -->
+        <TextView
+            android:id="@+id/option_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="打招呼"
-            android:textColor="@color/sel_message"
-            android:textSize="17sp"
+            android:layout_toRightOf="@+id/option_1_unread_count"
             android:layout_marginLeft="20dp"
-            android:button="@null"
-            android:checked="false"
-            />
-    </RadioGroup>
+            android:textSize="16sp"
+            android:textColor="@color/text_999999"
+            android:layout_alignParentBottom="true"/>
+
+        <!-- 第二项选择项的未读计数 -->
+        <TextView
+            android:id="@+id/option_2_unread_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/option_2"
+            android:text="0"
+            android:textColor="@color/white"
+            android:layout_marginLeft="3dp"
+            android:textSize="10sp"
+            android:background="@drawable/message_num"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="33dp"
@@ -45,8 +80,7 @@
         android:layout_gravity="center_vertical"
         android:background="@drawable/home_search"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="15dp">
+        android:layout_marginRight="20dp">
         <ImageView
             android:layout_width="17dp"
             android:layout_height="17dp"
