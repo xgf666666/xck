@@ -89,6 +89,7 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
                 TextView tvCompany =holder.itemView.findViewById(R.id.tvCompany);
                 TextView tvAddress =holder.itemView.findViewById(R.id.tvAddress);
                 TextView tvCase =holder.itemView.findViewById(R.id.tvCase);
+                TextView tvRealName =holder.itemView.findViewById(R.id.tvRealName);
                 EaseImageView iv_userHeadProject =holder.itemView.findViewById(R.id.iv_userHeadProject);
 
                 RelativeLayout rlProjectTitle =holder.itemView.findViewById(R.id.rlProjectTitle);
@@ -101,9 +102,9 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
                     rlInvestorTitle.setVisibility(View.GONE);
                 }
                 if (userMessage==null) return;
-                if (EaseCommom.getInstance().isProject()){
+                if (EaseCommom.getInstance().isProject()){//当前账号是项目，就显示机构
                     tvInvestorName.setText(userMessage.getName());
-                    tvInvestorCompany.setText(userMessage.getPosition()+"  |  "+userMessage.getFinancing());
+                    tvInvestorCompany.setText(userMessage.getUserName()+"  |  "+userMessage.getFinancing());
                     Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
                             .dontAnimate()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -115,6 +116,7 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
                     tvCompany.setText(userMessage.getTrade()+"  |  "+userMessage.getFinancing());
                     tvAddress.setText(userMessage.getAddress());
                     tvCase.setText(userMessage.getDescribe());
+                    tvRealName.setText(userMessage.getUserName()+"  |  "+userMessage.getPosition());
                     Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
                             .dontAnimate()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -173,6 +175,7 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
                 TextView tvCompany =holder.itemView.findViewById(R.id.tvCompany);
                 TextView tvAddress =holder.itemView.findViewById(R.id.tvAddress);
                 TextView tvCase =holder.itemView.findViewById(R.id.tvCase);
+                TextView tvRealName =holder.itemView.findViewById(R.id.tvRealName);
                 EaseImageView iv_userHeadProject =holder.itemView.findViewById(R.id.iv_userHeadProject);
 
                 RelativeLayout rlProjectTitle =holder.itemView.findViewById(R.id.rlProjectTitle);
@@ -187,7 +190,7 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
                 if (userMessage==null) return;
                 if (EaseCommom.getInstance().isProject()){
                     tvInvestorName.setText(userMessage.getName());
-                    tvInvestorCompany.setText(userMessage.getPosition()+"  |  "+userMessage.getFinancing());
+                    tvInvestorCompany.setText(userMessage.getUserName()+"  |  "+userMessage.getFinancing());
                     Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
                             .dontAnimate()
                             .error(R.drawable.icon_base)
@@ -198,6 +201,7 @@ public class MyEaseMessageAdapter extends EaseMessageAdapter {
                     tvCompany.setText(userMessage.getTrade()+"  |  "+userMessage.getFinancing());
                     tvAddress.setText(userMessage.getAddress());
                     tvCase.setText(userMessage.getDescribe());
+                    tvRealName.setText(userMessage.getUserName()+"  |  "+userMessage.getPosition());
                     Glide.with(mContext).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
                             .dontAnimate()
                             .error(R.drawable.icon_base)

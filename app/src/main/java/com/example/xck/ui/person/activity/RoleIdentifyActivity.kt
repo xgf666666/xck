@@ -21,7 +21,7 @@ class RoleIdentifyActivity : BaseMvpActivity<RoleIdentifyPersenter>(),RoleIdenti
 
     override fun initEvent() {
         tvSend.setOnClickListener {
-            getPresenter().roleIdentify(Constants.getToken(),intent.getIntExtra("user_type_select",0),etName.text.toString(),etWx.text.toString())
+            getPresenter().roleIdentify(Constants.getToken(),intent.getIntExtra("user_type_select",0),etName.text.toString(),etWx.text.toString(),etPosition.text.toString())
         }
     }
 

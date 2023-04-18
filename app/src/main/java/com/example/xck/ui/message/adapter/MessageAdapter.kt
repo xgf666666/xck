@@ -22,7 +22,7 @@ class MessageAdapter : BaseQuickAdapter<User,BaseViewHolder>(R.layout.item_messa
         if (item.avatar!=null){
             ivPerson.loadImag(item.avatar)
         }
-        holder.setText(R.id.tvName,item.name)
+        holder.setText(R.id.tvName,"${item.userMessage.userName} | ${item.name}")
         holder.setText(R.id.tvMessage,item.message)
         holder.setText(R.id.tvTime,item.time)
         var tvNum=holder.getView<TextView>(R.id.tvNum)

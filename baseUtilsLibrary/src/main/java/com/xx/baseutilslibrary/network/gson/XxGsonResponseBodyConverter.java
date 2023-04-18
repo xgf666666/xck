@@ -49,7 +49,13 @@ final class XxGsonResponseBodyConverter<T> implements Converter<ResponseBody, T>
             if (baseResponseEntity.getCode().equals("40001")) {
                 throw new TokenInvalidException("40001");
             } else if (baseResponseEntity.getCode() != 0) {
-                throw new ApiFaileException(baseResponseEntity.getMsg());
+                String msg="";
+                if (baseResponseEntity.getMsg()==null||baseResponseEntity.getMsg().isEmpty()){
+                    msg=baseResponseEntity.getMessage();
+                }else {
+                    msg=baseResponseEntity.getMsg();
+                }
+                throw new ApiFaileException(msg);
             } else {
                 return adapter.fromJson(valueString);
             }

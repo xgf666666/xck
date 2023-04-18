@@ -11,7 +11,8 @@ class RoleIdentifyPersenter(view: RoleIdentifyContract.View):RoleIdentifyContrac
         Authorization: String,
         user_type_select: Int,
         real_name: String,
-        wechat: String
+        wechat: String,
+        position:String
     ) {
         if (StringUtils.isEmpty(real_name)){
             ToastUtils.showShort("请输入真实姓名")
@@ -21,8 +22,12 @@ class RoleIdentifyPersenter(view: RoleIdentifyContract.View):RoleIdentifyContrac
             ToastUtils.showShort("请输入微信")
             return
         }
+        if (StringUtils.isEmpty(position)){
+            ToastUtils.showShort("请输入职业")
+            return
+        }
         getView()?.showLoadingDialog()
-        getModel().roleIdentify(Authorization, user_type_select, real_name, wechat).ui({
+        getModel().roleIdentify(Authorization, user_type_select, real_name, wechat,position).ui({
             getView()?.dismissLoadingDialog()
             getView()?.showToast("提交成功，等待审核")
             getView()?.roleIdentify()

@@ -80,10 +80,11 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
                     userMessage.financing=inverstor
                     userMessage.address=address
                     userMessage.name=it1.project_name
-                    userMessage.position=it1.operation
+                    userMessage.position=it1.user_info.position
                     userMessage.describe=it1.introduction
                     userMessage.logo=it1.logo_image
                     userMessage.trade=trade
+                    userMessage.userName=it1.user_info.real_name
                     EaseCommom.getInstance().userMessage=userMessage
                 }).start()
                 ChatActivity.actionStart(this,"${it1.user_id}", EaseConstant.CHATTYPE_SINGLE,
@@ -124,6 +125,8 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
             userMessage.describe=project.introduction
             userMessage.logo=project.logo_image
             userMessage.trade=trade
+            userMessage.position=project.user_info.position
+            userMessage.userName=project.user_info.real_name
             var user = User(project.user_id, project.logo_image, project.project_name)
             user.userMessage=userMessage
             Constants.putUserDetail(user)

@@ -13,6 +13,7 @@ open class BaseResponseStatusEntity {
 
     var code: Int? = null
     var msg: String? = null
+    var message: String? = null
 
 
 

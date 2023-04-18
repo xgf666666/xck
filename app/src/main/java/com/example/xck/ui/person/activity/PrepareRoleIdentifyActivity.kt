@@ -17,6 +17,7 @@ class PrepareRoleIdentifyActivity : BaseMvpViewActivity() {
         (application as App).addActivity(this)
         cb_select.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked){
+                if (cbSelectTzr.isChecked) cbSelectTzr.isChecked=false
                 var intent=Intent(this,RoleIdentifyActivity::class.java)
                 intent.putExtra("user_type_select",1)
                 startActivity(intent)
@@ -24,6 +25,7 @@ class PrepareRoleIdentifyActivity : BaseMvpViewActivity() {
         }
         cbSelectTzr.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked){
+                if (cb_select.isChecked) cb_select.isChecked=false
                 var intent=Intent(this,RoleIdentifyActivity::class.java)
                 intent.putExtra("user_type_select",2)
                 startActivity(intent)

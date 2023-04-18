@@ -227,7 +227,7 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
         if (userMessage==null) return;
         if (EaseCommom.getInstance().isProject()){
             tvInvestorName.setText(userMessage.getName());
-            tvInvestorCompany.setText(userMessage.getPosition()+"  |  "+userMessage.getFinancing());
+            tvInvestorCompany.setText(userMessage.getUserName()+"  |  "+userMessage.getFinancing());
             Glide.with(context()).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
                     .dontAnimate()
                     .error(R.drawable.icon_base)
@@ -238,6 +238,7 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
             tvCompany.setText(userMessage.getTrade()+"  |  "+userMessage.getFinancing());
             tvAddress.setText(userMessage.getAddress());
             tvCase.setText(userMessage.getDescribe());
+            tvRealName.setText(userMessage.getUserName()+"  |  "+userMessage.getPosition());
             Glide.with(context()).load(userMessage.getLogo()).placeholder(R.drawable.icon_base)
                     .dontAnimate()
                     .error(R.drawable.icon_base)

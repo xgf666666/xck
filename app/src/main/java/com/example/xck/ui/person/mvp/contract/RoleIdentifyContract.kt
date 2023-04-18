@@ -11,10 +11,10 @@ interface RoleIdentifyContract {
 
     }
     interface Model{
-        fun roleIdentify( Authorization:String, user_type_select:Int, real_name:String, wechat:String):Observable<BaseResponseEntity<Any>>
+        fun roleIdentify( Authorization:String, user_type_select:Int, real_name:String, wechat:String,position:String):Observable<BaseResponseEntity<Any>>
 
     }
     abstract class Persenter(view:View):BaseMvpPresenter<Model,View>(view){
-        abstract  fun roleIdentify( Authorization:String, user_type_select:Int, real_name:String, wechat:String)
+        abstract  fun roleIdentify( Authorization:String, user_type_select:Int, real_name:String, wechat:String,position:String)
     }
 }

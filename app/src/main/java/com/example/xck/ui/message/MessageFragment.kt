@@ -425,8 +425,9 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             userMessage.financing=inverstor
             userMessage.address=address
             userMessage.name=capitalist.capitalist_name
-            userMessage.position=capitalist.contact_name
+            userMessage.position=capitalist.position
             userMessage.describe=capitalist.introduction
+            userMessage.userName=capitalist.contact_name
             userMessage.logo=capitalist.avatar
             userMessage.trade=trade
             callUsers.forEachIndexed { index, user ->
@@ -487,6 +488,8 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             userMessage.describe=project.introduction
             userMessage.logo=project.logo_image
             userMessage.trade=trade
+            userMessage.position=project.user_info.position
+            userMessage.userName=project.user_info.real_name
             var isHas=false
             callUsers.forEachIndexed { index, user ->
                 if (user.id == project.user_id) {

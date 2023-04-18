@@ -152,7 +152,7 @@ public interface AppService {
      */
     @FormUrlEncoded
     @POST("api/v1/user/proof")
-    Observable<BaseResponseEntity<Object>> roleIdentify(@Header("Authorization") String Authorization,@Field("user_type_select")int user_type_select,@Field("real_name")String real_name,@Field("wechat") String wechat);
+    Observable<BaseResponseEntity<Object>> roleIdentify(@Header("Authorization") String Authorization,@Field("user_type_select")int user_type_select,@Field("real_name")String real_name,@Field("wechat") String wechat,@Field("position") String position);
     /**
      * 上传文件
      */

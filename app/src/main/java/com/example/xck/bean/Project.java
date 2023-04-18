@@ -46,6 +46,15 @@ public class Project {
     private int weight;
     private int delete_time;
     private List<AttrListBean> attr_list;
+    private Login.UserInfoBean user_info;
+
+    public Login.UserInfoBean getUser_info() {
+        return user_info;
+    }
+
+    public void setUser_info(Login.UserInfoBean user_info) {
+        this.user_info = user_info;
+    }
 
     public int getId() {
         return id;

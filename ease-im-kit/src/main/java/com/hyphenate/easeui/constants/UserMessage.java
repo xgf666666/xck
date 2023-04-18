@@ -14,6 +14,15 @@ public class UserMessage {
     private String trade;//行业
     private String financing;//融资轮次
     private String describe;//公司描述
+    private String userName;//人名
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getName() {
         return name;

@@ -85,7 +85,8 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
                     userMessage.financing=inverstor
                     userMessage.address=address
                     userMessage.name=it1.capitalist_name
-                    userMessage.position=it1.contact_name
+                    userMessage.position=it1.position
+                    userMessage.userName=it1.contact_name
                     userMessage.describe=it1.introduction
                     userMessage.logo=it1.avatar
                     userMessage.trade=trade
@@ -122,6 +123,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
             userMessage.position=capitalist.position
             userMessage.describe=capitalist.introduction
             userMessage.logo=capitalist.avatar
+            userMessage.userName=capitalist.contact_name
             userMessage.trade=trade
             var user = User(capitalist.user_id, capitalist.avatar, capitalist.capitalist_name)
             user.userMessage=userMessage

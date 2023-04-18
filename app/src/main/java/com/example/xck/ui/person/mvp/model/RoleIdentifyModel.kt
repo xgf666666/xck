@@ -13,5 +13,6 @@ class RoleIdentifyModel :RoleIdentifyContract.Model{
         user_type_select: Int,
         real_name: String,
         wechat: String
-    ): Observable<BaseResponseEntity<Any>> =AppApi.Api().roleIdentify(Authorization, user_type_select, real_name, wechat)
+        ,position:String
+    ): Observable<BaseResponseEntity<Any>> =AppApi.Api().roleIdentify(Authorization, user_type_select, real_name, wechat,position)
 }

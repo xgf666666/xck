@@ -104,7 +104,7 @@ fun Int.changeKm() : String{
 fun ImageView.loadImag(url: String) {
     var urltemp=url
 
-    Glide.get(context).setMemoryCategory(MemoryCategory.HIGH)
+//    Glide.get(context).setMemoryCategory(MemoryCategory.HIGH)
     Glide.with(this.context).load(urltemp)
         .placeholder(R.mipmap.icon_base)
         .diskCacheStrategy(DiskCacheStrategy.ALL)

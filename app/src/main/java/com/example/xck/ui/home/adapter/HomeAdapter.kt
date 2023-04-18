@@ -22,7 +22,7 @@ class HomeAdapter : BaseQuickAdapter<Capitalist,BaseViewHolder>(R.layout.item_ho
         holder.setText(R.id.tvName,item.contact_name)
         holder.setText(R.id.tvCompany,item.capitalist_name+"|"+item.position)
         holder.setText(R.id.tvCase,"投资案例:"+item.cases)
-        holder.setText(R.id.tvCapital,item.single_amount)
+        holder.setText(R.id.tvCapital,"${item.single_amount}万")
         var iv_person=holder.getView<ImageView>(R.id.iv_person)
         iv_person.loadImag(item.avatar)
         var rcType=holder.getView<RecyclerView>(R.id.rcType)

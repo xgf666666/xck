@@ -64,6 +64,24 @@ public class Login {
         private String real_name; // 真实姓名
         private String wechat; // 微信号
         private int im_user_id; // im 用户id
+        private int reg_im_status;
+        private String position;
+
+        public int getReg_im_status() {
+            return reg_im_status;
+        }
+
+        public void setReg_im_status(int reg_im_status) {
+            this.reg_im_status = reg_im_status;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public void setPosition(String position) {
+            this.position = position;
+        }
 
         public String getAvatar() {
             return avatar;
