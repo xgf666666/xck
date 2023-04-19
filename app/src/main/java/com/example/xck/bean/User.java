@@ -13,8 +13,17 @@ public class User {
     private String message;
     private int messageNum;
     private String time;
+    private long times;
     private String name;
     private UserMessage userMessage;
+
+    public long getTimes() {
+        return times;
+    }
+
+    public void setTimes(long times) {
+        this.times = times;
+    }
 
     public UserMessage getUserMessage() {
         return userMessage;

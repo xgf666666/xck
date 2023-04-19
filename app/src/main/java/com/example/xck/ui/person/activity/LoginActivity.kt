@@ -27,6 +27,8 @@ class LoginActivity : BaseMvpActivity<LoginPersenter>(),LoginContract.View {
 
     override fun initData() {
         (application as App).addActivity(this)
+        etPhone.setText(Constants.getKeyUserPhone())
+        etPassword.setText(Constants.getKeyUserPwd())
         if (!Constants.isShow()){
             ivHide.setImageResource(R.mipmap.hide)
             etPassword.transformationMethod=PasswordTransformationMethod.getInstance()

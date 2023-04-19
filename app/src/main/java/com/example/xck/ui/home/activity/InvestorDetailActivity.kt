@@ -38,26 +38,32 @@ import kotlinx.android.synthetic.main.ic_title.*
 class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),InvestorDetailContract.View{
     var capitalist: Capitalist? =null
     var isFriend=false;//当前用户是否为好友
+    var user_id=0
     override fun getActivityLayoutId(): Int = R.layout.activity_investor_detail
 
     override fun initData() {
         tvTilte.text="详情"
         val caId = intent.getIntExtra("capitalist_id", 0)
-        val user_id = intent.getIntExtra("user_id", 0)
+         user_id = intent.getIntExtra("user_id", 0)
         if (Constants.getPersonal().user_type_select==0){
             tvSend.text = "先完善角色信息再打招呼"
         }
         getPresenter().getInverstorDetail(Constants.getToken(),caId)
-        Thread(Runnable {
-            isFriend=EMClient.getInstance().contactManager().allContactsFromServer.contains("$user_id")
-        }).start()
 
     }
 
     override fun onResume() {
         super.onResume()
-        getPresenter().getUserQuotaNum()//获取余额
-        getPresenter().getGreetingList()
+        if (Constants.getPersonal().user_type_select!=0){
+            Thread(Runnable {
+                isFriend= EMClient.getInstance().contactManager().allContactsFromServer.contains("$user_id")
+                if (!isFriend) {
+                    getPresenter().getGreetingList()//请求打招呼
+                }
+                getPresenter().getUserQuotaNum()//获取余额
+            }).start()
+        }
+
     }
 
     override fun initEvent() {
@@ -158,7 +164,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
         tvInverstor.text=inverstor
         tvAddress.text=address
         iv_person.loadImag(capitalist.avatar)
-        setSendState()
+//        setSendState()
     }
 
     var userQuotaNum: UserQuotaNum? =null
@@ -172,37 +178,37 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
         setSendState()
     }
     private fun setSendState(){//设置沟通按钮的状态
-        if (userQuotaNum==null||callIm==null||capitalist==null) return
-        if (userQuotaNum!!.quota_num==0){
-            tvSend.isClickable=false
-            tvSend.setBackgroundResource(R.drawable.false_click)
-            tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
-        }else{
+        if (!isFriend){
+            if (userQuotaNum==null||callIm==null) return
+        }
+        if (isFriend){
             tvSend.isClickable=true
-            tvSend.setBackgroundResource(R.drawable.sel_login)
-            if (isFriend){
-                tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
-            }else {
-                var isHas=false
-                Thread(Runnable {
-                    callIm!!.receive.forEachIndexed { index, activeBean ->
-                        if (activeBean.user_id== capitalist!!.user_id){
-                            isHas=true
-                            return@forEachIndexed
+            tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
+        }else{
+            if (userQuotaNum!!.quota_num==0){
+                tvSend.isClickable=false
+                tvSend.setBackgroundResource(R.drawable.false_click)
+                tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
+            }else{
+                tvSend.isClickable=true
+                tvSend.setBackgroundResource(R.drawable.sel_login)
+                    var isHas=false
+                    Thread(Runnable {
+                        callIm!!.receive.forEachIndexed { index, activeBean ->
+                            if (activeBean.user_id== user_id){
+                                isHas=true
+                                return@forEachIndexed
+                            }
                         }
-                    }
-                    ThreadUtils.runOnUiThread(Runnable {
-                        if (isHas){
-                            tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
-                        }else{
-                            tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
-                        }
-                    })
-                }).start()
-
+                        ThreadUtils.runOnUiThread(Runnable {
+                            if (isHas){
+                                tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
+                            }else{
+                                tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
+                            }
+                        })
+                    }).start()
             }
-
-
 
         }
     }

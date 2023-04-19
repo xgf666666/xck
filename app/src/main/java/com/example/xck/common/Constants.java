@@ -41,6 +41,7 @@ public class Constants {
     private static final String KEY_SP_HOME = "SP_HOME";//首页数据
     private static final String KEY_SP_IS_FIRST_LOGIN = "SP_IS_FIRST_LOGIN";//是否第一登录
     private static final String KEY_USER_PHONE="SP_USER_PHONE";//手机号
+    private static final String KEY_USER_PWD="KEY_USER_PWD";//密码
     private static final String KEY_SP_SEARCH="KEY_SP_SEARCH";//搜索记录
     private static final String KEY_UNREAD_MESSAGE = "UNREAD_MESSAGE";//未读消息
     private static final String TISHI_MESSAGE= "TISHI_MESSAGE";//新消息提示
@@ -78,7 +79,32 @@ public class Constants {
 
 
 
-    *//**
+    */
+    /**
+     * 存储手机号码
+     */
+    public static void setKeyUserPhone (String phone) {
+        SPUtils.getInstance().put(KEY_USER_PHONE, phone);
+    }
+    /**
+     * 获取手机号码
+     */
+    public static String getKeyUserPhone () {
+        return SPUtils.getInstance().getString(KEY_USER_PHONE);
+    }
+    /**
+     * 存储密码
+     */
+    public static void setKeyUserPwd (String pwd) {
+        SPUtils.getInstance().put(KEY_USER_PWD, pwd);
+    }
+    /**
+     * 获取密码
+     */
+    public static String getKeyUserPwd () {
+        return SPUtils.getInstance().getString(KEY_USER_PWD);
+    }
+    /**
      * 用户是否登录
      */
     public static boolean isLogin() {

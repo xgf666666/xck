@@ -42,7 +42,8 @@ class RegisterPersenter(view: RegisterContract.View):RegisterContract.Persenter(
             getView()?.showToast(it.message)
         })
     }
-
+    var mobile_phone=""
+    var password=""
     override fun register(
         mobile_phone: String,
         vercode: String,
@@ -81,6 +82,8 @@ class RegisterPersenter(view: RegisterContract.View):RegisterContract.Persenter(
             getView()?.showToast("确认密码与密码不一致")
             return
         }
+        this.mobile_phone=mobile_phone
+        this.password=password
        getView()?.showLoadingDialog()
        getModel().register(mobile_phone,vercode,smscode, key, password, repassword).ui({
            register=it.data!!
@@ -104,6 +107,8 @@ class RegisterPersenter(view: RegisterContract.View):RegisterContract.Persenter(
                     EMCallBack {
                     override fun onSuccess() {
                         Constants.putIMToken(it.data!!.access_token)
+                        Constants.setKeyUserPhone(mobile_phone)
+                        Constants.setKeyUserPwd(password)
                         register?.let { it1 -> getView()?.login(it1) }
                         getView()?.dismissLoadingDialog()
                     }

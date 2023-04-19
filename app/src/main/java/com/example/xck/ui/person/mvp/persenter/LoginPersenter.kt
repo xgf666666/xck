@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.util.Log
 import com.example.xck.App
 import com.example.xck.MainActivity
+import com.example.xck.common.Constants
 import com.example.xck.common.isPhone
 import com.example.xck.extensions.ui
 import com.example.xck.ui.person.activity.LoginActivity
@@ -32,6 +33,8 @@ class LoginPersenter(view: LoginContract.View):LoginContract.Persenter(view) {
                     override fun onSuccess() {
                         getView()?.login(loginInfo)
                         getView()?.showToast("登录成功")
+                        Constants.setKeyUserPhone(mobile_phone)
+                        Constants.setKeyUserPwd(password)
                         ((getView() as LoginActivity).application as App).cleanActivity()
                         getView()?.dismissLoadingDialog()
                     }

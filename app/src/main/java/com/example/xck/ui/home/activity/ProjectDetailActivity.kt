@@ -18,8 +18,10 @@ import com.hyphenate.chat.EMClient
 import com.hyphenate.easeui.constants.EaseCommom
 import com.hyphenate.easeui.constants.EaseConstant
 import com.hyphenate.easeui.constants.UserMessage
+import kotlinx.android.synthetic.main.activity_investor_detail.*
 import kotlinx.android.synthetic.main.activity_project_detail.*
 import kotlinx.android.synthetic.main.activity_project_detail.icLoading
+import kotlinx.android.synthetic.main.activity_project_detail.iv_person
 import kotlinx.android.synthetic.main.activity_project_detail.tvAddress
 import kotlinx.android.synthetic.main.activity_project_detail.tvCompany
 import kotlinx.android.synthetic.main.activity_project_detail.tvName
@@ -34,25 +36,29 @@ import kotlinx.android.synthetic.main.ic_title.*
 class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDetailContract.View{
     var project: Project? =null
     var isFriend=false
+    var user_id=0
     override fun getActivityLayoutId(): Int = R.layout.activity_project_detail
 
     override fun initData() {
         tvTilte.text="详情"
         val projectId = intent.getIntExtra("project_id", 0)
-        val user_id = intent.getIntExtra("user_id", 0)
+         user_id = intent.getIntExtra("user_id", 0)
         if (Constants.getPersonal().user_type_select==0){
             tvSend.text = "先完善角色信息再打招呼"
         }
         getPresenter().getProjectDetail(Constants.getToken(),projectId,0)
-
-        Thread(Runnable {
-            isFriend= EMClient.getInstance().contactManager().allContactsFromServer.contains("$user_id")
-            if (!isFriend) {
-                getPresenter().getGreetingList()//请求打招呼
-            }
-            getPresenter().getUserQuotaNum()//获取余额
-        }).start()
-
+    }
+    override fun onResume() {
+        super.onResume()
+        if (Constants.getPersonal().user_type_select!=0){
+            Thread(Runnable {
+                isFriend= EMClient.getInstance().contactManager().allContactsFromServer.contains("$user_id")
+                if (!isFriend) {
+                    getPresenter().getGreetingList()//请求打招呼
+                }
+                getPresenter().getUserQuotaNum()//获取余额
+            }).start()
+        }
     }
 
     override fun initEvent() {
@@ -93,11 +99,6 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        getPresenter().getUserQuotaNum()//获取余额
-        getPresenter().getGreetingList()//打招呼列表
-    }
 
 
     override fun createPresenter(): ProjectDetailPersenter = ProjectDetailPersenter(this)
@@ -157,7 +158,7 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
         tvBusinessBook.text=project.project_file
         tvTeamNum.text=project.team_member
         iv_person.loadImag(project.logo_image)
-        setSendState()
+//        setSendState()
     }
     var userQuotaNum: UserQuotaNum? =null
     override fun getUserQuotaNum(userQuotaNum: UserQuotaNum) {
@@ -170,36 +171,37 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
         setSendState()
     }
     private fun setSendState(){//设置沟通按钮的状态
-        if (userQuotaNum==null||callIm==null||project==null) return
-        if (userQuotaNum!!.quota_num==0){
-            tvSend.isClickable=false
-            tvSend.setBackgroundResource(R.drawable.false_click)
-            tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
-        }else{
+        if (!isFriend){
+            if (userQuotaNum==null||callIm==null) return
+        }
+        if (isFriend){
             tvSend.isClickable=true
-            tvSend.setBackgroundResource(R.drawable.sel_login)
-            if (isFriend){
-                tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
-            }else {
-                var isHas=false
-               Thread(Runnable {
-                   callIm!!.receive.forEachIndexed { index, activeBean ->
-                       if (activeBean.user_id== project!!.user_id){
-                           isHas=true
-                           return@forEachIndexed
-                       }
-                   }
-                  ThreadUtils.runOnUiThread(Runnable {
-                      if (isHas){
-                          tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
-                      }else{
-                          tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
-                      }
-                  })
-               }).start()
+            tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
+        }else{
+            if (userQuotaNum!!.quota_num==0){
+                tvSend.isClickable=false
+                tvSend.setBackgroundResource(R.drawable.false_click)
+                tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
+            }else{
+                tvSend.isClickable=true
+                tvSend.setBackgroundResource(R.drawable.sel_login)
+                    var isHas=false
+                    Thread(Runnable {
+                        callIm!!.receive.forEachIndexed { index, activeBean ->
+                            if (activeBean.user_id== user_id){
+                                isHas=true
+                                return@forEachIndexed
+                            }
+                        }
+                        ThreadUtils.runOnUiThread(Runnable {
+                            if (isHas){
+                                tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
+                            }else{
+                                tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
+                            }
+                        })
+                    }).start()
             }
-
-
 
         }
     }

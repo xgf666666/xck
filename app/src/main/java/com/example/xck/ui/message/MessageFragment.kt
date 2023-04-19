@@ -27,6 +27,8 @@ import com.example.xck.utils.TimeUtil
 import com.hyphenate.EMContactListener
 import com.hyphenate.EMMessageListener
 import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMFileMessageBody
+import com.hyphenate.chat.EMImageMessageBody
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMTextMessageBody
 import com.hyphenate.chat.adapter.message.EMATextMessageBody
@@ -53,11 +55,10 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
     private var isCall=false
     override fun getFragmentLayoutId(): Int = R.layout.fragment_message
     var hidden=false
-    private var ifFirstLoad=false
+    private var token="";
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun init(view: View?) {
-
         messageAdapter= MessageAdapter()
         rvMessage.layoutManager=LinearLayoutManager(this.context)
         rvMessage.adapter=messageAdapter
@@ -72,10 +73,9 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             }
         }
         EMClient.getInstance().contactManager().setContactListener(object : EMContactListener {//好友请求回调
-            override fun onContactAdded(username: String?) {//同意别人的好友请求
+            override fun onContactAdded(username: String?) {//联系人已添加。
             if (username != null) {
                 allContactsFromServer.add(username)
-//                    Constants.putFriendIDs(allContactsFromServer)
                 call?.let { setMessageInfo(it) }
             }
         }
@@ -88,11 +88,12 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
 
             override fun onFriendRequestAccepted(username: String?) {
                 //好友请求被同意
+/*
                 if (username != null) {
                     allContactsFromServer.add(username)
-//                    Constants.putFriendIDs(allContactsFromServer)
                     call?.let { setMessageInfo(it) }
                 }
+*/
             }
 
             override fun onFriendRequestDeclined(username: String?) {
@@ -135,21 +136,6 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             }
 
         }
-/*
-        rgSel.setOnCheckedChangeListener { group, checkedId ->
-            if (checkedId==R.id.tvCommunicate){
-                isCall=false
-                messageAdapter?.setNewInstance(friendUsers)
-                tvCommunicate.setTextSize(COMPLEX_UNIT_DIP,19f)
-                tvCall.setTextSize(COMPLEX_UNIT_DIP,17f)
-            }else{
-                isCall=true
-                messageAdapter?.setNewInstance(callUsers)
-                tvCommunicate.setTextSize(COMPLEX_UNIT_DIP,17f)
-                tvCall.setTextSize(COMPLEX_UNIT_DIP,19f)
-            }
-        }
-*/
         et_search.setOnEditorActionListener { v, actionId, event ->
             var keyword=v.text.toString()
             search.clear()
@@ -237,8 +223,8 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
     private fun setVisLogin(){
         if (Constants.isLogin()){
             icPrePareLogin.visibility=View.GONE
-            if (!ifFirstLoad){
-                ifFirstLoad=true
+            if (token!=Constants.getToken()){
+                token=Constants.getToken()
                 Thread(Runnable {
                     try {
                         allContactsFromServer = EMClient.getInstance().contactManager().allContactsFromServer
@@ -326,10 +312,15 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                         if (lastMessage!=null){
                             if (lastMessage.body is EMTextMessageBody){
                                 user.message=(lastMessage.body as EMTextMessageBody).message
+                            }else if (lastMessage.body is EMImageMessageBody){
+                                user.message="[图片]"
+                            }else if (lastMessage.body is EMFileMessageBody){
+                                user.message="[文件]"
                             }else{
                                 user.message=lastMessage.body.toString()
                             }
                             user.time=TimeUtil.formatDate(lastMessage.msgTime)
+                            user.times=lastMessage.msgTime
                         }
                         user.messageNum=next.value.unreadMsgCount
                         callNum+=user.messageNum
@@ -338,7 +329,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                 }
             }
             callUsers.sortByDescending {
-                TimeUtil.getFormFormatTime(it.time)
+                it.times
 
             }
 
@@ -369,7 +360,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                 }
             }
             friendUsers.sortByDescending {
-                TimeUtil.getFormFormatTime(it.time)
+                it.times
 
             }
 
@@ -391,7 +382,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                     option_2_unread_count.text = "99+"
                 }else{
                     option_2_unread_count.visibility=View.VISIBLE
-                    option_2_unread_count.text = "$callNum"
+                    option_2_unread_count.text = "${callNum-friendNum}"
                 }
 
             })
