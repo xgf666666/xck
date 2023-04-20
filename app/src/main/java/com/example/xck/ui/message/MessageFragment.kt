@@ -319,7 +319,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
                             }else{
                                 user.message=lastMessage.body.toString()
                             }
-                            user.time=TimeUtil.formatDate(lastMessage.msgTime)
+                            user.time=TimeUtil.formatConversationTime(lastMessage.msgTime)
                             user.times=lastMessage.msgTime
                         }
                         user.messageNum=next.value.unreadMsgCount

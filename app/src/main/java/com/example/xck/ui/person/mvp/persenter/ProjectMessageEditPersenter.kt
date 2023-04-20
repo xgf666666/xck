@@ -1,11 +1,13 @@
 package com.example.xck.ui.person.mvp.persenter
 
+import android.util.Log
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.xck.extensions.ui
 import com.example.xck.ui.person.mvp.contract.ProjectMessageEditContract
 import com.example.xck.ui.person.mvp.model.ProjectMessageEditModel
 import java.io.File
+import kotlin.math.log
 
 class ProjectMessageEditPersenter(view: ProjectMessageEditContract.View) :
     ProjectMessageEditContract.Persenter(view) {
@@ -19,6 +21,7 @@ class ProjectMessageEditPersenter(view: ProjectMessageEditContract.View) :
         }, {
             getView()?.dismissLoadingDialog()
             getView()?.showToast(it.message)
+            it.message?.let { it1 -> Log.i("xgf", it1) }
         })
     }
 

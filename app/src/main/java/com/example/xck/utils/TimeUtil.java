@@ -148,6 +148,56 @@ public class TimeUtil {
         String str = df.format(timeStr);
         return str;
     }
+    public static String formatConversationTime(long timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        String time = sdf.format(new Date(timestamp));
+
+        if (isToday(timestamp)) {
+            return time;
+        } else if (isYesterday(timestamp)) {
+            return "昨天 " + time;
+        } else if (isYear(timestamp)){
+            sdf.applyPattern("MM-dd");
+            return sdf.format(new Date(timestamp));
+        }
+        else {
+            sdf.applyPattern("yyyy-MM-dd");
+            return sdf.format(new Date(timestamp));
+        }
+    }
+
+    public static boolean isToday(long timestamp) {
+        Calendar today = Calendar.getInstance();
+        Calendar otherDay = Calendar.getInstance();
+        otherDay.setTimeInMillis(timestamp);
+        return today.get(Calendar.YEAR) == otherDay.get(Calendar.YEAR)
+                && today.get(Calendar.MONTH) == otherDay.get(Calendar.MONTH)
+                && today.get(Calendar.DAY_OF_MONTH) == otherDay.get(Calendar.DAY_OF_MONTH);
+    }
+    public static boolean isYear(long timestamp) {
+        Calendar now = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+
+        // 判断时间是否是当天
+        return  (now.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+                &&( now.get(Calendar.MONTH) != calendar.get(Calendar.MONTH)
+                || now.get(Calendar.DAY_OF_MONTH) != calendar.get(Calendar.DAY_OF_MONTH)));
+
+
+
+    }
+
+    public static boolean isYesterday(long timestamp) {
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DAY_OF_MONTH, -1);
+        Calendar otherDay = Calendar.getInstance();
+        otherDay.setTimeInMillis(timestamp);
+        return yesterday.get(Calendar.YEAR) == otherDay.get(Calendar.YEAR)
+                && yesterday.get(Calendar.MONTH) == otherDay.get(Calendar.MONTH)
+                && yesterday.get(Calendar.DAY_OF_MONTH) == otherDay.get(Calendar.DAY_OF_MONTH);
+    }
+
     public static String formatDate(long timeInMillis) {
         Calendar now = Calendar.getInstance();
         Calendar calendar = Calendar.getInstance();

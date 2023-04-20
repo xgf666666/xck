@@ -8,6 +8,8 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
     <uses-permission
         android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" /> <!-- 允许程序在手机屏幕关闭后后台进程仍然运行 -->
@@ -48,13 +50,24 @@
         <!-- 适配Android 7.0, 需要将下方的com.hyphenate.chatdemo替换为你的app包名 -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileProvider"
+            android:authorities="com.example.xck.fileProvider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+<!--
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.xck.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+-->
         <activity
             android:name=".ui.person.activity.AboutUsActivity"
             android:exported="false"

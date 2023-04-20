@@ -5,7 +5,12 @@ import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
+import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -13,7 +18,6 @@ import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.UtilsTransActivity
-import com.bumptech.glide.Glide
 import com.example.xck.BuildConfig
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
@@ -24,22 +28,17 @@ import com.example.xck.common.Constants
 import com.example.xck.dialog.SelectDialog
 import com.example.xck.ui.person.mvp.contract.ProjectMessageEditContract
 import com.example.xck.ui.person.mvp.persenter.ProjectMessageEditPersenter
+import com.example.xck.utils.PowerUtil
+import com.example.xck.utils.UriUtil
 import com.example.xck.utils.filechoose.FileBrowseActivity
 import com.example.xck.utils.filechoose.FxFileDialogArgs
 import com.example.xck.utils.filechoose.FxHelp
 import com.example.xck.utils.loadImag
 import com.xx.baseutilslibrary.common.ImageChooseHelper
 import kotlinx.android.synthetic.main.activity_project_message_edit.*
-import kotlinx.android.synthetic.main.activity_project_message_edit.ivPerson
-import kotlinx.android.synthetic.main.activity_project_message_edit.llAddress
-import kotlinx.android.synthetic.main.activity_project_message_edit.llFinance
-import kotlinx.android.synthetic.main.activity_project_message_edit.llFleid
-import kotlinx.android.synthetic.main.activity_project_message_edit.tvAddress
-import kotlinx.android.synthetic.main.activity_project_message_edit.tvFinance
 import kotlinx.android.synthetic.main.ic_title.*
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(),ProjectMessageEditContract.View,
@@ -60,8 +59,20 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
     @RequiresApi(Build.VERSION_CODES.N)
     override fun initEvent() {
         rlFile.setOnClickListener {
-            isImage=false
-            showFileChooser()
+            if (PowerUtil.checkIsStoragePermissionsGranted(this,Constants.REQUEST_CODE)){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {//Android11以上要给权限才能拿文件
+                    val intent: Intent =
+                        Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                    val uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivityForResult(intent, 11)
+                } else {
+                    var intent = Intent(Intent.ACTION_GET_CONTENT);
+                    intent.type = "*/*";
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    startActivityForResult(Intent.createChooser(intent,"需要选择文件"),1);
+                }
+            }
         }
         ivPerson.setOnClickListener {
             isImage=true
@@ -105,6 +116,26 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
         llFinance.setOnClickListener(this)
         llFleid.setOnClickListener(this)
         llAddress.setOnClickListener(this)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == Constants.REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 用户授予了所请求的权限
+                var intent = Intent(Intent.ACTION_GET_CONTENT);
+                intent.type = "*/*";
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(Intent.createChooser(intent,"需要选择文件"),1);
+            } else {
+                // 用户拒绝了所请求的权限
+            }
+        }
+
     }
 
     override fun createPresenter(): ProjectMessageEditPersenter =ProjectMessageEditPersenter(this)
@@ -195,10 +226,35 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
         datePicker.setBackgroundResource(R.color.white)*/
         datePickerDialog.show()
     }
+  /*  if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+        val uri: Uri? = data.data // 获取选定文件的URI
+        // 处理选定的文件
+    }
+*/
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+      if (requestCode === 11 && resultCode === RESULT_OK){//Android11及以上给完权限回调
+          var intent = Intent(Intent.ACTION_GET_CONTENT);
+          intent.type = "*/*";
+          intent.addCategory(Intent.CATEGORY_OPENABLE);
+          startActivityForResult(Intent.createChooser(intent,"需要选择文件"),1);
+          return
+      }
         if (!isImage){
-            if (requestCode === 1 && resultCode === 1) { //上传文件的回调
+            if (requestCode === 1 && resultCode === RESULT_OK) { //上传文件的回调
+                val uri: Uri? = data?.data // 获取选定文件的URI
+                var file: File? = null
+                if (uri != null) {
+                    val path = UriUtil.getPath(this, uri)
+                    Log.i("xgf",path)
+                    if (path != null) {
+                        file = File(path)
+                        getPresenter().upload(file)//上传商业书
+                        tvTishi.text=file.name
+                    }
+                }
+
+/*
                 if (data != null) {
                     val args = data.getSerializableExtra(FxHelp.ACTIVITY_ARG_PARAM_NAME) as FxFileDialogArgs?
                     if (args != null) {
@@ -210,6 +266,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                         }
                     }
                 }
+*/
             }
         }else{
             imageChooseHelper!!.onActivityResult(requestCode,resultCode,data)
@@ -245,23 +302,21 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 }else{
                     trade += ",${project.attr_list[i].attr_name}"
                 }
-                filids?.add(project.attr_list[i].project_id)
-            }
-            if (project.attr_list[i].attr_parent_id==2){
+                filids?.add(project.attr_list[i].attr_id)
+            }else if (project.attr_list[i].attr_parent_id==2){
                 if (StringUtils.isEmpty(address)){
                     address+=project.attr_list[i].attr_name
                 }else{
                     address+=",${project.attr_list[i].attr_name}"
                 }
-                fanances?.add(project.attr_list[i].project_id)
-            }
-            if (project.attr_list[i].attr_parent_id==3){
+                addresss?.add(project.attr_list[i].attr_id)
+            }else if (project.attr_list[i].attr_parent_id==3){
                 if (StringUtils.isEmpty(finance)){
                     finance+=project.attr_list[i].attr_name
                 }else{
                     finance+=",${project.attr_list[i].attr_name}"
                 }
-                addresss?.add(project.attr_list[i].project_id)
+                fanances?.add(project.attr_list[i].attr_id)
             }
         }
         tvFleid.text=trade
@@ -329,5 +384,6 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
         })
         selectDialog?.show()
     }
+
 
 }

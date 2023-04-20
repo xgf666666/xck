@@ -27,6 +27,7 @@ public class Constants {
     public static final String KEY_SP_HEAN = "SP_HEAN";
     public static final String KEY_SP_PERSON = "SP_Person";
     public static final String KEY_SP_CODE = "SP_CODE";
+    public static final int REQUEST_CODE = 1;
     public static final int INTENT_HOME = 0;
     public static final int INTENT_SHOPPING = 2;
     public static final String KEY_INTENT_MAIN = "INTENT_MAIN";
@@ -58,7 +59,9 @@ public class Constants {
     public static final String SHORT_TOKEN_INVALID = "30003";
     public static final String SHORT_TOKEN_INVALID_ = "30004";
     public static final String BASE_URL = "http://api-test.xck6666.com/";
-    public final static String SELECT_FILE_SUFFIX = ".PDF;.pdf";
+    public final static String SELECT_FILE_SUFFIX = ".jpg;.png;.bmp;.txt;.pdf;.jpeg;.mp4;.avi;.rmvb;.mov;.apk;.xls;.ppt;.pptx;.mp3;.doc;.docx;.xlsx;" +
+            ".JPG;.PNG;.BMP;.TXT;.PDF;.JPEG;.MP4;.AVI;.RMVB;.MOV;.APK;.XLS;.PPT;.PPTX;.MP3;.DOC;.DOCX;.XLSX";
+
     public final static String USERDETAIL = "USERDETAIL";
     /*private static UserCenterBean userData;
 
