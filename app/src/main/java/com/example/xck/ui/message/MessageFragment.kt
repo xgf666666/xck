@@ -423,7 +423,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             userMessage.trade=trade
             callUsers.forEachIndexed { index, user ->
                 if (user.id==capitalist.user_id){
-                    user.avatar=capitalist.logo_image
+                    user.avatar=capitalist.avatar
                     user.name=capitalist.capitalist_name
                     user.userMessage=userMessage
                     Constants.putUserDetail(user)
@@ -434,7 +434,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             if (!isHas){
                 friendUsers.forEachIndexed { index, user ->
                     if (user.id==capitalist.user_id){
-                        user.avatar=capitalist.logo_image
+                        user.avatar=capitalist.avatar
                         user.name=capitalist.capitalist_name
                         user.userMessage=userMessage
                         Constants.putUserDetail(user)
