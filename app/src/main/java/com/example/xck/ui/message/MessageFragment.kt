@@ -3,10 +3,12 @@ package com.example.xck .ui.message
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue.COMPLEX_UNIT_DIP
 import android.util.TypedValue.COMPLEX_UNIT_SP
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ThreadUtils
@@ -17,6 +19,7 @@ import com.example.xck.bean.Capitalist
 import com.example.xck.bean.Project
 import com.example.xck.bean.User
 import com.example.xck.common.Constants
+import com.example.xck.databinding.FragmentMessageBinding
 import com.example.xck.ui.message.adapter.MessageAdapter
 import com.example.xck.ui.message.mvp.contract.MessageContract
 import com.example.xck.ui.message.mvp.persenter.MessagePersenter
@@ -31,40 +34,36 @@ import com.hyphenate.chat.EMFileMessageBody
 import com.hyphenate.chat.EMImageMessageBody
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMTextMessageBody
-import com.hyphenate.chat.adapter.message.EMATextMessageBody
 import com.hyphenate.easeui.constants.EaseCommom
 import com.hyphenate.easeui.constants.EaseConstant
 import com.hyphenate.easeui.constants.UserMessage
 import com.hyphenate.exceptions.HyphenateException
-import kotlinx.android.synthetic.main.activity_prepare_login.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_message.*
-import kotlinx.android.synthetic.main.fragment_message.et_search
+
 
 
 /**
  *   author ： xiaogf
  *   time    ： 2022/10/8
  */
-class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
+class MessageFragment :BaseMvpFragment<MessagePersenter,FragmentMessageBinding>(),MessageContract.View{
     var messageAdapter: MessageAdapter? =null
     var allContactsFromServer : MutableList<String> = mutableListOf()
     var callUsers : MutableList<User> = mutableListOf()//打招呼adapter的Data
     var friendUsers : MutableList<User> = mutableListOf()//沟通中adapter的Data
     var search : MutableList<User> = mutableListOf()//搜索的Data
     private var isCall=false
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_message
+
     var hidden=false
     private var token="";
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun init(view: View?) {
         messageAdapter= MessageAdapter()
-        rvMessage.layoutManager=LinearLayoutManager(this.context)
-        rvMessage.adapter=messageAdapter
+        mBindingView!!.rvMessage.layoutManager =LinearLayoutManager(this.context)
+        mBindingView!!.rvMessage.adapter=messageAdapter
         messageAdapter!!.setNewInstance(friendUsers)
         messageAdapter!!.setOnItemClickListener { adapter, view, position ->
-            var bean = adapter.data[position] as User
+            val bean = adapter.data[position] as User
             context?.let {
                 EaseCommom.getInstance().userMessage=bean.userMessage
                 ChatActivity.actionStart(
@@ -108,36 +107,36 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ResourceAsColor")
     private fun initEvent() {
-        tvToLogin.setOnClickListener {
+        mBindingView!!.icPrePareLogin.tvToLogin.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
-            this?.startActivity(intent)
+            this.startActivity(intent)
         }
-        tvRegister.setOnClickListener {
+        mBindingView!!.icPrePareLogin.tvRegister.setOnClickListener {
             startActivity(Intent(context, RegisterActivity::class.java))
         }
-        option_1.setOnClickListener {
+        mBindingView!!.option1.setOnClickListener {
             if (isCall){
                 isCall=false
                 messageAdapter?.setNewInstance(friendUsers)
-                option_1.setTextSize(COMPLEX_UNIT_SP,19f)
-                option_1.setTextColor(resources.getColor(R.color.text_333333,null))
-                option_2.setTextSize(COMPLEX_UNIT_SP,17f)
-                option_2.setTextColor(resources.getColor(R.color.text_999999,null))
+                mBindingView!!.option1.setTextSize(COMPLEX_UNIT_SP,19f)
+                mBindingView!!.option1.setTextColor(resources.getColor(R.color.text_333333,null))
+                mBindingView!!.option2.setTextSize(COMPLEX_UNIT_SP,17f)
+                mBindingView!!.option2.setTextColor(resources.getColor(R.color.text_999999,null))
             }
         }
-        option_2.setOnClickListener {
+        mBindingView!!.option2.setOnClickListener {
             if (!isCall){
             isCall=true
             messageAdapter?.setNewInstance(callUsers)
-                option_1.setTextSize(COMPLEX_UNIT_SP,17f)
-                option_1.setTextColor(resources.getColor(R.color.text_999999,null))
-                option_2.setTextSize(COMPLEX_UNIT_SP,19f)
-                option_2.setTextColor(resources.getColor(R.color.text_333333,null))
+                mBindingView!!.option1.setTextSize(COMPLEX_UNIT_SP,17f)
+                mBindingView!!.option1.setTextColor(resources.getColor(R.color.text_999999,null))
+                mBindingView!!.option2.setTextSize(COMPLEX_UNIT_SP,19f)
+                mBindingView!!.option2.setTextColor(resources.getColor(R.color.text_333333,null))
             }
 
         }
-        et_search.setOnEditorActionListener { v, actionId, event ->
-            var keyword=v.text.toString()
+        mBindingView!!.etSearch.setOnEditorActionListener { v, actionId, event ->
+            val keyword=v.text.toString()
             search.clear()
             if (!isCall){//沟通中
                 if (keyword.isBlank()){
@@ -222,7 +221,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
     }
     private fun setVisLogin(){
         if (Constants.isLogin()){
-            icPrePareLogin.visibility=View.GONE
+            mBindingView!!.icPrePareLogin.root.visibility=View.GONE
             if (token!=Constants.getToken()){
                 token=Constants.getToken()
                 Thread(Runnable {
@@ -241,7 +240,7 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
 //                setMessageInfo()
             }
         }else{
-            icPrePareLogin.visibility=View.VISIBLE
+            mBindingView!!.icPrePareLogin.root.visibility=View.VISIBLE
         }
     }
     private var call: CallIm? =null
@@ -367,22 +366,22 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             ThreadUtils.runOnUiThread(Runnable {
                     messageAdapter?.notifyDataSetChanged()
                 if (friendNum==0){
-                    option_1_unread_count.visibility=View.INVISIBLE
+                    mBindingView!!.option1UnreadCount.visibility=View.INVISIBLE
                 }else if (friendNum>99){
-                    option_1_unread_count.visibility=View.VISIBLE
-                    option_1_unread_count.text = "99+"
+                    mBindingView!!.option1UnreadCount.visibility=View.VISIBLE
+                    mBindingView!!.option1UnreadCount.text = "99+"
                 }else{
-                    option_1_unread_count.visibility=View.VISIBLE
-                    option_1_unread_count.text = "$friendNum"
+                    mBindingView!!.option1UnreadCount.visibility=View.VISIBLE
+                    mBindingView!!.option1UnreadCount.text = "$friendNum"
                 }
                 if ((callNum-friendNum)==0){
-                    option_2_unread_count.visibility=View.INVISIBLE
+                    mBindingView!!.option2UnreadCount.visibility=View.INVISIBLE
                 }else if ((callNum-friendNum)>99){
-                    option_2_unread_count.visibility=View.VISIBLE
-                    option_2_unread_count.text = "99+"
+                    mBindingView!!.option2UnreadCount.visibility=View.VISIBLE
+                    mBindingView!!.option2UnreadCount.text = "99+"
                 }else{
-                    option_2_unread_count.visibility=View.VISIBLE
-                    option_2_unread_count.text = "${callNum-friendNum}"
+                    mBindingView!!.option2UnreadCount.visibility=View.VISIBLE
+                    mBindingView!!.option2UnreadCount.text = "${callNum-friendNum}"
                 }
 
             })
@@ -509,5 +508,20 @@ class MessageFragment :BaseMvpFragment<MessagePersenter>(),MessageContract.View{
             })
 
             }).start()
+    }
+
+    override fun getViewBinding(
+        inflater: LayoutInflater?,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): FragmentMessageBinding {
+        return FragmentMessageBinding.bind(
+            inflater!!.inflate(
+                R.layout.fragment_message,
+                null,
+                false
+            )
+        )
+
     }
 }

@@ -8,16 +8,21 @@ import android.view.ContextMenu
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
+import com.example.xck.databinding.ActivityMainBinding
 import com.example.xck.ui.home.HomeFragment
 import com.example.xck.ui.message.MessageFragment
 import com.example.xck.ui.person.PersonFragment
 import com.xx.baseuilibrary.mvp.BaseMvpViewActivity
-import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : BaseMvpViewActivity() {
     private var mFragments: Array<Fragment?> = arrayOf(HomeFragment(), null, null)
     private val mMenuItemId = arrayOf(R.id.item0, R.id.item1, R.id.item2)
-    override fun getActivityLayoutId(): Int =R.layout.activity_main
+    private val mBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    override fun getViewBinding(): ViewBinding {
+        return mBinding
+    }
 
     override fun initData() {
         supportFragmentManager
@@ -25,7 +30,7 @@ class MainActivity : BaseMvpViewActivity() {
             .add(R.id.ll_fragment, mFragments[0]!!)
             .commit()
 //        BottomNavigationViewUtils.disableShiftMode(bottomNavigationView)
-        bottomNavigationView.setOnItemSelectedListener {
+        mBinding.bottomNavigationView.setOnItemSelectedListener {
             selectedFragemnt(it.itemId)
             true
         }

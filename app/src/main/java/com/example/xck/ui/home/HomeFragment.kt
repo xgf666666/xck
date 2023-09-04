@@ -3,7 +3,10 @@ package com.example.xck.ui.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView.OnEditorActionListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +19,7 @@ import com.example.xck.bean.Capitalist
 import com.example.xck.bean.Project
 import com.example.xck.bean.Select
 import com.example.xck.common.Constants
+import com.example.xck.databinding.FragmentHomeBinding
 import com.example.xck.dialog.SelectDialog
 import com.example.xck.ui.home.activity.InvestorDetailActivity
 import com.example.xck.ui.home.activity.ProjectDetailActivity
@@ -27,10 +31,10 @@ import com.example.xck.ui.home.mvp.persenter.HomePersenter
 import com.example.xck.utils.SoftKeyboardUtils
 import com.example.xck.utils.loadImag
 import com.hyphenate.easeui.constants.EaseCommom
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
-class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
+
+class HomeFragment : BaseMvpFragment<HomePersenter,FragmentHomeBinding>(),HomeContract.View,
     SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
     private var homeAdapter: HomeAdapter? =null
     private var homeProjectAdapter: HomeProjectAdapter? =null
@@ -38,12 +42,12 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
     private var page=1
     private var keyword=""
     private var attr=""
-    private val selectDialog by lazy {SelectDialog(this.requireContext()) }
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_home
+    private val selectDialog by lazy {SelectDialog(requireContext()) }
+
 
     @SuppressLint("SuspiciousIndentation")
     override fun init(view: View?) {
-        rvHome.layoutManager=LinearLayoutManager(this.context)
+        mBindingView!!.rvHome.layoutManager=LinearLayoutManager(this.context)
         if (Constants.getPersonal()!=null){
             EaseCommom.getInstance().isProject = Constants.getPersonal().user_type_select == 1
             EaseCommom.getInstance().avatar=Constants.getPersonal().avatar
@@ -74,17 +78,17 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
         }
 
         if (isProject){
-            rvHome.adapter=homeProjectAdapter
+            mBindingView!!.rvHome.adapter=homeProjectAdapter
            showLoadingDialog()
             getPresenter().getProjects(Constants.getToken(),attr,keyword,page,10)
             getPresenter().getBanner("project_banner")
         }else{
-            rvHome.adapter=homeAdapter
+            mBindingView!!.rvHome.adapter=homeAdapter
             showLoadingDialog()
             getPresenter().getCapitalists(Constants.getToken(),attr,keyword,page,10)
             getPresenter().getBanner("capitalist_banner")
         }
-        srHome.setOnRefreshListener(this)
+        mBindingView!!.srHome.setOnRefreshListener(this)
         selectDialog.setOnSureListener(object : SelectDialog.OnSureListener{
             override fun onSure(
                 filid: ArrayList<Select.ChildrenBean>,
@@ -122,10 +126,10 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             }
 
         })
-        iv_screen.setOnClickListener {
+        mBindingView!!.ivScreen.setOnClickListener {
             selectDialog.show()
         }
-        et_search.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+        mBindingView!!.etSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             page==1
             keyword=v.text.toString()
             if (SoftKeyboardUtils.isSoftShowing(activity)){
@@ -152,11 +156,11 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             }
             page=1
             if (isProject){
-                rvHome.adapter=homeProjectAdapter
+                mBindingView!!.rvHome.adapter=homeProjectAdapter
                 getPresenter().getProjects(Constants.getToken(),attr,keyword,page,10)
                 getPresenter().getBanner("project_banner")
             }else{
-                rvHome.adapter=homeAdapter
+                mBindingView!!.rvHome.adapter=homeAdapter
                 getPresenter().getCapitalists(Constants.getToken(),attr,keyword,page,10)
                 getPresenter().getBanner("capitalist_banner")
             }
@@ -190,8 +194,8 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
 
     @SuppressLint("NotifyDataSetChanged")
     override fun getProject(projects: List<Project>) {
-        if (srHome.isRefreshing){
-            srHome.isRefreshing=false
+        if ( mBindingView!!.srHome.isRefreshing){
+            mBindingView!!.srHome.isRefreshing=false
             homeProjectAdapter?.data=projects.toMutableList()
         }else if(homeProjectAdapter?.loadMoreModule?.isLoading==true){
             homeProjectAdapter?.addData(projects)
@@ -207,8 +211,8 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
     }
 
     override fun getCapitalist(projects: List<Capitalist>) {
-        if (srHome.isRefreshing){
-            srHome.isRefreshing=false
+        if ( mBindingView!!.srHome.isRefreshing){
+            mBindingView!!.srHome.isRefreshing=false
             homeAdapter?.data=projects.toMutableList()
         }else if(homeAdapter?.loadMoreModule?.isLoading==true){
             homeAdapter?.addData(projects)
@@ -231,7 +235,21 @@ class HomeFragment : BaseMvpFragment<HomePersenter>(),HomeContract.View,
             image.loadImag(it)
             data.add(image)
         }
-        VpHome.adapter=HomeViewPagerAdapter(data)
+        mBindingView!!.VpHome.adapter=HomeViewPagerAdapter(data)
+    }
+
+    override fun getViewBinding(
+        inflater: LayoutInflater?,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): FragmentHomeBinding {
+        return FragmentHomeBinding.bind(
+            inflater!!.inflate(
+                R.layout.fragment_home,
+                null,
+                false
+            )
+        )
     }
 
 }

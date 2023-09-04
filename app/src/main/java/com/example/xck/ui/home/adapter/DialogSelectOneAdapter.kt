@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.xck.R
 import com.example.xck.bean.Select
-import kotlinx.android.synthetic.main.dialog_select.*
 
 /**
  *   author ： xiaogf

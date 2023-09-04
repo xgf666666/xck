@@ -51,8 +51,6 @@ fun BaseMvpView.showToast(throwable:Throwable){
         msg="状态异常，请重新登录！"//需要重新登录获取
         if (this is BaseActivity){
 //            tokenError((this as Context),msg)
-        }else if (this is BaseFragment){
-//            tokenError((this as BaseFragment).context!!,msg)
         }else{
             showToast(msg)
         }

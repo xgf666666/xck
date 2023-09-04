@@ -1,12 +1,12 @@
 package com.example.xck.base.mvp
 
 import android.content.Context
-
 import android.os.Bundle
-import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 import com.xx.baseutilslibrary.common.XxResourceUtil
+
 
 /**
  * BaseActivity
@@ -19,20 +19,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected lateinit var mContext: Context
     protected lateinit var mPermissionsManager : PermissionsManager
-
-
-    /**
-     * 获取布局资源文件id
-     *
-     * @return 布局资源文件id
-     */
-    protected abstract fun getActivityLayoutId(): Int
-
+    abstract fun getViewBinding(): ViewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mContext = this
-        beforeSetContentView()
-        setContentView(getActivityLayoutId())
+        setContentView(getViewBinding()!!.root);
+//        setContentView(getActivityLayoutId())
         mPermissionsManager= PermissionsManager(this)
         mPermissionsManager.permissions= returnPermissionArr()
         mPermissionsManager.setPermissionCallback(MyOnPermissionsCallback())

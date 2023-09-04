@@ -1,5 +1,6 @@
 package com.example.xck.base.mvp
 
+import androidx.viewbinding.ViewBinding
 import com.example.xck.base.mvp.contract.BaseMvpView
 import com.example.xck.base.mvp.presenter.BaseMvpPresenter
 import com.example.xck.base.mvp.presenter.BasePersenter
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull
  * Describe：
  * Created by 雷小星🍀 on 2017/11/1 9:53.
  */
-abstract class BaseMvpFragment< P : BasePersenter> : BaseMvpViewFragment() {
+abstract class BaseMvpFragment< P : BasePersenter,V : ViewBinding> : BaseMvpViewFragment<V>() {
 
     private var presenter: P? = null
 

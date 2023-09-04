@@ -15,16 +15,17 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
+import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.UtilsTransActivity
 import com.example.xck.BuildConfig
-import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
 import com.example.xck.bean.Project
 import com.example.xck.bean.Select
 import com.example.xck.bean.UpLoadFile
 import com.example.xck.common.Constants
+import com.example.xck.databinding.ActivityProjectMessageEditBinding
 import com.example.xck.dialog.SelectDialog
 import com.example.xck.ui.person.mvp.contract.ProjectMessageEditContract
 import com.example.xck.ui.person.mvp.persenter.ProjectMessageEditPersenter
@@ -35,8 +36,6 @@ import com.example.xck.utils.filechoose.FxFileDialogArgs
 import com.example.xck.utils.filechoose.FxHelp
 import com.example.xck.utils.loadImag
 import com.xx.baseutilslibrary.common.ImageChooseHelper
-import kotlinx.android.synthetic.main.activity_project_message_edit.*
-import kotlinx.android.synthetic.main.ic_title.*
 import java.io.File
 import java.util.*
 
@@ -54,11 +53,10 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
     private var isImage=false
     var completeStatus=0
     var ProjectId=0
-    override fun getActivityLayoutId(): Int =R.layout.activity_project_message_edit
-
+    private val mBinding by lazy { ActivityProjectMessageEditBinding.inflate(layoutInflater) }
     @RequiresApi(Build.VERSION_CODES.N)
     override fun initEvent() {
-        rlFile.setOnClickListener {
+        mBinding.rlFile.setOnClickListener {
             if (PowerUtil.checkIsStoragePermissionsGranted(this,Constants.REQUEST_CODE)){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {//Android11以上要给权限才能拿文件
                     val intent: Intent =
@@ -74,48 +72,48 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 }
             }
         }
-        ivPerson.setOnClickListener {
+        mBinding.ivPerson.setOnClickListener {
             isImage=true
             showEditAvatarDialog()
         }
-        llTime.setOnClickListener {
-            showDatePickerDialog(this,2,tvTime,Calendar.getInstance(Locale.CHINA))
+        mBinding.llTime.setOnClickListener {
+            showDatePickerDialog(this,2, mBinding.tvTime,Calendar.getInstance(Locale.CHINA))
         }
-        tvSend.setOnClickListener {
+        mBinding.tvSend.setOnClickListener {
             if (completeStatus==0){
-                getPresenter().setProject(Constants.getToken(),etWx.text.toString(),image,tvTime.text.toString(),
-                    etProjectIntroduce.text.toString(),etFinance.text.toString(),etoperation.text.toString(),etAdvantage.text.toString()
-                    ,etHistory.text.toString(),fileString,etPersonNum.text.toString(),
+                getPresenter().setProject(Constants.getToken(), mBinding.etWx.text.toString(),image, mBinding.tvTime.text.toString(),
+                    mBinding.etProjectIntroduce.text.toString(), mBinding.etFinance.text.toString(), mBinding.etoperation.text.toString(), mBinding.etAdvantage.text.toString()
+                    , mBinding.etHistory.text.toString(),fileString, mBinding.etPersonNum.text.toString(),
                     filids!!.toIntArray(),fanances!!.toIntArray(),addresss!!.toIntArray(),0)
             }else{
-                getPresenter().setProject(Constants.getToken(),etWx.text.toString(),image,tvTime.text.toString(),
-                    etProjectIntroduce.text.toString(),etFinance.text.toString(),etoperation.text.toString(),etAdvantage.text.toString()
-                    ,etHistory.text.toString(),fileString,etPersonNum.text.toString(),
+                getPresenter().setProject(Constants.getToken(), mBinding.etWx.text.toString(),image, mBinding.tvTime.text.toString(),
+                    mBinding.etProjectIntroduce.text.toString(), mBinding.etFinance.text.toString(), mBinding.etoperation.text.toString(), mBinding.etAdvantage.text.toString()
+                    , mBinding.etHistory.text.toString(),fileString, mBinding.etPersonNum.text.toString(),
                     filids!!.toIntArray(),fanances!!.toIntArray(),addresss!!.toIntArray(),ProjectId)
 
             }
         }
-        etProjectIntroduce.addTextChangedListener {
-            tvProjectIntroduce.text="${etProjectIntroduce.text.length}/300"
+        mBinding.etProjectIntroduce.addTextChangedListener {
+            mBinding.tvProjectIntroduce.text="${ mBinding.etProjectIntroduce.text.length}/300"
         }
-        etFinance.addTextChangedListener {
-            tvFinances.text="${etFinance.text.length}/300"
+        mBinding.etFinance.addTextChangedListener {
+            mBinding.tvFinances.text="${ mBinding.etFinance.text.length}/300"
         }
-        etoperation.addTextChangedListener {
-            tvOperation.text="${etoperation.text.length}/300"
+        mBinding.etoperation.addTextChangedListener {
+            mBinding.tvOperation.text="${ mBinding.etoperation.text.length}/300"
         }
-        etAdvantage.addTextChangedListener {
-            tvAdvantage.text="${etAdvantage.text.length}/300"
+        mBinding.etAdvantage.addTextChangedListener {
+            mBinding.tvAdvantage.text="${ mBinding.etAdvantage.text.length}/300"
         }
-        etHistory.addTextChangedListener {
-            tvHistory.text="${etHistory.text.length}/300"
+        mBinding.etHistory.addTextChangedListener {
+            mBinding.tvHistory.text="${ mBinding.etHistory.text.length}/300"
         }
-        etPersonNum.addTextChangedListener {
-            tvPersonNum.text="${etPersonNum.text.length}/300"
+        mBinding.etPersonNum.addTextChangedListener {
+            mBinding.tvPersonNum.text="${ mBinding.etPersonNum.text.length}/300"
         }
-        llFinance.setOnClickListener(this)
-        llFleid.setOnClickListener(this)
-        llAddress.setOnClickListener(this)
+        mBinding.llFinance.setOnClickListener(this)
+        mBinding.llFleid.setOnClickListener(this)
+        mBinding.llAddress.setOnClickListener(this)
     }
 
     override fun onRequestPermissionsResult(
@@ -139,12 +137,16 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
     }
 
     override fun createPresenter(): ProjectMessageEditPersenter =ProjectMessageEditPersenter(this)
+    override fun getViewBinding(): ViewBinding {
+        return mBinding
+    }
+
     override fun initData() {
-        tvTilte.text="创业项目信息完善"
+        mBinding.icTitle.tvTilte.text="创业项目信息完善"
         initImageChooseHelper()
          completeStatus = intent.getIntExtra("complete_status", 0)
         if (completeStatus==1){
-            icLoading.visibility=View.VISIBLE
+            mBinding.icLoading.root.visibility=View.VISIBLE
             getPresenter().getProjectDetail(Constants.getToken(),Constants.getPersonal().id)
         }
 
@@ -165,7 +167,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 getPresenter().upload(file)
             }
             .setOnFinishChooseImageListener { uri, file ->
-                ivPerson.setImageURI(uri)
+                mBinding.ivPerson.setImageURI(uri)
                 showLoadingDialog()
                 getPresenter().upload(file)
             }
@@ -250,7 +252,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                     if (path != null) {
                         file = File(path)
                         getPresenter().upload(file)//上传商业书
-                        tvTishi.text=file.name
+                        mBinding.tvTishi.text=file.name
                     }
                 }
 
@@ -278,7 +280,7 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
             fileString=upLoadFile.url
         }else{
             image=upLoadFile.url
-            ivPerson.loadImag(image)
+            mBinding.ivPerson.loadImag(image)
         }
 
     }
@@ -289,9 +291,9 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
 
     override fun getProjectDetail(project: Project) {
         ProjectId=project.id
-        icLoading.visibility=View.GONE
-        etWx.setText(project.project_name)
-        ivPerson.loadImag(project.logo_image)
+        mBinding.icLoading.root.visibility=View.GONE
+        mBinding.etWx.setText(project.project_name)
+        mBinding.ivPerson.loadImag(project.logo_image)
         var address=""//地址
         var trade=""//行业
         var finance=""//轮次
@@ -319,17 +321,17 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                 fanances?.add(project.attr_list[i].attr_id)
             }
         }
-        tvFleid.text=trade
-        tvFinance.text=finance
-        tvAddress.text=address
-        tvTime.text=project.create_time
-        etProjectIntroduce.setText(project.introduction)
-        etFinance.setText(project.wait_finance)
-        etoperation.setText(project.operation)
-        etAdvantage.setText(project.advantage)
-        etHistory.setText(project.history_financice)
-        tvTishi.text=project.project_file
-        etPersonNum.setText(project.team_member)
+        mBinding.tvFleid.text=trade
+        mBinding.tvFinance.text=finance
+        mBinding.tvAddress.text=address
+        mBinding.tvTime.text=project.create_time
+        mBinding.etProjectIntroduce.setText(project.introduction)
+        mBinding.etFinance.setText(project.wait_finance)
+        mBinding.etoperation.setText(project.operation)
+        mBinding.etAdvantage.setText(project.advantage)
+        mBinding.etHistory.setText(project.history_financice)
+        mBinding.tvTishi.text=project.project_file
+        mBinding.etPersonNum.setText(project.team_member)
         image=project.logo_image
         fileString=project.project_file
     }
@@ -376,9 +378,9 @@ class ProjectMessageEditActivity : BaseMvpActivity<ProjectMessageEditPersenter>(
                     }
                 }
 
-                tvFleid.text=field
-                tvFinance.text=fananceStr
-                tvAddress.text=addressStr
+                mBinding.tvFleid.text=field
+                mBinding.tvFinance.text=fananceStr
+                mBinding.tvAddress.text=addressStr
             }
 
         })

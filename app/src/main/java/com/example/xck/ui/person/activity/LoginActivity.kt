@@ -5,75 +5,73 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.StringUtils
 import com.example.xck.App
-import com.example.xck.MainActivity
 import com.example.xck.R
 import com.example.xck.base.BaseMvpActivity
 import com.example.xck.bean.Login
 import com.example.xck.common.Constants
+import com.example.xck.databinding.ActivityLoginBinding
 import com.example.xck.ui.person.mvp.contract.LoginContract
 import com.example.xck.ui.person.mvp.persenter.LoginPersenter
-import com.hyphenate.EMCallBack
-import com.hyphenate.chat.EMClient
-import kotlinx.android.synthetic.main.activity_login.*
+
 
 class LoginActivity : BaseMvpActivity<LoginPersenter>(),LoginContract.View {
 
 
 
     override fun createPresenter(): LoginPersenter =LoginPersenter(this)
-    override fun getActivityLayoutId(): Int = R.layout.activity_login
 
     override fun initData() {
         (application as App).addActivity(this)
-        etPhone.setText(Constants.getKeyUserPhone())
-        etPassword.setText(Constants.getKeyUserPwd())
+        mBinding.etPhone.setText(Constants.getKeyUserPhone())
+        mBinding.etPassword.setText(Constants.getKeyUserPwd())
         if (!Constants.isShow()){
-            ivHide.setImageResource(R.mipmap.hide)
-            etPassword.transformationMethod=PasswordTransformationMethod.getInstance()
+            mBinding.ivHide.setImageResource(R.mipmap.hide)
+            mBinding.etPassword.transformationMethod=PasswordTransformationMethod.getInstance()
         }else{
-            ivHide.setImageResource(R.mipmap.look)
-            etPassword.transformationMethod=HideReturnsTransformationMethod.getInstance()
+            mBinding.ivHide.setImageResource(R.mipmap.look)
+            mBinding.etPassword.transformationMethod=HideReturnsTransformationMethod.getInstance()
         }
     }
 
     override fun initEvent() {
-        tvRegister.setOnClickListener {
+        mBinding.tvRegister.setOnClickListener {
             var intent=Intent(this,RegisterActivity::class.java)
             this.startActivity(intent)
         }
-        tvForgetPw.setOnClickListener {
+        mBinding.tvForgetPw.setOnClickListener {
             var intent=Intent(this,ModifyPasswordActivity::class.java)
             intent.putExtra("type",1)
             this.startActivity(intent)
         }
-        tvToLogin.setOnClickListener {
-                getPresenter().login(etPhone.text.toString(),etPassword.text.toString())
+        mBinding.tvToLogin.setOnClickListener {
+                getPresenter().login(mBinding.etPhone.text.toString(),mBinding.etPassword.text.toString())
         }
-        ivDelete.setOnClickListener {
-            etPassword.setText("")
+        mBinding.ivDelete.setOnClickListener {
+            mBinding.etPassword.setText("")
         }
-        ivHide.setOnClickListener {
+        mBinding.ivHide.setOnClickListener {
            if (!Constants.isShow()){
                Constants.setShow(true)
-               ivHide.setImageResource(R.mipmap.look)
-               etPassword.transformationMethod=HideReturnsTransformationMethod.getInstance()
-               val pos= etPassword.getText().length
-               etPassword.setSelection(pos)
+               mBinding.ivHide.setImageResource(R.mipmap.look)
+               mBinding.etPassword.transformationMethod=HideReturnsTransformationMethod.getInstance()
+               val pos= mBinding.etPassword.getText().length
+               mBinding.etPassword.setSelection(pos)
            }else{
                Constants.setShow(false)
-               ivHide.setImageResource(R.mipmap.hide)
-               etPassword.transformationMethod=PasswordTransformationMethod.getInstance()
-               val pos= etPassword.getText().length
-               etPassword.setSelection(pos)
+               mBinding.ivHide.setImageResource(R.mipmap.hide)
+               mBinding.etPassword.transformationMethod=PasswordTransformationMethod.getInstance()
+               val pos= mBinding.etPassword.getText().length
+               mBinding.etPassword.setSelection(pos)
            }
         }
-        etPassword.addTextChangedListener {
-            if (StringUtils.isEmpty(etPassword.text.toString())){
-                ivDelete.visibility= View.GONE
-            }else if (ivDelete.visibility == View.GONE){
-                ivDelete.visibility=View.VISIBLE
+        mBinding.etPassword.addTextChangedListener {
+            if (StringUtils.isEmpty(mBinding.etPassword.text.toString())){
+                mBinding.ivDelete.visibility= View.GONE
+            }else if (mBinding.ivDelete.visibility == View.GONE){
+                mBinding.ivDelete.visibility=View.VISIBLE
             }
         }
     }
@@ -91,5 +89,9 @@ class LoginActivity : BaseMvpActivity<LoginPersenter>(),LoginContract.View {
     override fun onDestroy() {
         super.onDestroy()
         (application as App).deleteActivity(this)
+    }
+    private val mBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
+    override fun getViewBinding(): ViewBinding {
+        return mBinding
     }
 }

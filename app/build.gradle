@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android-extensions'
+
 }
 
 android {
@@ -32,6 +32,9 @@ android {
         jvmTarget = '1.8'
     }
     buildToolsVersion '32.0.0'
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {

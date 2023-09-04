@@ -4,22 +4,20 @@ package com.example.xck.ui.person.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import androidx.viewbinding.ViewBinding
 import com.example.xck.R
 import com.example.xck.base.mvp.BaseActivity
+import com.example.xck.databinding.ActivityChatBinding
 import com.example.xck.ui.person.ChatFragment
 import com.hyphenate.easeui.constants.EaseConstant
-import com.hyphenate.easeui.widget.EaseTitleBar.OnBackPressListener
-import kotlinx.android.synthetic.main.activity_chat.*
-import kotlinx.android.synthetic.main.activity_chat.view.*
-import kotlinx.android.synthetic.main.gridview_item.view.*
+
 
 class ChatActivity : BaseActivity() {
     private var fragment: ChatFragment? = null
     private var conversationId: String? = null
     private var chatType = 0
     private var historyMsgId: String? = null
-    override fun getActivityLayoutId(): Int = R.layout.activity_chat
+    private val mBinding by lazy { ActivityChatBinding.inflate(layoutInflater) }
     companion object{
         fun  actionStart(context: Context, conversationId: String?, chatType: Int,name:String) {
             val intent = Intent(context, ChatActivity::class.java)
@@ -29,17 +27,22 @@ class ChatActivity : BaseActivity() {
             context.startActivity(intent)
         }
     }
+
+    override fun getViewBinding(): ViewBinding {
+       return mBinding
+    }
+
     override fun initData() {
         conversationId = intent.getStringExtra(EaseConstant.EXTRA_CONVERSATION_ID)
         chatType = intent.getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE)
-        title_bar_message.title_bar_message.setTitle(intent.getStringExtra("name"))
+        mBinding.titleBarMessage.setTitle(intent.getStringExtra("name"))
         initChatFragment()
     }
 
     override fun initEvent() {
-        title_bar_message.setLeftImageResource(R.mipmap.iv_back)
+        mBinding.titleBarMessage.setLeftImageResource(R.mipmap.iv_back)
 
-        title_bar_message.setOnBackPressListener {
+        mBinding.titleBarMessage.setOnBackPressListener {
             finish()
         }
     }

@@ -2,6 +2,7 @@ package com.example.xck.ui.home.activity
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.xck.R
@@ -11,6 +12,7 @@ import com.example.xck.bean.Capitalist
 import com.example.xck.bean.User
 import com.example.xck.bean.UserQuotaNum
 import com.example.xck.common.Constants
+import com.example.xck.databinding.ActivityInvestorDetailBinding
 import com.example.xck.ui.home.adapter.HomeTypeAdapter
 import com.example.xck.ui.home.mvp.contract.InvestorDetailContract
 import com.example.xck.ui.home.mvp.persenter.InvestorDetailPersenter
@@ -20,15 +22,7 @@ import com.hyphenate.chat.EMClient
 import com.hyphenate.easeui.constants.EaseCommom
 import com.hyphenate.easeui.constants.EaseConstant
 import com.hyphenate.easeui.constants.UserMessage
-import kotlinx.android.synthetic.main.activity_investor_detail.*
-import kotlinx.android.synthetic.main.activity_investor_detail.icLoading
-import kotlinx.android.synthetic.main.activity_investor_detail.iv_person
-import kotlinx.android.synthetic.main.activity_investor_detail.tvAddress
-import kotlinx.android.synthetic.main.activity_investor_detail.tvCompany
-import kotlinx.android.synthetic.main.activity_investor_detail.tvName
-import kotlinx.android.synthetic.main.activity_investor_detail.tvSend
-import kotlinx.android.synthetic.main.activity_project_detail.*
-import kotlinx.android.synthetic.main.ic_title.*
+
 
 /**
  *   author ： xiaogf
@@ -39,14 +33,14 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
     var capitalist: Capitalist? =null
     var isFriend=false;//当前用户是否为好友
     var user_id=0
-    override fun getActivityLayoutId(): Int = R.layout.activity_investor_detail
+    private val mBinding by lazy { ActivityInvestorDetailBinding.inflate(layoutInflater) }
 
     override fun initData() {
-        tvTilte.text="详情"
+        mBinding.icTitle.tvTilte.text="详情"
         val caId = intent.getIntExtra("capitalist_id", 0)
          user_id = intent.getIntExtra("user_id", 0)
         if (Constants.getPersonal().user_type_select==0){
-            tvSend.text = "先完善角色信息再打招呼"
+            mBinding.tvSend.text = "先完善角色信息再打招呼"
         }
         getPresenter().getInverstorDetail(Constants.getToken(),caId)
 
@@ -67,7 +61,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
     }
 
     override fun initEvent() {
-        tvSend.setOnClickListener {
+        mBinding.tvSend.setOnClickListener {
             if (Constants.getPersonal().user_type_select==0){
                 ToastUtils.showShort("先完善角色信息再打招呼")
                 return@setOnClickListener
@@ -106,6 +100,10 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
     }
 
     override fun createPresenter(): InvestorDetailPersenter = InvestorDetailPersenter(this)
+    override fun getViewBinding(): ViewBinding {
+        return mBinding
+    }
+
     override fun getInverstorDetail(capitalist: Capitalist) {
         this.capitalist=capitalist
         Thread(Runnable {
@@ -135,7 +133,7 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
             user.userMessage=userMessage
             Constants.putUserDetail(user)
         }).start()
-        icLoading.visibility=View.GONE
+        mBinding.icLoading.root.visibility=View.GONE
         var inverstor=""
         var address=""
         var datas:ArrayList<Capitalist.AttrListBean> =ArrayList()
@@ -149,21 +147,21 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
             }
         }
 
-        tvName.text=capitalist.capitalist_name
-        tvCompany.text=capitalist.contact_name+"|"+capitalist.position
-        tvOrgan.text=capitalist.introduction
-        rcType.visibility= View.VISIBLE
+        mBinding.tvName.text=capitalist.capitalist_name
+        mBinding.tvCompany.text=capitalist.contact_name+"|"+capitalist.position
+        mBinding.tvOrgan.text=capitalist.introduction
+        mBinding.rcType.visibility= View.VISIBLE
         var layoutManager= LinearLayoutManager(this)
         layoutManager.orientation= LinearLayoutManager.HORIZONTAL
-        rcType.layoutManager=layoutManager
+        mBinding.rcType.layoutManager=layoutManager
         var adapter= HomeTypeAdapter()
-        rcType.adapter=adapter
+        mBinding.rcType.adapter=adapter
         adapter.data=datas
-        tvCase.text="投资案例:"+capitalist.cases
-        tvMoeny.text=capitalist.single_amount
-        tvInverstor.text=inverstor
-        tvAddress.text=address
-        iv_person.loadImag(capitalist.avatar)
+        mBinding.tvCase.text="投资案例:"+capitalist.cases
+        mBinding.tvMoeny.text=capitalist.single_amount
+        mBinding.tvInverstor.text=inverstor
+        mBinding.tvAddress.text=address
+        mBinding.ivPerson.loadImag(capitalist.avatar)
 //        setSendState()
     }
 
@@ -182,16 +180,16 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
             if (userQuotaNum==null||callIm==null) return
         }
         if (isFriend){
-            tvSend.isClickable=true
-            tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
+            mBinding.tvSend.isClickable=true
+            mBinding.tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
         }else{
             if (userQuotaNum!!.quota_num==0){
-                tvSend.isClickable=false
-                tvSend.setBackgroundResource(R.drawable.false_click)
-                tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
+                mBinding.tvSend.isClickable=false
+                mBinding.tvSend.setBackgroundResource(R.drawable.false_click)
+                mBinding.tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
             }else{
-                tvSend.isClickable=true
-                tvSend.setBackgroundResource(R.drawable.sel_login)
+                mBinding.tvSend.isClickable=true
+                mBinding.tvSend.setBackgroundResource(R.drawable.sel_login)
                     var isHas=false
                     Thread(Runnable {
                         callIm!!.receive.forEachIndexed { index, activeBean ->
@@ -202,9 +200,9 @@ class InvestorDetailActivity :BaseMvpActivity<InvestorDetailPersenter>(),Investo
                         }
                         ThreadUtils.runOnUiThread(Runnable {
                             if (isHas){
-                                tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
+                                mBinding.tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
                             }else{
-                                tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
+                                mBinding.tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
                             }
                         })
                     }).start()

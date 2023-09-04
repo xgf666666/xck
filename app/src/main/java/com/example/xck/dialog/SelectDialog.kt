@@ -1,22 +1,17 @@
 package com.example.xck.dialog
 
 import android.app.Dialog
-import android.app.slice.Slice
 import android.content.Context
-import android.os.Bundle
 import android.view.Gravity
 import android.view.WindowManager
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.example.xck.R
 import com.example.xck.bean.Select
 import com.example.xck.common.AppApi
+import com.example.xck.databinding.DialogSelectBinding
 import com.example.xck.extensions.ui
 import com.example.xck.ui.home.adapter.DialogSelectAdapter
-import com.example.xck.utils.getScreenHeight
-import com.example.xck.utils.getScreenWidth
-import kotlinx.android.synthetic.main.dialog_select.*
 
 /**
  *   author ： xiaogf
@@ -30,7 +25,9 @@ class SelectDialog(context: Context) : Dialog(context){
     var filid:ArrayList<Select.ChildrenBean>?=null
     var fanance:ArrayList<Select.ChildrenBean>?=null
     var address:ArrayList<Select.ChildrenBean>?=null
+    private val mBinding by lazy { DialogSelectBinding.inflate(layoutInflater) }
     init {
+        setContentView(mBinding.root);
         setContentView(R.layout.dialog_select)
         window!!.setGravity(Gravity.BOTTOM)
         var lp=window!!.attributes
@@ -39,17 +36,18 @@ class SelectDialog(context: Context) : Dialog(context){
         window!!.attributes=lp
         initView()
     }
+
     /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }*/
 
     private fun initView() {
-        rvSelect.layoutManager=LinearLayoutManager(context)
+        mBinding.rvSelect.layoutManager=LinearLayoutManager(context)
         selectAdapter=DialogSelectAdapter()
-        rvSelect.adapter=selectAdapter
+        mBinding.rvSelect.adapter=selectAdapter
         setData()
-        tvReset.setOnClickListener {
+        mBinding.tvReset.setOnClickListener {
             for (i in 0 until datas!!.size){
                for (y in 0 until  datas!![i].children.size){
                    datas!![i].children[y].isSelect=false
@@ -57,7 +55,7 @@ class SelectDialog(context: Context) : Dialog(context){
             }
             selectAdapter!!.notifyDataSetChanged()
         }
-        tvSure.setOnClickListener {
+        mBinding.tvSure.setOnClickListener {
             for ( i in 0 until datas!!.size){
                 when(i){
                     0->{

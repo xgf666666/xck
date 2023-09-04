@@ -1,6 +1,7 @@
 package com.example.xck.ui.home.activity
 
 import android.view.View
+import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.xck.R
@@ -10,6 +11,8 @@ import com.example.xck.bean.Project
 import com.example.xck.bean.User
 import com.example.xck.bean.UserQuotaNum
 import com.example.xck.common.Constants
+import com.example.xck.databinding.ActivityInvestorDetailBinding
+import com.example.xck.databinding.ActivityProjectDetailBinding
 import com.example.xck.ui.home.mvp.contract.ProjectDetailContract
 import com.example.xck.ui.home.mvp.persenter.ProjectDetailPersenter
 import com.example.xck.ui.person.activity.ChatActivity
@@ -18,15 +21,6 @@ import com.hyphenate.chat.EMClient
 import com.hyphenate.easeui.constants.EaseCommom
 import com.hyphenate.easeui.constants.EaseConstant
 import com.hyphenate.easeui.constants.UserMessage
-import kotlinx.android.synthetic.main.activity_investor_detail.*
-import kotlinx.android.synthetic.main.activity_project_detail.*
-import kotlinx.android.synthetic.main.activity_project_detail.icLoading
-import kotlinx.android.synthetic.main.activity_project_detail.iv_person
-import kotlinx.android.synthetic.main.activity_project_detail.tvAddress
-import kotlinx.android.synthetic.main.activity_project_detail.tvCompany
-import kotlinx.android.synthetic.main.activity_project_detail.tvName
-import kotlinx.android.synthetic.main.activity_project_detail.tvSend
-import kotlinx.android.synthetic.main.ic_title.*
 
 /**
  *   author ： xiaogf
@@ -37,14 +31,13 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
     var project: Project? =null
     var isFriend=false
     var user_id=0
-    override fun getActivityLayoutId(): Int = R.layout.activity_project_detail
 
     override fun initData() {
-        tvTilte.text="详情"
+        mBinding.icTitle.tvTilte.text="详情"
         val projectId = intent.getIntExtra("project_id", 0)
          user_id = intent.getIntExtra("user_id", 0)
         if (Constants.getPersonal().user_type_select==0){
-            tvSend.text = "先完善角色信息再打招呼"
+            mBinding.tvSend.text = "先完善角色信息再打招呼"
         }
         getPresenter().getProjectDetail(Constants.getToken(),projectId,0)
     }
@@ -62,7 +55,7 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
     }
 
     override fun initEvent() {
-        tvSend.setOnClickListener {
+        mBinding.tvSend.setOnClickListener {
             if (Constants.getPersonal().user_type_select==0){
                 ToastUtils.showShort("先完善角色信息再打招呼")
                return@setOnClickListener
@@ -102,6 +95,11 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
 
 
     override fun createPresenter(): ProjectDetailPersenter = ProjectDetailPersenter(this)
+    private val mBinding by lazy { ActivityProjectDetailBinding.inflate(layoutInflater) }
+    override fun getViewBinding(): ViewBinding {
+        return mBinding
+    }
+
     override fun getProjectDetail(project: Project) {
         this.project=project
         Thread(Runnable {
@@ -133,8 +131,8 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
             Constants.putUserDetail(user)
         }).start()//存储信息给打招呼和沟通中使用
 
-        icLoading.visibility=View.GONE
-        tvName.text=project.project_name
+        mBinding.icLoading.root.visibility=View.GONE
+        mBinding.tvName.text=project.project_name
         var type=""
         var address=""
         for (i in 0 until project.attr_list.size){
@@ -147,17 +145,17 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
                 address=project.attr_list[i].attr_name
             }
         }
-        tvCompany.text=type
-        tvAddress.text=address
-        tvTime.text=project.create_time
-        tv_ProjectI.text=project.introduction
-        tvRongzi.text=project.wait_finance
-        tvOperateData.text=project.operation
-        tvProjectAdvantage.text=project.advantage
-        tvHistoryFinance.text=project.history_financice
-        tvBusinessBook.text=project.project_file
-        tvTeamNum.text=project.team_member
-        iv_person.loadImag(project.logo_image)
+        mBinding.tvCompany.text=type
+        mBinding.tvAddress.text=address
+        mBinding.tvTime.text=project.create_time
+        mBinding.tvProjectI.text=project.introduction
+        mBinding.tvRongzi.text=project.wait_finance
+        mBinding.tvOperateData.text=project.operation
+        mBinding.tvProjectAdvantage.text=project.advantage
+        mBinding.tvHistoryFinance.text=project.history_financice
+        mBinding.tvBusinessBook.text=project.project_file
+        mBinding.tvTeamNum.text=project.team_member
+        mBinding.ivPerson.loadImag(project.logo_image)
 //        setSendState()
     }
     var userQuotaNum: UserQuotaNum? =null
@@ -175,16 +173,16 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
             if (userQuotaNum==null||callIm==null) return
         }
         if (isFriend){
-            tvSend.isClickable=true
-            tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
+            mBinding.tvSend.isClickable=true
+            mBinding.tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
         }else{
             if (userQuotaNum!!.quota_num==0){
-                tvSend.isClickable=false
-                tvSend.setBackgroundResource(R.drawable.false_click)
-                tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
+                mBinding.tvSend.isClickable=false
+                mBinding.tvSend.setBackgroundResource(R.drawable.false_click)
+                mBinding. tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
             }else{
-                tvSend.isClickable=true
-                tvSend.setBackgroundResource(R.drawable.sel_login)
+                mBinding.tvSend.isClickable=true
+                mBinding.tvSend.setBackgroundResource(R.drawable.sel_login)
                     var isHas=false
                     Thread(Runnable {
                         callIm!!.receive.forEachIndexed { index, activeBean ->
@@ -195,9 +193,9 @@ class ProjectDetailActivity :BaseMvpActivity<ProjectDetailPersenter>(),ProjectDe
                         }
                         ThreadUtils.runOnUiThread(Runnable {
                             if (isHas){
-                                tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
+                                mBinding.tvSend.text="继续沟通(额度余${userQuotaNum!!.quota_num})"
                             }else{
-                                tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
+                                mBinding.tvSend.text="打个招呼聊聊天(额度余${userQuotaNum!!.quota_num})"
                             }
                         })
                     }).start()

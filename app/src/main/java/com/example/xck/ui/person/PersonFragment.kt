@@ -3,7 +3,9 @@ package com.example.xck.ui.person
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.UtilsTransActivity
@@ -13,39 +15,32 @@ import com.example.xck.R
 import com.example.xck.base.mvp.BaseMvpFragment
 import com.example.xck.bean.Login
 import com.example.xck.common.Constants
+import com.example.xck.databinding.FragmentHomeBinding
+import com.example.xck.databinding.FragmentPersonBinding
 import com.example.xck.dialog.LoginOutDialog
 import com.example.xck.ui.person.activity.*
 import com.example.xck.ui.person.mvp.contract.PersonContract
 import com.example.xck.ui.person.mvp.persenter.PersonPersenter
-import com.example.xck.utils.changeKm
-import com.example.xck.utils.filechoose.FxFileDialogArgs
-import com.example.xck.utils.filechoose.FxHelp
 import com.example.xck.utils.loadImag
 import com.hyphenate.chat.EMClient
 import com.hyphenate.easeui.constants.EaseCommom
 import com.xx.baseutilslibrary.common.ImageChooseHelper
-import kotlinx.android.synthetic.main.activity_prepare_login.*
-import kotlinx.android.synthetic.main.activity_project_message_edit.*
-import kotlinx.android.synthetic.main.fragment_person.*
-import kotlinx.android.synthetic.main.fragment_person.ivPerson
-import java.io.File
 
 /**
  *   author ： xiaogf
  *   time    ： 2022/10/8
  */
-class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
+class PersonFragment:BaseMvpFragment<PersonPersenter,FragmentPersonBinding>(),PersonContract.View {
     var isHide=false;
     var message:String=""
     private var imageChooseHelper: ImageChooseHelper? = null
-    override fun getFragmentLayoutId(): Int = R.layout.fragment_person
     override fun init(view: View?) {
         initImageChooseHelper()
-        tvToLogin.setOnClickListener {
+        mBindingView!!.icPrePareLogin.tvToLogin.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
             this?.startActivity(intent)
         }
-         tvRegister.setOnClickListener {
+        mBindingView!!.icPrePareLogin.tvRegister.setOnClickListener {
             startActivity(Intent(context, RegisterActivity::class.java))
         }
 /*
@@ -54,17 +49,17 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
             context?.startActivity(intent)
         }
 */
-        llRoleIdentity.setOnClickListener {
+        mBindingView!!.llRoleIdentity.setOnClickListener {
             val intent = Intent(context, PrepareRoleIdentifyActivity::class.java)
             context?.startActivity(intent)
         }
-        llHelp.setOnClickListener {
+        mBindingView!!.llHelp.setOnClickListener {
             startActivity(Intent(context,HelpActivity::class.java))
         }
-        llAboutUs.setOnClickListener {
+        mBindingView!!.llAboutUs.setOnClickListener {
             startActivity(Intent(context,AboutUsActivity::class.java))
         }
-        llMessage.setOnClickListener {
+        mBindingView!!.llMessage.setOnClickListener {
             var intent:Intent?=null
             if (Constants.getPersonal().user_type_select==1){
                 if (Constants.getPersonal().proof_status==2){
@@ -86,10 +81,10 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
                 }
             }
         }
-        ll_identifyPw.setOnClickListener {
+        mBindingView!!.llIdentifyPw.setOnClickListener {
             startActivity(Intent(context,ModifyPasswordActivity::class.java))
         }
-        llLoginOut.setOnClickListener {
+        mBindingView!!.llLoginOut.setOnClickListener {
             var loginOutDialog = context?.let { it1 -> LoginOutDialog(it1) }
             loginOutDialog?.setLoginOutClickListener(object :LoginOutDialog.LoginOutClickListener{
                 override fun sure() {
@@ -107,7 +102,7 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
 
 
         }
-        ivPerson.setOnClickListener {
+        mBindingView!!.ivPerson.setOnClickListener {
             showEditAvatarDialog()
         }
     }
@@ -167,9 +162,9 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
     }
     private fun setVisLogin(){
         if (Constants.isLogin()){
-            icPrePareLogin.visibility=View.GONE
+            mBindingView!!.icPrePareLogin.root.visibility=View.GONE
         }else{
-            icPrePareLogin.visibility=View.VISIBLE
+            mBindingView!!.icPrePareLogin.root.visibility=View.VISIBLE
         }
     }
 
@@ -187,38 +182,38 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
     override fun userInfo(userInfo: Login.UserInfoBean) {
         Constants.putPersonal(userInfo)
         EaseCommom.getInstance().avatar=userInfo.avatar
-        ivPerson.loadImag(userInfo.avatar)
+        mBindingView!!.ivPerson.loadImag(userInfo.avatar)
         if (userInfo.user_type_select==1){
-            tvMessage.text="创业项目信息"
+            mBindingView!!.tvMessage.text="创业项目信息"
         }else if (userInfo.user_type_select==2){
-            tvMessage.text="投资人信息"
+            mBindingView!!.tvMessage.text="投资人信息"
         }
-        tvPhone.text=userInfo.mobile_phone
-        tvNames.text=userInfo.real_name
-        tvQuota.text="额度："+userInfo.quota_num
+        mBindingView!!.tvPhone.text=userInfo.mobile_phone
+        mBindingView!!.tvNames.text=userInfo.real_name
+        mBindingView!!.tvQuota.text="额度："+userInfo.quota_num
 
         when( userInfo.proof_status){
-           0->{tvRenz.visibility=View.VISIBLE
-               ivRenz.visibility=View.VISIBLE
-               llRoleIdentity.isClickable=true
-               tvRenz.text="前往认证"
+           0->{mBindingView!!.tvRenz.visibility=View.VISIBLE
+               mBindingView!!.ivRenz.visibility=View.VISIBLE
+               mBindingView!!.llRoleIdentity.isClickable=true
+               mBindingView!!.tvRenz.text="前往认证"
                message="需要等认证通过"
-               ivRenMessage.visibility=View.GONE
+               mBindingView!!.ivRenMessage.visibility=View.GONE
            }
             1->{
-                ivRenz.visibility=View.GONE
-                tvRenz.visibility=View.VISIBLE
-                tvRenz.text="审核中"
-                llRoleIdentity.isClickable=false
-                ivRenMessage.visibility=View.GONE
+                mBindingView!!.ivRenz.visibility=View.GONE
+                mBindingView!!.tvRenz.visibility=View.VISIBLE
+                mBindingView!!.tvRenz.text="审核中"
+                mBindingView!!.llRoleIdentity.isClickable=false
+                mBindingView!!.ivRenMessage.visibility=View.GONE
                 message="需要等认证通过"
             }
             2->{
-                ivRenz.visibility=View.GONE
-                tvRenz.visibility=View.VISIBLE
-                tvRenz.text="认证成功"
-                llRoleIdentity.isClickable=false
-                ivRenMessage.visibility=View.VISIBLE
+                mBindingView!!.ivRenz.visibility=View.GONE
+                mBindingView!!.tvRenz.visibility=View.VISIBLE
+                mBindingView!!.tvRenz.text="认证成功"
+                mBindingView!!.llRoleIdentity.isClickable=false
+                mBindingView!!.ivRenMessage.visibility=View.VISIBLE
                 if (userInfo.complete_status==1){
                     message="已完善"
                 }else{
@@ -226,19 +221,27 @@ class PersonFragment:BaseMvpFragment<PersonPersenter>(),PersonContract.View {
                 }
             }
             3->{
-                ivRenz.visibility=View.VISIBLE
-                tvRenz.visibility=View.VISIBLE
-                tvRenz.text="认证不通过，需重新认证"
-                llRoleIdentity.isClickable=true
+                mBindingView!!.ivRenz.visibility=View.VISIBLE
+                mBindingView!!.tvRenz.visibility=View.VISIBLE
+                mBindingView!!.tvRenz.text="认证不通过，需重新认证"
+                mBindingView!!.llRoleIdentity.isClickable=true
                 message="需要等认证通过"
             }
         }
-        tvRenMessage.text=message
+        mBindingView!!.tvRenMessage.text=message
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
             imageChooseHelper!!.onActivityResult(requestCode,resultCode,data)
+    }
+
+    override fun getViewBinding(
+        inflater: LayoutInflater?,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): FragmentPersonBinding {
+        return FragmentPersonBinding.inflate(layoutInflater)
     }
 
 }

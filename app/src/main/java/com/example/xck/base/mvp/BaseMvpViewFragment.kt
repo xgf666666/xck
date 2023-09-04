@@ -2,6 +2,7 @@ package com.example.xck.base.mvp
 
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AlertDialog
+import androidx.viewbinding.ViewBinding
 import com.example.xck.R
 
 
@@ -11,7 +12,7 @@ import com.example.xck.R
  * Describe：
  * Created by 雷小星🍀 on 2017/11/2 18:22.
  */
-abstract class BaseMvpViewFragment : BaseFragment() {
+abstract class BaseMvpViewFragment<V : ViewBinding> : BaseFragment<V>() {
 
 
 

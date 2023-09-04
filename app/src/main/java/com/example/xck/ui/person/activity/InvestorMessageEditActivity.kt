@@ -3,9 +3,9 @@ package com.example.xck.ui.person.activity
 import android.Manifest
 import android.content.Intent
 import android.view.View
+import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.StringUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.UtilsTransActivity
 import com.example.xck.BuildConfig
 import com.example.xck.R
@@ -14,23 +14,13 @@ import com.example.xck.bean.Capitalist
 import com.example.xck.bean.Select
 import com.example.xck.bean.UpLoadFile
 import com.example.xck.common.Constants
+import com.example.xck.databinding.ActivityInvestorMessageEditBinding
 import com.example.xck.dialog.SelectDialog
 import com.example.xck.ui.person.mvp.contract.InverstorMessageEditContract
 import com.example.xck.ui.person.mvp.persenter.InverstorMessageEditPersenter
 import com.example.xck.utils.loadImag
 import com.xx.baseutilslibrary.common.ImageChooseHelper
-import kotlinx.android.synthetic.main.activity_investor_message_edit.*
-import kotlinx.android.synthetic.main.activity_investor_message_edit.icLoading
-import kotlinx.android.synthetic.main.activity_investor_message_edit.ivPerson
-import kotlinx.android.synthetic.main.activity_investor_message_edit.llAddress
-import kotlinx.android.synthetic.main.activity_investor_message_edit.llFinance
-import kotlinx.android.synthetic.main.activity_investor_message_edit.llFleid
-import kotlinx.android.synthetic.main.activity_investor_message_edit.tvAddress
-import kotlinx.android.synthetic.main.activity_investor_message_edit.tvFinance
-import kotlinx.android.synthetic.main.activity_investor_message_edit.tvFleid
-import kotlinx.android.synthetic.main.activity_investor_message_edit.tvSend
-import kotlinx.android.synthetic.main.activity_project_message_edit.*
-import kotlinx.android.synthetic.main.ic_title.*
+
 
 class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersenter>(),InverstorMessageEditContract.View,
     View.OnClickListener {
@@ -44,51 +34,53 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
     private var addresss: MutableList<Int>?=mutableListOf()
     private var completeStatus=0;
     private var capitalistId=0;
-
-    override fun getActivityLayoutId(): Int =R.layout.activity_investor_message_edit
+    private val mBinding by lazy { ActivityInvestorMessageEditBinding.inflate(layoutInflater) }
 
 
     override fun initData() {
-        tvTilte.text="投资人信息完善"
+        mBinding.icTitle.tvTilte.text="投资人信息完善"
         initImageChooseHelper()
         completeStatus = intent.getIntExtra("complete_status", 0)
         if (completeStatus==1){
-            icLoading.visibility=View.VISIBLE
+            mBinding.icLoading.root.visibility=View.VISIBLE
             getPresenter().getInverstorDetail(Constants.getToken(),Constants.getPersonal().id)
         }
     }
 
     override fun initEvent() {
-        ivPerson.setOnClickListener {
+        mBinding.ivPerson.setOnClickListener {
             card=false
             showEditAvatarDialog()
         }
-        iv_card.setOnClickListener {
+        mBinding.ivCard.setOnClickListener {
             card=true
             showEditAvatarDialog()
         }
-        tvSend.setOnClickListener {
+        mBinding.tvSend.setOnClickListener {
             if (completeStatus==0){
-                getPresenter().setCapitalist(Constants.getToken(),etName.text.toString(),etPerson.text.toString(),etPosition.text.toString(),
-                    "${etlessMoney.text.toString()}"+"-"+"${etMoreMoney.text.toString()}",imageUri!!,etOrganIntroduce.text.toString(),
-                    etCase.text.toString(),cardUri!!,
+                getPresenter().setCapitalist(Constants.getToken(),mBinding.etName.text.toString(),mBinding.etPerson.text.toString(),mBinding.etPosition.text.toString(),
+                    "${mBinding.etlessMoney.text.toString()}"+"-"+"${mBinding.etMoreMoney.text.toString()}",imageUri!!,mBinding.etOrganIntroduce.text.toString(),
+                    mBinding.etCase.text.toString(),cardUri!!,
                     filids!!.toIntArray(),fanances!!.toIntArray() ,addresss!!.toIntArray(),0)
 
             }else{
-                getPresenter().setCapitalist(Constants.getToken(),etName.text.toString(),etPerson.text.toString(),etPosition.text.toString(),
-                    "${etlessMoney.text.toString()}"+"-"+"${etMoreMoney.text.toString()}",imageUri!!,etOrganIntroduce.text.toString(),
-                    etCase.text.toString(),cardUri!!,
+                getPresenter().setCapitalist(Constants.getToken(),mBinding.etName.text.toString(),mBinding.etPerson.text.toString(),mBinding.etPosition.text.toString(),
+                    "${mBinding.etlessMoney.text.toString()}"+"-"+"${mBinding.etMoreMoney.text.toString()}",imageUri!!,mBinding.etOrganIntroduce.text.toString(),
+                    mBinding.etCase.text.toString(),cardUri!!,
                     filids!!.toIntArray(),fanances!!.toIntArray() ,addresss!!.toIntArray(),capitalistId)
 
             }
 
         }
-        llFinance.setOnClickListener(this)
-        llFleid.setOnClickListener(this)
-        llAddress.setOnClickListener(this)
+        mBinding.llFinance.setOnClickListener(this)
+        mBinding.llFleid.setOnClickListener(this)
+        mBinding.llAddress.setOnClickListener(this)
     }
 
     override fun createPresenter(): InverstorMessageEditPersenter = InverstorMessageEditPersenter(this)
+    override fun getViewBinding(): ViewBinding {
+        return mBinding
+    }
 
     private fun initImageChooseHelper(){
         imageChooseHelper = ImageChooseHelper.Builder()
@@ -183,9 +175,9 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
                     }
                 }
 
-                tvFleid.text=field
-                tvFinance.text=fananceStr
-                tvAddress.text=addressStr
+                mBinding.tvFleid.text=field
+                mBinding.tvFinance.text=fananceStr
+                mBinding.tvAddress.text=addressStr
             }
 
         })
@@ -200,10 +192,10 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
     override fun getloadFile(upLoadFile: UpLoadFile) {
         if (card){
             cardUri=upLoadFile.url
-            iv_card.loadImag(cardUri!!)
+            mBinding.ivCard.loadImag(cardUri!!)
         }else{
             imageUri=upLoadFile.url
-            ivPerson.loadImag(imageUri!!)
+            mBinding.ivPerson.loadImag(imageUri!!)
         }
     }
 
@@ -213,17 +205,17 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
 
     override fun getInverstorDetail(capitalist: Capitalist) {
         capitalistId=capitalist.id
-        icLoading.visibility=View.GONE
-        etName.setText(capitalist.capitalist_name)
-        etPerson.setText(capitalist.contact_name)
-        etPosition.setText(capitalist.position)
+        mBinding.icLoading.root.visibility=View.GONE
+        mBinding.etName.setText(capitalist.capitalist_name)
+        mBinding.etPerson.setText(capitalist.contact_name)
+        mBinding.etPosition.setText(capitalist.position)
         var amount=capitalist.single_amount.split("-")
         if (amount.size>1){
-            etlessMoney.setText(amount[0])
-            etMoreMoney.setText(amount[1])
+            mBinding.etlessMoney.setText(amount[0])
+            mBinding.etMoreMoney.setText(amount[1])
         }
-        ivPerson.loadImag(capitalist.avatar)
-        iv_card.loadImag(capitalist.business_card_img)
+        mBinding.ivPerson.loadImag(capitalist.avatar)
+        mBinding.ivCard.loadImag(capitalist.business_card_img)
             cardUri=capitalist.business_card_img
             imageUri=capitalist.avatar
         var address=""//地址
@@ -255,10 +247,10 @@ class InvestorMessageEditActivity : BaseMvpActivity<InverstorMessageEditPersente
                 addresss?.add(capitalist.attr_list[i].attr_id)
             }
         }
-        tvFleid.text=trade;
-        tvAddress.text=address
-        tvFinance.text=finance
-        etOrganIntroduce.setText(capitalist.introduction)
-        etCase.setText(capitalist.cases)
+        mBinding.tvFleid.text=trade;
+        mBinding.tvAddress.text=address
+        mBinding.tvFinance.text=finance
+        mBinding.etOrganIntroduce.setText(capitalist.introduction)
+        mBinding.etCase.setText(capitalist.cases)
     }
 }
